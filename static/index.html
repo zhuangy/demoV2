@@ -7,7 +7,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
         
 <title>Demo Backbone</title>
-<link type="text/css" href="/index1.css" rel="stylesheet">
+<link type="text/css" href="css/index.css" rel="stylesheet" id="stylesheet">
+<link type="text/css" href="css/android.css" rel="stylesheet" id="device-stylesheet">
 <link type="text/css" href="/noNFCscreen.css" rel="stylesheet">
 <link type="text/css" href="/animateLogo.css" rel="stylesheet">
 <style>
@@ -30,6 +31,7 @@ html, body{
 }
 #menu-view, #noNFC_view{
 	position:absolute;
+	height:100%;
 	top:0px;
 	left:0px;
 	-webkit-backface-visibility: hidden;
@@ -75,18 +77,31 @@ html, body{
 
 <script>
 $(document).ready(function (){  	
+
+	// define screen dimensions - take into account iphone footer bar
+	var Dim = new Object();
+	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+		Dim.height = window.innerHeight;
+		Dim.width = window.innerWidth;
+		// set stylesheet
+		$("#device-stylesheet").attr("href", "css/iphone.css");
+		console.log('iphone');
+	}
+	else{
+		Dim.height = window.outerHeight;
+		Dim.width = window.outerWidth;	
+	}
 	
-	$('body').css('font-size', window.outerWidth*0.06+'px');
-	$('body').css('width', window.outerWidth+'px');
-	$('body').css('height', window.outerHeight+'px');
-	$('#menu_screen').css('width', window.outerWidth+'px');
-	$('#menu_screen').css('height', window.outerHeight+'px');
-	$('#noNFC_screen').css('width', window.outerWidth+'px');
-	$('#noNFC_screen').css('height', window.outerHeight+'px');
-	
-	
+	$('body').css('font-size', Dim.width*0.06+'px');
+	$('body').css('width', Dim.width+'px');
+	$('body').css('height', Dim.height+'px');
+	$('#menu_screen').css('width', Dim.width+'px');
+	$('#menu_screen').css('height', Dim.height+'px');
+	$('#noNFC_screen').css('width', Dim.width+'px');
+	$('#noNFC_screen').css('height', Dim.height+'px');
+
 	// LOAD noNFC SCREEN
-		var nonfcView = new noNFCView();
+		var nonfcView = new noNFCView(Dim);
 		nonfcView.render();
 		nonfcView.slide(1,0);
 		
@@ -94,24 +109,20 @@ $(document).ready(function (){
 	
 	/*
 	// LOAD MENU DATA FROM JSON FILE
-	$.getJSON('/json/iota.json', function(data){
-		//data = JSON.parse(data.responseText);
+		var data = $.ajax({
+							type: 'GET',
+							url: '/json/iota.json',
+							dataType: 'json',
+							success: function() { },
+							data: {},
+							async: false
+						});
+		data = JSON.parse(data.responseText);
 		data = data.categories;
-		//console.log(data[0].items);
 		
-		var menuView = new MenuView();
-		menuView.render(data);
-		// bind touch events
-		$('#menu_view').bind('touchstart', function(e){menuView.ontouchstart(e);});
-		$('#menu_view').bind('touchmove', function(e){menuView.ontouchmove(e);});
-		$('#menu_view').bind('touchend', function(e){menuView.ontouchend(e);});
-		// for descktop testing
-		$('#menu_view').bind('mousedown', function(e){menuView.ontouchstart(e);});
-		$('#menu_view').bind('mousemove', function(e){menuView.ontouchmove(e);});
-		$('#menu_view').bind('mouseup', function(e){menuView.ontouchend(e);});
-		
-	});*/
-	
+		var menuView = new MenuView(Dim);
+		menuView.render(data);		
+	*/
 	
 })
 </script>

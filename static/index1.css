@@ -1,3 +1,56 @@
+/*FOOTER*/
+#footer {
+	position: absolute; 
+	z-index: 110;
+	top: 93%;
+	width: 100%;
+	height: 7%;
+	padding: 0;
+	text-align:center;
+}
+
+#footer #homeButton {
+  width: 8%;
+  margin:auto;
+  height: 90%;
+  background: url("/img/home.png") center center no-repeat;
+  background-size:100%;
+  opacity:1;
+}
+
+@-webkit-keyframes backButtonSlideLeft{
+	0% {
+		-webkit-transform: translateX(30%);
+		opacity:0;
+	}
+	20% {
+		opacity:1;
+	}
+
+	80% {
+		
+		opacity:1;
+	}
+	100% {
+		-webkit-transform: translateX(10%);
+		opacity:0;
+	}
+}
+
+#footer #backButton {
+  width:12%;
+  position:absolute;
+  margin-left:5%;
+  height:60%;
+  margin-top:20%;
+  opacity:1;
+  
+    -webkit-animation: backButtonSlideLeft 3000ms infinite;
+	-moz-animation: backButtonSlideLeft 3000ms infinite;
+	-o-animation: backButtonSlideLeft 3000ms infinite;
+	animation: backButtonSlideLeft 3000ms infinite;
+}
+
 /*SCROLLABLE*/
 
 ul{

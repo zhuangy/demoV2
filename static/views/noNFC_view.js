@@ -5,19 +5,18 @@ var noNFCView = Backbone.View.extend({
 		"tap #keyboard li":"input_number"
 	},
 	
-	initialize: function() {
+	initialize: function(Dim) {
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'slide', 'input_number', 'test', 'animateLogo', 'selectInput', 'validate', 'transitionOut');
-        
+
+		
 		//this.data = data;
-		this.BrowserWidth = window.outerWidth;
-		this.BrowserHeight = window.outerHeight;
+		this.BrowserWidth = Dim.width;
+		this.BrowserHeight = Dim.height;
 		
-		$(this.el).css('height', this.BrowserHeight);
+		//$(this.el).css('height', this.BrowserHeight);
 		$(this.el).css('width', 3*this.BrowserWidth);
-		
-		window.scrollTo(0,1);
-		
+
 		this.index = 0;
 		this.speed = 300;
 		this.length = 3;
@@ -25,6 +24,7 @@ var noNFCView = Backbone.View.extend({
 		
 		this.animationOn=0;
 		this.cellIndex = 0;
+
 	},
 	
 	render: function(){		
@@ -46,6 +46,8 @@ var noNFCView = Backbone.View.extend({
 				
 				//set keyboard font size
 				$('#keyboard').css('font-size',  (s*0.6)+'px');
+				
+				setTimeout(function(){window.scrollTo(0,1);},500);
 
 			}
 		});
@@ -207,31 +209,32 @@ var noNFCView = Backbone.View.extend({
 						this.animateLogo();
 						
 						
-						// LOAD MENU DATA FROM JSON FILE
-						$.getJSON('/json/iota.json', function(data){
-							//data = JSON.parse(data.responseText);
-							data = data.categories;
-							//console.log(data[0].items);
-							
-							var menuView = new MenuView();
-							menuView.render(data);
-							// bind touch events
-							$('#menu_view').bind('touchstart', function(e){menuView.ontouchstart(e);});
-							$('#menu_view').bind('touchmove', function(e){menuView.ontouchmove(e);});
-							$('#menu_view').bind('touchend', function(e){menuView.ontouchend(e);});
-							// for descktop testing
-							$('#menu_view').bind('mousedown', function(e){menuView.ontouchstart(e);});
-							$('#menu_view').bind('mousemove', function(e){menuView.ontouchmove(e);});
-							$('#menu_view').bind('mouseup', function(e){menuView.ontouchend(e);});
-							
-							
-						});
+						// LOAD MENU DATA FROM JSON FILE							
+						var data = $.ajax({
+										type: 'GET',
+										url: '/json/iota.json',
+										dataType: 'json',
+										success: function() { },
+										data: {},
+										async: false
+									});
+						data = JSON.parse(data.responseText);
+						data = data.categories;
+						//console.log(data[0].items);
+						
+						//define Dimensions
+						var Dim = new Object();
+						Dim.height = this.BrowserHeight;
+						Dim.width = this.BrowserWidth;
+						
+						// initialize manu panel
+						var menuView = new MenuView(Dim);
+						menuView.render(data);
 					}
 			
 				}
 			}
 		}
 
-	},
-	
+	}
 });
