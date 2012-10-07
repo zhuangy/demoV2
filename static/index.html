@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, height=device-height, target-densitydpi=device-dpi, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        
+<title>Demo Backbone</title>
+<link type="text/css" href="/index1.css" rel="stylesheet">
+<link type="text/css" href="/noNFCscreen.css" rel="stylesheet">
+<link type="text/css" href="/animateLogo.css" rel="stylesheet">
+<style>
+html, body{
+	width:100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	overflow:hidden;
+	position:relative;
+}
+
+.col{
+	position:absolute;
+	top:0;
+	height:100%;
+	backface-visibility:hidden;
+	overflow:hidden;
+	z-index:1;
+}
+#menu-view, #noNFC_view{
+	position:absolute;
+	top:0px;
+	left:0px;
+	-webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+}
+
+#menu_screen, #noNFC_screen{
+	width:100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	position:absolute;
+	overflow:hidden;
+}
+
+#noNFC_screen{
+	z-index:200;
+}
+
+#menu_screen{
+	z-index:100;
+	display:block;
+}
+
+</style>
+
+<script src="lib/jquery-1.7.1.js"></script>
+<script src="lib/jquery-mobile.js"></script>
+<script src="lib/underscore-min.js"></script>
+<script src="lib/backbone-min.js"></script>
+<script src="lib/dust-core-1.0.0.js"></script>
+<script src="lib/iscroll.js"></script>
+
+<!--View Templates -->
+<script type="text/javascript" src="jsTemplates/itemView.js"></script>
+
+<!--Backbone Views -->
+<script src="views/menu_view.js"></script>
+<script src="views/noNFC_view.js"></script>
+<script src="views/screen_view.js"></script>
+<script src="views/front_screen_view.js"></script>
+<script src="views/item_view.js"></script>
+
+<script>
+$(document).ready(function (){  	
+	
+	$('body').css('font-size', window.outerWidth*0.06+'px');
+	$('body').css('width', window.outerWidth+'px');
+	$('body').css('height', window.outerHeight+'px');
+	$('#menu_screen').css('width', window.outerWidth+'px');
+	$('#menu_screen').css('height', window.outerHeight+'px');
+	$('#noNFC_screen').css('width', window.outerWidth+'px');
+	$('#noNFC_screen').css('height', window.outerHeight+'px');
+	
+	
+	// LOAD noNFC SCREEN
+		var nonfcView = new noNFCView();
+		nonfcView.render();
+		nonfcView.slide(1,0);
+		
+		//$('#noNFC_view').bind('mousedown', function(e){noNFCView.input_number(e);});
+	
+	/*
+	// LOAD MENU DATA FROM JSON FILE
+	$.getJSON('/json/iota.json', function(data){
+		//data = JSON.parse(data.responseText);
+		data = data.categories;
+		//console.log(data[0].items);
+		
+		var menuView = new MenuView();
+		menuView.render(data);
+		// bind touch events
+		$('#menu_view').bind('touchstart', function(e){menuView.ontouchstart(e);});
+		$('#menu_view').bind('touchmove', function(e){menuView.ontouchmove(e);});
+		$('#menu_view').bind('touchend', function(e){menuView.ontouchend(e);});
+		// for descktop testing
+		$('#menu_view').bind('mousedown', function(e){menuView.ontouchstart(e);});
+		$('#menu_view').bind('mousemove', function(e){menuView.ontouchmove(e);});
+		$('#menu_view').bind('mouseup', function(e){menuView.ontouchend(e);});
+		
+	});*/
+	
+	
+})
+</script>
+
+</head>
+
+<body>
+
+<div id="noNFC_screen">
+	<div id="noNFC_view"></div>
+</div>
+
+<div id="menu_screen">
+	<div id="menu_view"></div>
+</div>
+
+
+</body>
+</html>

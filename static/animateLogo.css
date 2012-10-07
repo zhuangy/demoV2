@@ -1,0 +1,82 @@
+@-webkit-keyframes animateLogo1{
+	0% {
+		opacity:0;
+	}
+	20%{
+		opacity:1;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-webkit-keyframes animateLogo2{
+	0% {
+		opacity:0;
+	}
+	30%{opacity:0}
+	40%{
+		opacity:1;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-webkit-keyframes animateLogo3{
+	0% {
+		opacity:0;
+	}
+	50%{opacity:0}
+	60%{
+		opacity:1;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-webkit-keyframes animateLogo4{
+	0% {
+		opacity:0;
+	}
+	70%{opacity:0}
+	80%{
+		opacity:1;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+.animateLogo1{
+	/*opacity:1;*/
+	-webkit-animation: animateLogo1 800ms linear;
+	-moz-animation: animateLogo1 800ms linear;
+	-o-animation: animateLogo1 800ms linear;
+	animation: animateLogo1 800ms linear;
+}
+
+.animateLogo2{
+	/*opacity:1;*/
+	-webkit-animation: animateLogo2 800ms linear;
+	-moz-animation: animateLogo2 800ms linear;
+	-o-animation: animateLogo2 800ms linear;
+	animation: animateLogo2 800ms linear;
+}
+
+.animateLogo3{
+	/*opacity:1;*/
+	-webkit-animation: animateLogo3 800ms linear;
+	-moz-animation: animateLogo3 800ms linear;
+	-o-animation: animateLogo3 800ms linear;
+	animation: animateLogo3 800ms linear;
+}
+
+.animateLogo4{
+	/*opacity:1;*/
+	-webkit-animation: animateLogo4 800ms linear;
+	-moz-animation: animateLogo4 800ms linear;
+	-o-animation: animateLogo4 800ms linear;
+	animation: animateLogo4 800ms linear;
+}
