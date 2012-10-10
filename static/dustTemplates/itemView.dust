@@ -1,4 +1,4 @@
-<li class='{itemNum}' data-token='{token}'> 
+<li class='itemView {itemNum}' data-token='{token}'> 
 
 <div class="menu-image">
 	<img src="thumb/{imgPath}"  class="itemImg shadow "/>

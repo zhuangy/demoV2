@@ -788,20 +788,20 @@ img.shadow{
 	font-size:0.65em;
 }
 
-#overlay .star{
+#overlay .itemDetailstar{
 	width:1.3em;
 	float:left;
 	padding: 0.5em 0.1em 0.5em 0.1em;
+}
+
+#overlay .stars{
+	margin-top: 0.4em;
 }
 
 #overlay .star_small{
 	width:0.6em;
 	float:left;
 	padding: 0em 0.05em 0.05em 0.05em;
-}
-
-#overlay .stars{
-	margin-top: 0.4em;
 }
 
 #overlay #item-content{
@@ -905,7 +905,7 @@ img.shadow{
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#000000');
 
 	overflow:hidden;
-	z-index: 5;
+	z-index: 130;
 }
 
 #enterCommentOverlay #stars {

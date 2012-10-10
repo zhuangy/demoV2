@@ -14,7 +14,9 @@ var ScreenView = Backbone.View.extend({
 			this.BrowserHeight = window.outerHeight;
 			this.BrowserWidth = window.outerWidth;	
 		}
-			
+		
+		this.collection = new MenuList();
+		
 	},
 	
 	render: function(index, data){		
@@ -39,8 +41,15 @@ var ScreenView = Backbone.View.extend({
 		//fill screen with items
 		var itemView = new Object();
 		for(i=0;i<data.items.length;i++){
-			itemView[i] = new ItemView();
-			itemView[i].render(data.items[i], 'col'+index+' ul');
+			// initiate model
+			var item = new Item();
+			item.set({title:data.items[i].title, imgPath:data.items[i].imgPath, description:data.items[i].description, price:data.items[i].price, token:data.items[i].token});
+			// add item to collection
+			this.collection.add(item);
+			// initiate item view
+			itemView[i] = new ItemView({model:item});
+			itemView[i].render('col'+index+' ul');
+			// append spacer after last item
 			if (i==data.items.length-1){
 				$('#col'+index+' ul').append('<div class="bottomListSpacer" style="height:'+this.BrowserHeight*0.1+'px;"></div>');
 			}

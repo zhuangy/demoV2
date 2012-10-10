@@ -9,7 +9,7 @@ var noNFCView = Backbone.View.extend({
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'slide', 'input_number', 'test', 'animateLogo', 'selectInput', 'validate', 'transitionOut');
 
-		
+		this.Dim = Dim;
 		//this.data = data;
 		this.BrowserWidth = Dim.width;
 		this.BrowserHeight = Dim.height;
@@ -220,15 +220,9 @@ var noNFCView = Backbone.View.extend({
 									});
 						data = JSON.parse(data.responseText);
 						data = data.categories;
-						//console.log(data[0].items);
-						
-						//define Dimensions
-						var Dim = new Object();
-						Dim.height = this.BrowserHeight;
-						Dim.width = this.BrowserWidth;
 						
 						// initialize manu panel
-						var menuView = new MenuView(Dim);
+						var menuView = new MenuView(this.Dim);
 						menuView.render(data);
 					}
 			

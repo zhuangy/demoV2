@@ -65,8 +65,12 @@ html, body{
 <script src="lib/dust-core-1.0.0.js"></script>
 <script src="lib/iscroll.js"></script>
 
+<script src="globals.js"></script>
+
 <!--View Templates -->
 <script type="text/javascript" src="jsTemplates/itemView.js"></script>
+<script type="text/javascript" src="jsTemplates/itemDetailedView.js"></script>
+<script type="text/javascript" src="jsTemplates/singleComment.js"></script>
 
 <!--Backbone Views -->
 <script src="views/menu_view.js"></script>
@@ -74,6 +78,10 @@ html, body{
 <script src="views/screen_view.js"></script>
 <script src="views/front_screen_view.js"></script>
 <script src="views/item_view.js"></script>
+<script src="views/item_detailed_view.js"></script>
+<script src="models/models.js"></script>
+<script src="views/comments.js"></script>
+<script src="views/add_comment_view.js"></script>
 
 <script>
 $(document).ready(function (){  	
@@ -99,15 +107,16 @@ $(document).ready(function (){
 	$('#menu_screen').css('height', Dim.height+'px');
 	$('#noNFC_screen').css('width', Dim.width+'px');
 	$('#noNFC_screen').css('height', Dim.height+'px');
-
+	
+	/*
 	// LOAD noNFC SCREEN
 		var nonfcView = new noNFCView(Dim);
 		nonfcView.render();
 		nonfcView.slide(1,0);
 		
 		//$('#noNFC_view').bind('mousedown', function(e){noNFCView.input_number(e);});
+	*/
 	
-	/*
 	// LOAD MENU DATA FROM JSON FILE
 		var data = $.ajax({
 							type: 'GET',
@@ -122,7 +131,9 @@ $(document).ready(function (){
 		
 		var menuView = new MenuView(Dim);
 		menuView.render(data);		
-	*/
+	
+	// TAP - loading screen
+	
 	
 })
 </script>
@@ -130,14 +141,26 @@ $(document).ready(function (){
 </head>
 
 <body>
-
-<div id="noNFC_screen">
-	<div id="noNFC_view"></div>
-</div>
-
-<div id="menu_screen">
-	<div id="menu_view"></div>
-</div>
+	<div id="loading_screen">
+        <div class="logo" style="width:30%; margin:auto;">
+            <img src="../img/webitap/logo0.png" width="100%" style="opacity:1;"/>
+            <img class="a" src="img/webitap/logo1.png" width="100%" style="opacity:1;"/>
+            <img class="a" src="img/webitap/logo2.png" width="100%" style="opacity:1;"/>
+            <img class="a" src="img/webitap/logo3.png" width="100%" style="opacity:1;"/>
+            <img class="a" src="img/webitap/logo4.png" width="100%" style="opacity:1;"/>            
+        </div>
+    </div>
+    
+    <div id="noNFC_screen">
+        <div id="noNFC_view"></div>
+    </div>
+    
+    <div id="menu_screen">
+        <div id="menu_view"></div>
+    </div>
+	
+    <div id="overlay"></div>
+    <div id="enterCommentOverlay"></div>
 
 
 </body>

@@ -1,0 +1,13 @@
+<div class="name ellipsis">{name}</div>
+<div class="date tinyFont ellipsis">{date}</div>
+<div class="stars" rating="{rating}">
+	<img src="img/star_yellow.png"  class="star_small"/>
+	<img src="img/star_yellow.png"  class="star_small"/>
+	<img src="img/star_yellow.png"  class="star_small"/>
+	<img src="img/star_yellow.png"  class="star_small"/>
+	<img src="img/star_grey.png"  class="star_small"/>
+	<div style="clear:both"></div><!--clear floats -->
+</div>
+<div class="user_comment smallFont">
+	{comment_text}
+</div>

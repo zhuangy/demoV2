@@ -7,13 +7,16 @@ var MenuView = Backbone.View.extend({
 		"mouseup":"ontouchend",
 		"touchstart":"ontouchstart",
 		"touchmove":"ontouchmove",
-		"touchend":"ontouchend"
+		"touchend":"ontouchend",
+		"click":"openOverlay"
 	},
 	
 	initialize: function(Dim) {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend');
-        
+		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'loadNextScreen', 'openOverlay');
+		
+		//this.ScreenCollection = new Screens();
+		this.screenView = new Object();
 		this.Dim = Dim;
 		
 		//this.data = data;
@@ -32,6 +35,8 @@ var MenuView = Backbone.View.extend({
 	render: function(data){
 		$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
+		$("#homeButton").click(this.tap_home);
+		$("#backButton").click(this.tap_back);
 		
 		this.data = data;
 		this.numSlides = data.length+1;
@@ -45,8 +50,12 @@ var MenuView = Backbone.View.extend({
 		// initialize 1st 2 sreens
 		var frontscreenView = new FrontScreenView();
 		frontscreenView.render();
-		var screenView = new ScreenView();
-		screenView.render(0, this.data[0]);
+		
+		//var menu_screen = new Screen();
+		//Screens.add(menu_screen);
+		
+		this.screenView[0] = new ScreenView({model:menu_screen});
+		this.screenView[0].render(0, this.data[0]);
 		
 		console.log('rendered menu_view');
 		
@@ -58,6 +67,91 @@ var MenuView = Backbone.View.extend({
 				$('#noNFC_screen').remove();
 			},800);
 		},800);
+	},
+	
+	tap_home: function(){
+		console.log('button tap');
+		if ($('#overlay').css('display')=='none'){
+		  //$('#col_front').css('display', 'block');
+		  this.slide(0, 300, -1);
+		} 
+		else if($('#enterCommentOverlay').css('display')=='block'){
+			$('#enterCommentOverlay').css('display','none');
+		}
+		else if ($('#overlay').css('display')=='block') {
+		  if(user.iphone) {
+			$('#overlay').css('-webkit-transform', 'scale(.5)');
+		  }
+		  $('#overlay').css('opacity', '0');
+		 
+		  $("#insert .slideshow").css('display','block');
+		  $('#col0 iframe').css("display","block");
+		  
+		  $('#overlay').css('display', 'none');
+		  $('#overlay-blur').css('display', 'none');
+		  $('#backButton').css('display', 'none');
+		}
+		else{
+			console.log('overlay not defined yet');
+		}
+		
+	},
+	
+	tap_back: function(){
+		if ($('#overlay').css('display')=='none') {
+		  //$('#tap').css('display', 'block').html($(ev.target).attr('id'));
+		  this.slide(0, 300, -1);
+		}
+		else if($('#enterCommentOverlay').css('display')=='block'){
+			$('#enterCommentOverlay').css('display','none');
+		}
+		else if ($('#overlay').css('display')=='block') {
+		  
+		  if(user.iphone) {
+			$('#overlay').css('-webkit-transform', 'scale(.5)');
+			$('#col0 iframe').css("display","block");
+		  }
+		  $('#overlay').css('opacity', '0');
+  
+		  $('#overlay').css('display', 'none');
+		  $('#overlay-blur').css('display', 'none');
+		  $('#backButton').css('display', 'none');
+		  
+		   $("#insert .slideshow").css('display','block');
+		}	
+	},
+	
+	openOverlay: function(ev){
+		console.log('you tapped');
+		ev = ev.originalEvent.touches ? ev.originalEvent.touches[0] : ev;
+		
+		// find token of tapped item
+		var $li = $(ev.target).closest('li');
+		var cl = $li.attr('class');
+		var tapped_token = $li.attr('data-token');
+		console.log(tapped_token);
+		
+		// detect which menu sreen was tapped
+		var $div = $(ev.target).parent().closest('div[id]');
+		var idstr = $div.attr('id');
+		var screenNum = idstr.substr(8)
+		
+		// search through corresponding items collection to find model with this token
+		this.screenView[screenNum].collection.each(function(item) {
+			if (item.get('token') == tapped_token){
+				console.log(item.get('token'));
+				var itemOverlay = new ItemDetailedView({model:item});
+				itemOverlay.render();
+				// initialize overlay veiew with this model
+			}
+		});
+	},
+	
+	loadNextScreen: function(index, data, length){
+		this.screenView[index] = new ScreenView();
+		this.screenView[index].render(index, data);
+		//return length++;
+		this.length++;
 	},
 	
 	slide: function(index, duration, direction){
@@ -74,28 +168,17 @@ var MenuView = Backbone.View.extend({
 		
 		this.index = index;
 		
-		// this function is called from inside a setTimeoun - cant call this.loadNextScreen inside a setTimeout. So the function has to be here.
-		function loadNextScreen(index, data, length){
-			var screenView = new ScreenView();
-			screenView.render(index, data);
-			return length++;
-		}
-		
 		  if(direction<0 && $('#menu_view').children('.col').length<=index+1 && $('#menu_view').children().length<this.numSlides){
-			  
-				// load next screen - inside a setTimeout function so that screen loads AFTER the swipe motion
-				var data = this.data[index];
-				var length = this.length;
-					setTimeout(function(){
-						loadNextScreen(index, data, length)
-					},301);
-				this.length++;
+			var that = this; 
+			setTimeout(function(){
+				that.loadNextScreen(index, that.data[index], that.length)
+			},301);
 
-			
 		  }
 	},
 	
 	ontouchstart: function(e){
+		console.log('touchstart');
 		this.start = {
 		  // get touch coordinates for delta calculations in onTouchMove
 		  pageX: e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,

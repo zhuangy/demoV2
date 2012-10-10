@@ -1,10 +1,49 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone Test</title>
+
+<script src="lib/jquery-1.7.1.js"></script>
+<script src="lib/underscore-min.js"></script>
+<script src="lib/backbone-min.js"></script>
+<script>
+//Backbone.emulateHTTP = true;
+//Backbone.emulateJSON = true;
+
+var Comment = Backbone.Model.extend({
+	url: 'http://localhost:8080/comment_create',
+	
+	defaults: {
+		item_token: '111222',
+		name: 'Masha',
+		rating: '4',
+		comment_text: 'Testing Backbone'
+	},
+	
+	save: function(){
+		var data = {'item_token':this.get('item_token'), 'name':this.get('name'),'rating':this.get('rating'),'comment_text':this.get('comment_text')};
+			console.log(JSON.stringify(data));
+			$.ajax({
+				   type:'POST',
+				   url:'http://localhost:8080/comment_create',
+				   headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+				   data:JSON.stringify(data),
+				   success: function(res){
+							console.log(res);
+							}
+				});
+	}
+	
+});
+
+var comment = new Comment();
+comment.save();
+</script>
+
 </head>
 
 <body>
-<h1>HELLO</h1>
+Hello
 </body>
 </html>
