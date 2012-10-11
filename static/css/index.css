@@ -1,3 +1,27 @@
+
+.GothamBold{
+	font-family:GothamBold;
+}
+
+.GothamLight{
+	font-family: GothamLight;
+}
+
+
+/*LOADING SCREEN*/
+#loading_screen
+{  
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  color: white;
+  z-index:110;
+  text-align: center;
+}
+
 /*FOOTER*/
 #footer {
 	position: absolute; 

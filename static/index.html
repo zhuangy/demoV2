@@ -74,6 +74,7 @@ html, body{
 
 <!--Backbone Views -->
 <script src="views/menu_view.js"></script>
+<script src="views/loading_view.js"></script>
 <script src="views/noNFC_view.js"></script>
 <script src="views/screen_view.js"></script>
 <script src="views/front_screen_view.js"></script>
@@ -103,20 +104,30 @@ $(document).ready(function (){
 	$('body').css('font-size', Dim.width*0.06+'px');
 	$('body').css('width', Dim.width+'px');
 	$('body').css('height', Dim.height+'px');
+	$('[data-role="page"]').css('width', size.width+'px');
+	$('[data-role="page"]').css('height', size.height+'px');
 	$('#menu_screen').css('width', Dim.width+'px');
 	$('#menu_screen').css('height', Dim.height+'px');
 	$('#noNFC_screen').css('width', Dim.width+'px');
 	$('#noNFC_screen').css('height', Dim.height+'px');
 	
-	/*
+	
 	// LOAD noNFC SCREEN
 		var nonfcView = new noNFCView(Dim);
 		nonfcView.render();
 		nonfcView.slide(1,0);
 		
 		//$('#noNFC_view').bind('mousedown', function(e){noNFCView.input_number(e);});
+	
+	/*
+	// TAP - loading screen
+	var loadingView = new LoadingView();
+	$('[data-role="page"]').append(loadingView.render().el);
+	//loadingView.animateLogo();
+	loadingView.loadMenu();
 	*/
 	
+	/*
 	// LOAD MENU DATA FROM JSON FILE
 		var data = $.ajax({
 							type: 'GET',
@@ -131,9 +142,7 @@ $(document).ready(function (){
 		
 		var menuView = new MenuView(Dim);
 		menuView.render(data);		
-	
-	// TAP - loading screen
-	
+	*/
 	
 })
 </script>
@@ -141,15 +150,6 @@ $(document).ready(function (){
 </head>
 
 <body>
-	<div id="loading_screen">
-        <div class="logo" style="width:30%; margin:auto;">
-            <img src="../img/webitap/logo0.png" width="100%" style="opacity:1;"/>
-            <img class="a" src="img/webitap/logo1.png" width="100%" style="opacity:1;"/>
-            <img class="a" src="img/webitap/logo2.png" width="100%" style="opacity:1;"/>
-            <img class="a" src="img/webitap/logo3.png" width="100%" style="opacity:1;"/>
-            <img class="a" src="img/webitap/logo4.png" width="100%" style="opacity:1;"/>            
-        </div>
-    </div>
     
     <div id="noNFC_screen">
         <div id="noNFC_view"></div>

@@ -3,7 +3,7 @@ Backbone.emulateJSON = true;
 
 // Single Comment Model. 
 var Comment = Backbone.Model.extend({
-	url: 'http://192.168.1.107:8080/comment_create',
+	url: API_address+'/comment_create',
 	
 	// backbone save doesnt work - have to override
 	save: function(){
@@ -11,7 +11,7 @@ var Comment = Backbone.Model.extend({
 			console.log(JSON.stringify(data));
 			$.ajax({
 				   type:'POST',
-				   url:'http://192.168.1.107:8080/comment_create',
+				   url: API_address+'/comment_create',
 				   headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
 				   data:JSON.stringify(data),
 				   success: function(res){
@@ -59,7 +59,7 @@ var Comments = Backbone.Collection.extend({
     this.token = options.token; // item_token
   },
   url : function() {
-    return "http://192.168.1.107:8080/comments?item_token=" + this.token;
+    return API_address+"/comments?item_token=" + this.token;
   }
 });
 

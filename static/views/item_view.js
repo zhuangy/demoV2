@@ -28,7 +28,6 @@ var ItemView = Backbone.View.extend({
 	},
 	
 	updateRating: function(){
-		console.log('ratin should be updated here');
 		setStarsRating('[data-token="'+this.model.get('token')+'"] .star',this.model.get('rating')); //global function
 	},
 	

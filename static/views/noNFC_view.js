@@ -1,18 +1,21 @@
+/*
+	4-didigt screen - displayed for users who dont have NFC
+*/
 var noNFCView = Backbone.View.extend({
 	el: '#noNFC_view',									
 	
 	events: {
-		"tap #keyboard li":"input_number"
+		"tap #keyboard li":"input_number",
+		"touchstart #aboutNFCbutton": "go_to_aboutNFC",
+		"touchstart #aboutWebitapbutton":"go_to_aboutWebitap"
 	},
 	
-	initialize: function(Dim) {
+	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'input_number', 'test', 'animateLogo', 'selectInput', 'validate', 'transitionOut');
+		_.bindAll(this, 'render', 'slide', 'input_number', 'animateLogo', 'selectInput', 'validate', 'go_to_aboutNFC', 'go_to_aboutWebitap');
 
-		this.Dim = Dim;
-		//this.data = data;
-		this.BrowserWidth = Dim.width;
-		this.BrowserHeight = Dim.height;
+		this.BrowserWidth = size.width;
+		this.BrowserHeight = size.height;
 		
 		//$(this.el).css('height', this.BrowserHeight);
 		$(this.el).css('width', 3*this.BrowserWidth);
@@ -33,9 +36,9 @@ var noNFCView = Backbone.View.extend({
 			success : function(string){
 				$('#noNFC_view').append(string);
 				
-				$('#4digitScreen').css({'left': window.outerWidth+'px',
-							  'width': window.outerWidth+'px',
-							  'height': window.outerHeight+'px'});
+				$('#4digitScreen').css({'left': size.width+'px',
+							  'width': size.width+'px',
+							  'height': size.height+'px'});
 				
 				var s = $('.input').css('height').replace(/[^-\d\.]/g, '');
 				$('.input').css('font-size', s+'px');				
@@ -55,8 +58,55 @@ var noNFCView = Backbone.View.extend({
 		
 	},
 	
-	test: function(){
-		console.log('click');	
+	go_to_aboutNFC: function(){
+		if (this.index == 2){
+			this.slide(1,300);
+			setTimeout(function(){ $('#aboutNFC_wrap').remove(); },305);
+		}
+		else{
+			var that = this;
+			// render about NFC view
+			$.ajax({
+				url : "/htmlTemplates/aboutNFC.html",
+				success : function(string){
+					$('#noNFC_view').append(string);
+					
+					$('#aboutNFC_wrap').css({'left': size.width*2+'px',
+								  'width': size.width+'px',
+								  'height': size.height+'px'});
+					
+					//slide
+					that.slide(2,300);
+				}
+			});
+		}
+	},
+	
+	go_to_aboutWebitap: function(){
+		if (this.index == 0){
+			this.slide(1,300);
+			setTimeout(function(){ $('#aboutWebitap').remove(); },305);
+		}
+		else{
+			var that = this;
+			// render about NFC view
+			$.ajax({
+				url : "/htmlTemplates/aboutWebitap.html",
+				success : function(string){
+					$('#noNFC_view').prepend(string);
+					
+					$('#aboutWebitap').css({'left': 0+'px',
+								  'width': size.width+'px',
+								  'height': size.height+'px'});
+					$('.video').css({'width': size.width+'px',
+									'height': size.width*0.5+'px'});
+					$('#aboutWebiTap_spacer').css('height', $('#aboutWebitap_wrapper').height()*0.03+'px');
+					
+					//slide
+					that.slide(0,300);
+				}
+			});
+		}
 	},
 	
 	slide: function(index, duration){
@@ -72,6 +122,9 @@ var noNFCView = Backbone.View.extend({
 		this.index = index;	
 	},
 	
+	/*
+		Animate logo when user enters correct code, while content is loading in the background
+	*/
 	animateLogo: function(){
 		if($('#noNFC_screen').css('display')=='block'){
 			
@@ -94,7 +147,9 @@ var noNFCView = Backbone.View.extend({
 		}
 	},
 
-	
+	/*
+		Highlight which entry the user is on
+	*/
 	selectInput: function(idx){
 		// update position
 		this.cellIndex = idx;
@@ -119,6 +174,10 @@ var noNFCView = Backbone.View.extend({
 
 	},
 	
+	
+	/*
+		Validate code entered by user
+	*/
 	validate: function(){
 		// get input
 		var code = "";
@@ -129,18 +188,9 @@ var noNFCView = Backbone.View.extend({
 		return (code == '1111');
 	},
 	
-	transitionOut: function(){
-		// page splits
-		$('#noNFCscreen_top').addClass('validated_slideUp');
-		$('#noNFCscreen_bottom').addClass('validated_slideDown');
-		
-		//remove this view from DOM
-		//setTimeout(function(){
-		//	$('#noNFC_view').remove();
-		//},500)
-		
-	},
-	
+	/*
+		Use num keyboard to eneter code
+	*/
 	input_number: function(ev){
 		window.scrollTo(0,1);
 		ev.preventDefault();
@@ -222,7 +272,7 @@ var noNFCView = Backbone.View.extend({
 						data = data.categories;
 						
 						// initialize manu panel
-						var menuView = new MenuView(this.Dim);
+						var menuView = new MenuView();
 						menuView.render(data);
 					}
 			

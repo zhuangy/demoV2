@@ -18,3 +18,5 @@ function setStarsRating(id, rating){
 	})
 
 }
+
+var API_address = "http://192.168.1.102:8080";

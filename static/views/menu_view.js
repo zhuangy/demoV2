@@ -11,17 +11,16 @@ var MenuView = Backbone.View.extend({
 		"click":"openOverlay"
 	},
 	
-	initialize: function(Dim) {
+	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'loadNextScreen', 'openOverlay');
 		
 		//this.ScreenCollection = new Screens();
 		this.screenView = new Object();
-		this.Dim = Dim;
 		
 		//this.data = data;
-		this.BrowserWidth = Dim.width;
-		this.BrowserHeight = Dim.height;
+		this.BrowserWidth = size.width;
+		this.BrowserHeight = size.height;
 		
 		$(this.el).css('height', this.BrowserHeight);
 		
@@ -59,6 +58,11 @@ var MenuView = Backbone.View.extend({
 		
 		console.log('rendered menu_view');
 		
+		if($('#loading_screen')){
+			setTimeout(function(){
+				$('#loading_screen').remove();
+			}, 1500);
+		}
 		// animate transition out
 		setTimeout(function(){
 			$('#noNFCscreen_top').addClass('validated_slideUp');
