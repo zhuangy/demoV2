@@ -13,7 +13,7 @@ var MenuView = Backbone.View.extend({
 	
 	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'loadNextScreen', 'openOverlay');
+		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen', 'openOverlay');
 		
 		//this.ScreenCollection = new Screens();
 		this.screenView = new Object();
@@ -26,7 +26,6 @@ var MenuView = Backbone.View.extend({
 		
 		this.index = 0;
 		this.speed = 300;
-		this.length = 3;
 		this.ended = 1;
 		
 	},
@@ -45,6 +44,8 @@ var MenuView = Backbone.View.extend({
 		$('#navigationOverlay').bind('touchstart', function(ev){
 			$('#navigationOverlay').remove();
 		});
+		// header - swipe on tap
+		$('#headerBlur').click(this.tap_header);
 		
 		this.data = data;
 		this.numSlides = data.length+1;
@@ -134,6 +135,15 @@ var MenuView = Backbone.View.extend({
 		}	
 	},
 	
+	tap_header: function(ev){
+		if (ev.pageX>this.BrowserWidth*3/4 && this.index<this.numSlides-1){
+			this.slide(this.index+1, 300, -1);
+		}
+		else if (ev.pageX<this.BrowserWidth*1/4 && this.index>0){
+			this.slide(this.index-1, 300, 1);
+		}
+	},
+	
 	openOverlay: function(ev){
 		console.log('you tapped');
 		ev = ev.originalEvent.touches ? ev.originalEvent.touches[0] : ev;
@@ -163,7 +173,6 @@ var MenuView = Backbone.View.extend({
 	loadNextScreen: function(index, data, length){
 		this.screenView[index] = new ScreenView();
 		this.screenView[index].render(index, data);
-		//return length++;
 		this.length++;
 	},
 	
@@ -184,7 +193,7 @@ var MenuView = Backbone.View.extend({
 		  if(direction<0 && $('#menu_view').children('.col').length<=index+1 && $('#menu_view').children().length<this.numSlides){
 			var that = this; 
 			setTimeout(function(){
-				that.loadNextScreen(index, that.data[index], that.length)
+				that.loadNextScreen(index, that.data[index], that.numSlides)
 			},301);
 
 		  }
