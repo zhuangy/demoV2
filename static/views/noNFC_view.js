@@ -16,11 +16,11 @@ var noNFCView = Backbone.View.extend({
 		"touchmove #aboutWebitap": "ontouchmove",
 		"touchend #aboutWebitap": "ontouchend",
 		// mouse events
-		"mousedown #aboutNFCbutton": "go_to_aboutNFC",
-		"mousedown #aboutWebitapbutton":"go_to_aboutWebitap",
-		"mousedown #aboutNFC_wrap": "ontouchstart",
-		"mousemove #aboutNFC_wrap": "ontouchmove",
-		"mouseup #aboutNFC_wrap": "ontouchend"
+		//"mousedown #aboutNFCbutton": "go_to_aboutNFC",
+		//"mousedown #aboutWebitapbutton":"go_to_aboutWebitap",
+		//"mousedown #aboutNFC_wrap": "ontouchstart",
+		//"mousemove #aboutNFC_wrap": "ontouchmove",
+		//"mouseup #aboutNFC_wrap": "ontouchend"
 	},
 	
 	initialize: function() {

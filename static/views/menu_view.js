@@ -2,9 +2,9 @@ var MenuView = Backbone.View.extend({
 	el: '#menu_view',									
 	
 	events: {
-		"mousedown":"ontouchstart",
-		"mousemove":"ontouchmove",
-		"mouseup":"ontouchend",
+		//"mousedown":"ontouchstart",
+		//"mousemove":"ontouchmove",
+		//"mouseup":"ontouchend",
 		"touchstart":"ontouchstart",
 		"touchmove":"ontouchmove",
 		"touchend":"ontouchend",
