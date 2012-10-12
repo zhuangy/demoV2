@@ -30,12 +30,11 @@ var ScreenView = Backbone.View.extend({
 		
 		$('#col'+index).css({'left': (index+1)*this.BrowserWidth+'px',
 					  'width': this.BrowserWidth+'px',
-					  'height': this.BrowserHeight+'px',
-					  'background-color': 'black',
+					  'background-image': 'url("../img/background_texture.jpg")',
 					  'color':'white',
 					  'height': 0.925*this.BrowserHeight+'px',
 					  'top': 0.075*this.BrowserHeight+'px',
-					  'padding-top': this.BrowserHeight*0.02+'px'});
+					  'padding-top': this.BrowserHeight*0.012+'px'});
 		console.log('rendered col '+index);
 
 		//fill screen with items

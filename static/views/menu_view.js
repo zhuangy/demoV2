@@ -34,8 +34,17 @@ var MenuView = Backbone.View.extend({
 	render: function(data){
 		$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
+		
+		// Navigation screen
+		if (!FACEBOOK_POST) {
+			$('[data-role="page"]').append('<div id="navigationOverlay"></div>'); // navigation overlay screen
+		}
+		
 		$("#homeButton").click(this.tap_home);
 		$("#backButton").click(this.tap_back);
+		$('#navigationOverlay').bind('touchstart', function(ev){
+			$('#navigationOverlay').remove();
+		});
 		
 		this.data = data;
 		this.numSlides = data.length+1;

@@ -24,11 +24,17 @@ var FrontScreenView = Backbone.View.extend({
 							  'height': height+'px',
 							  'background-color': 'black',
 							  'height': 0.925*height+'px',
-						      'top': 0.075*height+'px',
-						      'padding-top': height*0.02+'px'});
-		
-				$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
-				$('#fbookButton').css('left', ($('#facebookOverlay').height()*1.7)+'px');
+						      'top': 0.075*height+'px'});
+				
+				if(FACEBOOK_POST){
+					$('#facebookOverlay').css('background-image', 'url(img/iota/facebook_confirmation.png)');
+					$('#facebookOverlay').css('background-size', '100% auto');
+					$('#fbookButton').html('');
+				}
+				else{
+					$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
+					$('#fbookButton').css('left', ($('#facebookOverlay').height()*1.7)+'px');
+				}
 				
 				that.slideshow(0,1,3);
 			}

@@ -229,8 +229,11 @@ div.input:focus{
 }
 
 #aboutWebitap{
+	position:relative;
+	z-index: 200;
+	overflow:hidden;
 	width:100%;
-	height:100%;
+	height:200%;
 	padding:0;
 	margin:0;
 	font-family: GothamLight;
@@ -261,6 +264,13 @@ div.input:focus{
 	padding:0% 2.5% 0% 2.5%;
 	float:left;
 	
+}
+
+#screen{
+	position:relative;
+	z-index:2; 
+	display: block;
+	margin:auto;
 }
 
 .right_signal{

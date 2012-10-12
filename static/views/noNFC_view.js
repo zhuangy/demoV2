@@ -7,12 +7,25 @@ var noNFCView = Backbone.View.extend({
 	events: {
 		"tap #keyboard li":"input_number",
 		"touchstart #aboutNFCbutton": "go_to_aboutNFC",
-		"touchstart #aboutWebitapbutton":"go_to_aboutWebitap"
+		"touchstart #aboutWebitapbutton":"go_to_aboutWebitap",
+		
+		"touchstart #aboutNFC_wrap": "ontouchstart",
+		"touchmove #aboutNFC_wrap": "ontouchmove",
+		"touchend #aboutNFC_wrap": "ontouchend",
+		"touchstart #aboutWebitap": "ontouchstart",
+		"touchmove #aboutWebitap": "ontouchmove",
+		"touchend #aboutWebitap": "ontouchend",
+		// mouse events
+		"mousedown #aboutNFCbutton": "go_to_aboutNFC",
+		"mousedown #aboutWebitapbutton":"go_to_aboutWebitap",
+		"mousedown #aboutNFC_wrap": "ontouchstart",
+		"mousemove #aboutNFC_wrap": "ontouchmove",
+		"mouseup #aboutNFC_wrap": "ontouchend"
 	},
 	
 	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'input_number', 'animateLogo', 'selectInput', 'validate', 'go_to_aboutNFC', 'go_to_aboutWebitap');
+		_.bindAll(this, 'render', 'slide', 'input_number', 'animateLogo', 'selectInput', 'validate', 'go_to_aboutNFC', 'go_to_aboutWebitap', 'ontouchstart', 'ontouchmove', 'ontouchend', 'animate_aboutWebitap');
 
 		this.BrowserWidth = size.width;
 		this.BrowserHeight = size.height;
@@ -98,10 +111,28 @@ var noNFCView = Backbone.View.extend({
 					$('#aboutWebitap').css({'left': 0+'px',
 								  'width': size.width+'px',
 								  'height': size.height+'px'});
+					var headerH = $('.aboutWebi_header').css('width').replace(/[^-\d\.]/g, '') * 0.12;
+					$('#aboutWebitap_wrapper').css('height', (size.height-headerH)+'px');
 					$('.video').css({'width': size.width+'px',
 									'height': size.width*0.5+'px'});
-					$('#aboutWebiTap_spacer').css('height', $('#aboutWebitap_wrapper').height()*0.03+'px');
+					$('#about_TopSpacer').css('height', size.height*0.03+'px');
+					$('#about_BottomSpacer').css('height', size.height*0.03+'px');
 					
+					var width=$('#phone').width();
+					var height=$('#phone').css('height').replace(/[^-\d\.]/g, '');
+					$('#screen').css('width',width*0.89);
+					$('#screen').css('top',-width*1.65+'px');
+					$('#tapPic').css('height', height*0.4+'px');
+					
+					$('.lastui').css('height',width*2.0+'px');
+					
+					setTimeout(function(){
+						var scroll = new iScroll('aboutWebitap_wrapper', {
+							vScrollbar:false
+						});
+					}, 200);
+					
+					that.animate_aboutWebitap();
 					//slide
 					that.slide(0,300);
 				}
@@ -118,8 +149,14 @@ var noNFCView = Backbone.View.extend({
 		$(this.el).css({'webkitTransitionDuration':duration+'ms',
 						 'webkitTransform': 'translate3d(' + -(index * this.BrowserWidth) + 'px,0,0)'});
 
+		this.index = index;
 		
-		this.index = index;	
+		if(index==1){
+			setTimeout(function(){
+				$('#aboutWebitap').remove();
+				$('#aboutNFC_wrap').remove();
+			},400);
+		}
 	},
 	
 	/*
@@ -185,7 +222,7 @@ var noNFCView = Backbone.View.extend({
 			code = code + $(this).html();					  
 		});
 
-		return (code == '1111');
+		return (code == ACCESS_CODE);
 	},
 	
 	/*
@@ -226,7 +263,7 @@ var noNFCView = Backbone.View.extend({
 					$('.input').each(function(){
 						$(this).html('');
 						$(this).removeClass('selected');
-						$(this).css('border', w+ 'px solid #006595');
+						$(this).css('border', this.borderWidth+ 'px solid #006595');
 						$(this).css('color', '#cd4314');
 					});
 					
@@ -255,30 +292,207 @@ var noNFCView = Backbone.View.extend({
 					
 					var correct = this.validate();
 					if(correct){
+						
 						this.animationOn = 1;
 						this.animateLogo();
-						
-						
-						// LOAD MENU DATA FROM JSON FILE							
-						var data = $.ajax({
-										type: 'GET',
-										url: '/json/iota.json',
-										dataType: 'json',
-										success: function() { },
-										data: {},
-										async: false
-									});
-						data = JSON.parse(data.responseText);
-						data = data.categories;
-						
-						// initialize manu panel
-						var menuView = new MenuView();
-						menuView.render(data);
+					
+						//setTimeout - so that the last digit appears on screen
+						setTimeout(function(){
+							// LOAD MENU DATA FROM JSON FILE							
+							var data = $.ajax({
+											type: 'GET',
+											url: '/json/iota.json',
+											dataType: 'json',
+											success: function() { },
+											data: {},
+											async: false
+										});
+							data = JSON.parse(data.responseText);
+							data = data.categories;
+							
+							// initialize manu panel
+							var menuView = new MenuView();
+							menuView.render(data);
+						}, 100);
 					}
 			
 				}
 			}
 		}
 
+	},
+	
+	ontouchstart: function(e){
+		if (this.index==1) return; // cant swip from 4digit screen
+		
+		console.log('touchstart');
+		this.start = {
+		  // get touch coordinates for delta calculations in onTouchMove
+		  pageX: e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
+		  pageY: e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
+	
+		  // set initial timestamp of touch sequence
+		  time: Number( new Date() )
+		};
+
+		// used for testing first onTouchMove event
+		this.isScrolling = undefined;
+		
+		// reset deltaX
+		this.deltaX = 0;
+		this.deltaY = 0;
+	
+		$(this.el).css({'webkitTransitionDuration':'0ms'});
+		$('#header_view').css({'webkitTransitionDuration':'0ms'});
+		this.ended = 0;
+		
+		e.stopPropagation();	
+	},
+	
+	ontouchmove: function(e){		
+		if (this.ended) return; // cant swip from 4digit screen
+		
+		if (this.index==1) return;
+		// ensure swiping with one touch and not pinching
+		if((e.originalEvent.touches && e.originalEvent.touches.length > 1) || e.scale && e.scale !== 1) return; 
+	 
+		this.deltaX = (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX) - this.start.pageX;
+		this.deltaY = (e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY) - this.start.pageY;
+		
+		// determine if scrolling test has run - one time test
+		if ( typeof this.isScrolling == 'undefined') {
+		  this.isScrolling = !!( this.isScrolling || Math.abs(this.deltaX) < Math.abs((e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY) - this.start.pageY) );
+		}
+		
+		// if user is not trying to scroll vertically
+		if (!this.isScrolling) {
+		
+		  // prevent native scrolling 
+		  e.preventDefault();
+
+		  // increase resistance if first or last slide
+		  this.deltaX = 
+			this.deltaX / 
+			  ( (!this.index && this.deltaX > 0               // if first slide and sliding left
+				|| this.index == this.length - 1              // or if last slide and sliding right
+				&& this.deltaX < 0                            // and if sliding at all
+			  ) ?                      
+			  ( Math.abs(this.deltaX) / this.BrowserWidth + 1 )      // determine resistance level
+			  : 1 );                                          // no resistance if false
+			  
+		  // translate immediately 1-to-1
+		  $(this.el).css({'webkitTransform': 'translate3d(' +(this.deltaX-this.index*this.BrowserWidth)+ 'px,0,0)'});
+		  $('#header_view').css({'webkitTransform': 'translate3d(' +(this.deltaX/2 - this.index * this.BrowserWidth/2)+ 'px,0,0)'});
+		  
+		  e.stopPropagation(e);
+		}
+	},
+	
+	ontouchend: function(e){
+		
+		if (this.index==1) return; // cant swip from 4digit screen
+		// determine if slide attempt triggers next/prev slide
+		var isValidSlide = 
+			  Number(new Date()) - this.start.time < 250      // if slide duration is less than 250ms
+			  && Math.abs(this.deltaX) > 20                   // and if slide amount is greater than 20px
+			  || Math.abs(this.deltaX) > this.BrowserWidth/2,        // or if slide amt is greater than half the width
+	
+		 //determine if slide attempt is past start and end
+			isPastBounds = 
+			  !this.index && this.deltaX > 0                          // if first slide and slide amt is greater than 0
+			  || this.index == this.numSlides - 1 && this.deltaX < 0;    // or if last slide and slide amt is less than 0
+
+		
+		// if not scrolling vertically
+		if (!this.isScrolling) {
+		   // call slide function with slide end value based on isValidSlide and isPastBounds tests
+		  this.slide( this.index + ( isValidSlide && !isPastBounds ? (this.deltaX < 0 ? 1 : -1) : 0 ), this.speed, (this.deltaX < 0 ? -1 : 1));
+		  
+		}
+		this.ended = 1;
+		
+		e.stopPropagation();
+	},
+	
+	animate_aboutWebitap: function(){
+		//ABOUT WEBITAP SCRIPTS
+		$("#screen #validPic img").fadeOut(0);
+		$("#screen #load").fadeOut(0);
+		$("#signal img").fadeOut(0);
+		$("#tapPic img").fadeOut(0).eq(0).fadeIn(0);
+		$("#screen #validPic img").eq(0).fadeIn(0);
+		//$("#signal img").eq(0).fadeIn(0);
+		setTimeout(function(){
+			$("#screen #validPic img").eq(0).fadeOut(0);
+			//$("#signal img").eq(0).fadeOut(0);
+			
+		},5500);
+
+		var i = 0;
+		setInterval(function(){
+		if($("#tapPic img").length > (i+1)){
+			//$("#signal img").eq(i).show();
+			$("#signal img").eq(i).fadeIn(200,function(){
+				$("#signal img").eq(i).fadeOut(200,function(){
+					$("#signal img").eq(i).fadeIn(200,function(){
+						$("#signal img").eq(i).fadeOut(200,function(){
+			});
+			});
+			});
+			});
+			setTimeout(function(){
+				$("#screen #validPic img").hide();
+				$("#screen #load").show();
+				//$("#signal img").hide();
+				setTimeout(function(){
+					$("#screen #load").hide();
+						$("#screen #validPic img").eq(i).show();
+						setTimeout(function(){
+							//$("#screen #validPic img").hide();
+							$("#screen #load").hide();
+							
+							$("#tapPic img").hide();
+							$("#tapPic img").eq(i+1).fadeIn(1000);
+							i++;
+							},1000);
+					
+				},1600);
+				
+			},800);
+				
+				
+			
+		}else{
+				//$("#signal img").eq(i).show();
+				$("#signal img").eq(i).fadeIn(200,function(){
+				$("#signal img").eq(i).fadeOut(200,function(){
+					$("#signal img").eq(i).fadeIn(200,function(){
+						$("#signal img").eq(i).fadeOut(200,function(){
+			});
+			});
+			});
+			});
+			setTimeout(function(){
+				$("#screen #validPic img").hide();
+				$("#screen #load").show();
+				//$("#signal img").hide();
+				setTimeout(function(){
+					$("#screen #load").hide();
+						$("#screen #validPic img").eq(i).show();
+						setTimeout(function(){
+							//$("#screen #validPic img").hide();
+							$("#screen #load").hide();
+							
+							$("#tapPic img").hide();
+							$("#tapPic img").eq(0).fadeIn(1500);
+							i=0;
+							},1000);
+					
+				},1600);
+				
+			},800);
+		}
+		},5000)
+		//ABOUT WEBITAP SCRIPTS
 	}
 });

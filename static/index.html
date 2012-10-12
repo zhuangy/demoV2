@@ -17,8 +17,14 @@ html, body{
 	height:100%;
 	padding:0px;
 	margin:0px;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	position:relative;
+	
+	-webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+	-webkit-user-select: none;
+   -webkit-text-size-adjust: none;
+	font-family: GothamLight !important;
+	-webkit-text-size-adjust:none !important; 
 }
 
 .col{
@@ -56,6 +62,39 @@ html, body{
 	display:block;
 }
 
+#wrongorientation{
+	width:100%;
+	height:100%;
+	background-color:#000000;
+	padding:0;
+	margin:0;
+	position:absolute;
+	top:0; left:0;
+	text-align:center;
+	color:#FFFFFF;
+	display:none;
+	
+	z-index:500;
+	
+	background-image: url(img/RotateScreen.png);
+	background-size: 100% 100%;
+}
+
+#navigationOverlay{
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	position:absolute;
+	top:0;
+	left:0;
+	opacity:0.9;
+	z-index: 180;
+	background-image: url(img/NavigationOverlay_small.png);
+	background-size: 100% 100%;
+}
+
+
 </style>
 
 <script src="lib/jquery-1.7.1.js"></script>
@@ -85,71 +124,13 @@ html, body{
 <script src="views/add_comment_view.js"></script>
 
 <script>
-$(document).ready(function (){  	
 
-	// define screen dimensions - take into account iphone footer bar
-	var Dim = new Object();
-	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-		Dim.height = window.innerHeight;
-		Dim.width = window.innerWidth;
-		// set stylesheet
-		$("#device-stylesheet").attr("href", "css/iphone.css");
-		console.log('iphone');
-	}
-	else{
-		Dim.height = window.outerHeight;
-		Dim.width = window.outerWidth;	
-	}
-	
-	$('body').css('font-size', Dim.width*0.06+'px');
-	$('body').css('width', Dim.width+'px');
-	$('body').css('height', Dim.height+'px');
-	$('[data-role="page"]').css('width', size.width+'px');
-	$('[data-role="page"]').css('height', size.height+'px');
-	$('#menu_screen').css('width', Dim.width+'px');
-	$('#menu_screen').css('height', Dim.height+'px');
-	$('#noNFC_screen').css('width', Dim.width+'px');
-	$('#noNFC_screen').css('height', Dim.height+'px');
-	
-	
-	// LOAD noNFC SCREEN
-		var nonfcView = new noNFCView(Dim);
-		nonfcView.render();
-		nonfcView.slide(1,0);
-		
-		//$('#noNFC_view').bind('mousedown', function(e){noNFCView.input_number(e);});
-	
-	/*
-	// TAP - loading screen
-	var loadingView = new LoadingView();
-	$('[data-role="page"]').append(loadingView.render().el);
-	//loadingView.animateLogo();
-	loadingView.loadMenu();
-	*/
-	
-	/*
-	// LOAD MENU DATA FROM JSON FILE
-		var data = $.ajax({
-							type: 'GET',
-							url: '/json/iota.json',
-							dataType: 'json',
-							success: function() { },
-							data: {},
-							async: false
-						});
-		data = JSON.parse(data.responseText);
-		data = data.categories;
-		
-		var menuView = new MenuView(Dim);
-		menuView.render(data);		
-	*/
-	
-})
 </script>
 
 </head>
 
 <body>
+    <div id="wrongorientation"></div>
     
     <div id="noNFC_screen">
         <div id="noNFC_view"></div>

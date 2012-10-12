@@ -7,6 +7,9 @@
 	font-family: GothamLight;
 }
 
+a:focus{
+	outline:none;
+}
 
 /*LOADING SCREEN*/
 #loading_screen
@@ -18,7 +21,7 @@
   width: 100%;
   background-color: #ffffff;
   color: white;
-  z-index:110;
+  z-index:200;
   text-align: center;
 }
 
@@ -75,6 +78,15 @@
 	-moz-animation: backButtonSlideLeft 3000ms infinite;
 	-o-animation: backButtonSlideLeft 3000ms infinite;
 	animation: backButtonSlideLeft 3000ms infinite;
+}
+
+/* .COL */
+.col{	
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
 /*HEADER*/
