@@ -5,10 +5,18 @@ var user ={
 	iphone: ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)))? true : false
 }
 
-var size={
-	width: user.iphone ? Math.min(window.innerWidth, window.innerHeight) : Math.min(window.outerWidth, window.outerHeight+1),
-	height: user.iphone ? Math.max(window.innerWidth, window.innerHeight) : Math.max(window.outerWidth, window.outerHeight+1)
+if(user.iphone){
+	$('#device-stylesheet').attr('href', 'css/iphone.css');	
 }
+
+var size={
+	width: user.iphone ? Math.min(window.innerWidth, $(window).height()-60) : Math.min(window.outerWidth, window.outerHeight+1),
+	height: user.iphone ? Math.max(window.innerWidth, $(window).height()-60) : Math.max(window.outerWidth, window.outerHeight+1)
+}
+
+//console.log(window.innerWidth);
+//console.log(window.outerWidth);
+//console.log(screen.width);
 
 // if app loaded in landscape mode - adjust for potential status bar
 if (user.mobile){
@@ -107,7 +115,7 @@ $(document).ready(function (){
 	*/
 	setInterval(function() {
 		if (window.pageYOffset!=1){
-			window.scrollTo(0.1);
+			window.scrollTo(0,1);
 		}
 	}, 1000);
 	
@@ -122,8 +130,7 @@ $(document).ready(function (){
 	
 	/*
 		Load the app!
-	*/
-	
+	*/	
 	var code = getQueryVariable('code');
 	if (code && code == ACCESS_CODE) {
 		// TAP - load the app :)
@@ -138,5 +145,23 @@ $(document).ready(function (){
 	}
 	//if wrong code - show 404 error?
 	
+	/*
+		Display a warning when user is leaving the page
+	*/
+	var tappedFacebook = false;
+	$('#facebook').tap(function(){
+		tappedFacebook = true;
+		setTimeout(function(){
+			tappedFacebook = false;
+		},500);
+	});
+	window.onbeforeunload = function() {
+		if(tappedFacebook){
+			return "You will be redirected to Facebook";
+		}
+		else{
+			return "You are about to leave WebiTap";	
+		}
+	}
 	
 });	

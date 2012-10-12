@@ -6,6 +6,8 @@ var noNFCView = Backbone.View.extend({
 	
 	events: {
 		"tap #keyboard li":"input_number",
+		"touchstart #keyboard li":"highlight_key",
+		"touchend #keyboard li":"unhighlight_key",
 		"touchstart #aboutNFCbutton": "go_to_aboutNFC",
 		"touchstart #aboutWebitapbutton":"go_to_aboutWebitap",
 		
@@ -25,7 +27,7 @@ var noNFCView = Backbone.View.extend({
 	
 	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'input_number', 'animateLogo', 'selectInput', 'validate', 'go_to_aboutNFC', 'go_to_aboutWebitap', 'ontouchstart', 'ontouchmove', 'ontouchend', 'animate_aboutWebitap');
+		_.bindAll(this, 'render', 'slide', 'input_number', 'animateLogo', 'selectInput', 'validate', 'go_to_aboutNFC', 'go_to_aboutWebitap', 'ontouchstart', 'ontouchmove', 'ontouchend', 'animate_aboutWebitap', 'highlight_key', 'unhighlight_key');
 
 		this.BrowserWidth = size.width;
 		this.BrowserHeight = size.height;
@@ -223,6 +225,33 @@ var noNFCView = Backbone.View.extend({
 		});
 
 		return (code == ACCESS_CODE);
+	},
+	
+	/*
+		highlight keyboard on press
+	*/
+	highlight_key: function(ev){
+		if(!this.animationOn){
+			if( $(ev.target).closest('#keyboard li').attr('class')=='erase'){
+				$('.backBtn').attr('src', "img/noNFCscreen/backBtnPressed.png");
+			}
+			else{
+				$(ev.target).css({'color': '#cd4314' ,'text-shadow': '-1px -1px 0px black'});
+			}
+		}
+	},
+	
+	unhighlight_key: function(ev){
+		if( $(ev.target).closest('#keyboard li').attr('class')=='erase'){
+			$('.backBtn').attr('src', "img/noNFCscreen/backBtn.png");
+		}
+		else{
+			if(!user.iphone){
+				$(ev.target).css({'color': '#006595', 'text-shadow': '1px 1px 5px black'});
+			}else{
+				$(ev.target).css({'color': '#006595', 'text-shadow': '1px 1px 2px black'});
+			}
+		}	
 	},
 	
 	/*

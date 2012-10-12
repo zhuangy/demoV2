@@ -26,25 +26,8 @@ a:focus{
 }
 
 /*FOOTER*/
-#footer {
-	position: absolute; 
-	z-index: 110;
-	top: 93%;
-	width: 100%;
-	height: 7%;
-	padding: 0;
-	text-align:center;
-}
 
-#footer #homeButton {
-  width: 8%;
-  margin:auto;
-  height: 90%;
-  background: url("../img/home.png") center center no-repeat;
-  background-size:100%;
-  opacity:1;
-  z-index:120;
-}
+
 
 @-webkit-keyframes backButtonSlideLeft{
 	0% {
@@ -568,13 +551,10 @@ img.shadow{
 	position: absolute;
 	width: 95%;
 	height: 88%;
-	margin: 3% 2% 0% 2%;
 	padding:0;
 	text-align:center;
 	background-image: url(../img/overlay_background.png);
 	background-size: 100% 100%;
-
-	border: 5px solid rgba(150, 150, 150, .5);
 
 	-moz-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     -webkit-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
@@ -655,7 +635,7 @@ img.shadow{
 }
 
 #overlay #item-content{
-	height:33%;
+	height:38%;
 	width:100%;
 	position:relative;
 	top:6%;
@@ -671,7 +651,6 @@ img.shadow{
 
 #overlay #comment_topBar{
 	width:100%;
-	height:8%;
 	position:absolute;
 	z-index:3;
 	background: url("../img/description_tab.png") no-repeat;
@@ -729,7 +708,7 @@ img.shadow{
 	color:#FFFFFF;
 	text-align:center;
 	padding:0.05em 0em 0.05em 0em;
-	font-size:1.35em;
+	font-size:1.2em;
 }
 
 #overlay .user_comment{
@@ -743,11 +722,9 @@ img.shadow{
 	position: absolute;
 	width: 95%;
 	height: 55%;
-	margin: 3% 2% 0% 2%;
 	padding:0;
 	background-color: #D4D4D4;
 	background-size: 100% 100%;
-	border: 5px solid rgba(30,30,30,0.6);
 
 	-moz-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     -webkit-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);

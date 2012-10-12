@@ -9,8 +9,45 @@
 	text-align:center;
 }
 
+#footer #homeButton {
+  width: 9%;
+  margin:auto;
+  height: 95%;
+  background: url("../img/home.png") center center no-repeat;
+  background-size:100%;
+  opacity:1;
+  z-index:120;
+}
+
 /*Spacer for Menu screens*/
 #bottomListSpacer{
 	width:100%;
 	height:9%;
+}
+
+/* noNFC screen button heights */
+#aboutNFCbutton{
+	height:30%;
+}
+
+#aboutWebitapbutton{
+	height:30%;
+}
+
+#overlay{
+	border: 2px solid rgba(150, 150, 150, .5);
+	margin: 1% 2% 0% 2%;
+}
+
+#overlay #comment_topBar{
+	height:9%;
+}
+
+#enterCommentOverlay{
+	border: 2px solid rgba(30,30,30,0.6);
+	margin: 1% 2% 0% 2%;
+}
+
+#keyboard ul li{
+	text-shadow: 1px 1px 2px black;
 }

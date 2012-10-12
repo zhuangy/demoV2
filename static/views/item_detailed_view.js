@@ -2,9 +2,9 @@ var ItemDetailedView = Backbone.View.extend({
 	el: '#overlay',
 	
 	events: {
-		"click #itemComments_button":"showComments",
-		"click #itemDescription_button":"showDescription",
-		"click #addComment":"showCommentForm"
+		"tap #itemComments_button":"showComments",
+		"tap #itemDescription_button":"showDescription",
+		"tap #addComment":"showCommentForm"
 	},
 	
 	initialize: function(){
@@ -12,6 +12,7 @@ var ItemDetailedView = Backbone.View.extend({
 		_.bindAll(this, 'render', 'makeMeVisible', 'showComments', 'showCommentForm', 'showDescription', 'updateRating');
 		
 		this.model.bind('change', this.updateRating);
+		window.scroll(0,1);
 		
 		
 	},
@@ -51,6 +52,12 @@ var ItemDetailedView = Backbone.View.extend({
 		$('#overlay-blur').css('display', 'block');
 		$('#overlay').css('display', 'block');
 		$('#backButton').css('display', 'block');
+		
+		// adjust height of item-content div
+		//var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
+		//$('#item-content').css('height', h+'px');
+		
+		new iScroll('item-content', {vScrollbar:false});
 			
 		/*fadein*/	
 		setTimeout( function(){
@@ -78,6 +85,7 @@ var ItemDetailedView = Backbone.View.extend({
 		this.commentsCollection.fetch({
 		  success : function(collection) {
 			$('#item-content').html(commentsView.render().el);
+			new iScroll('item-content', {vScrollbar:false});
 		  },
 		  error: function() {
 			console.log('error!');
@@ -97,6 +105,7 @@ var ItemDetailedView = Backbone.View.extend({
 		
 		// render view
 		$("#item-content").html('<div id="item-description">'+this.model.get('description')+'</div>');
+		new iScroll('item-content', {vScrollbar:false});
 	
 	},
 	

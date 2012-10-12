@@ -3,11 +3,10 @@
 
 #aboutNFCbutton{
 	width:50%;
-	height:25%;
 	position:absolute;
 	top:-7%;
 	left:75%;
-	z-index:210;
+	z-index:250;
 	/*background-color:#006595;
 	border-radius: 20%/50%;
 	-moz-border-radius:20%/50%;
@@ -20,11 +19,10 @@
 
 #aboutWebitapbutton{
 	width:50%;
-	height:25%;
 	position:absolute;
 	top:-7%;
 	left:-25%;
-	z-index:210;
+	z-index:250;
 	/*background-color:#006595;
 	border-radius: 20%/50%;
 	-moz-border-radius:20%/50%;
@@ -183,7 +181,6 @@ div.input:focus{
 	font-family: GothamBold;
 	font-weight:bold;
 	color: #006595;
-	text-shadow: 1px 1px 5px black;
 	text-align:center;
 	
 	padding: 1% 0 1% 0;
