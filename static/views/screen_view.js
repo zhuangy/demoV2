@@ -6,14 +6,8 @@ var ScreenView = Backbone.View.extend({
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render');
 		
-		if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-			this.BrowserHeight = window.innerHeight;
-			this.BrowserWidth = window.innerWidth;
-		}
-		else{
-			this.BrowserHeight = window.outerHeight;
-			this.BrowserWidth = window.outerWidth;	
-		}
+		this.BrowserHeight = size.height;
+		this.BrowserWidth = size.width;
 		
 		this.collection = new MenuList();
 		
@@ -27,6 +21,17 @@ var ScreenView = Backbone.View.extend({
 		// add screen
 		var str = '<div class="col" id="col'+index+'" scrollable="true" style="display:block"><div class="scroller" id="scroller'+index+'"><ul class"scrollContent"><div class="video" style="margin:0; padding:0;"></div></ul></div></div>';
 		$('#menu_view').append(str);
+		
+		//add video to first menu column
+		if (index==0){
+			$('#col0 .video').html('<iframe height="100%"  width="100%" id="coffee_video" src="http://www.youtube.com/embed/HAO3KHTnq58" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
+			$('.video').css('height',this.BrowserWidth*0.9/1.6*0.9+'px');
+			$('.video').css('width',this.BrowserWidth+'px');
+			
+			function onYouTubeIframeAPIReady() {
+			  window.video = new YT.Player('coffee_video');
+			}
+		}
 		
 		$('#col'+index).css({'left': (index+1)*this.BrowserWidth+'px',
 					  'width': this.BrowserWidth+'px',

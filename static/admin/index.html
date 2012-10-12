@@ -1,0 +1,48 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webitap Log</title>
+<script type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
+<script>
+
+$.ajax({
+	type:"GET",
+	url:"http://api.webitap.com/events", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
+	success:function(res){
+		var str = '';
+		//for(i=20; i<res.length; i++){
+		//console.log(JSON.stringify(res));
+		count = 0;
+		for (i in res){
+			var date = res[i].datestamp;
+			if((parseFloat(date.substr(3,2))>11 && parseFloat(date.substr(11,2))>16) || parseFloat(date.substr(3,2))>12){
+				var ev = res[i];
+				str = str + '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+ev.tag_id+'</td><td>'+ev.user_agent+'</td><td>'+ev.datestamp+'</td></tr>';
+				count = count+1;
+			}
+		}
+		document.getElementById('events').innerHTML = str;
+
+	}
+});
+
+
+</script>
+<style>
+td{
+	width:200px;
+	border:1px solid black;
+}
+</style>
+</head>
+
+<body>
+<h3>WebiTap events at Iota</h3>
+<table id='events' cellspacing="0" cellpadding="5px">
+	
+</table>
+
+</body>
+</html>

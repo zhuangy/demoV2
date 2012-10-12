@@ -197,6 +197,9 @@ var MenuView = Backbone.View.extend({
 			},301);
 
 		  }
+		if (this.index!=1){
+			window.video.stopVideo();	
+		}
 	},
 	
 	ontouchstart: function(e){
