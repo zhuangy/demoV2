@@ -69,7 +69,7 @@ function getQueryVariable(variable) {
 		}
 	}
 }
-			
+
 $(document).ready(function (){
 	/*
 		Check orientation to make sure phone is in portrait mode
