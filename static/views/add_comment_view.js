@@ -77,26 +77,31 @@ var AddCommentForm = Backbone.View.extend({
 		
 		console.log(this.rating);
 		if(!incomplete){
+			var that = this;
 			// new commment model with user inputs
 			var comment = new Comment({'item_token': this.token, 'name': name, 'rating': this.rating, 'comment_text':text})
 			// save the comment in database
-			comment.save();
+			comment.save(function(){
+				// add comment to collection - after it is saved (token + time is added)
+				that.collection.add(comment);
 			
-			// add comment to collection
-			this.collection.add(comment);
 			
-			//update item model with new rating
-			var sum = 0;
-			this.collection.each(function(comment){
-				console.log('rating: '+comment.get('rating'));
-				sum = sum + parseFloat(comment.get('rating')); 
-			})
-			console.log(sum);
-			console.log(this.collection.length);
-			console.log(Math.round(sum/this.collection.length));
-			this.model.set({'rating': Math.round(sum/this.collection.length)});
-			
-			this.unrender();
+				//update item model with new rating
+				var sum = 0;
+				that.collection.each(function(comment){
+					console.log('rating: '+comment.get('rating'));
+					sum = sum + parseFloat(comment.get('rating')); 
+				})
+				console.log(sum);
+				console.log(that.collection.length);
+				console.log(Math.round(sum/that.collection.length));
+				that.model.set({'rating': Math.round(sum/that.collection.length)});
+				that.model.update();
+				
+				
+				
+				that.unrender();
+			});
 		}
 		
 	},

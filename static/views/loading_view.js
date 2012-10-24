@@ -39,7 +39,25 @@ var LoadingView = Backbone.View.extend({
 		},1050);
 	},
 	
-	loadMenu: function(){
+	loadMenu: function(){		
+		// find org token based on query code
+		var code = getQueryVariable('code');
+		this.token = $.ajax({type:"GET", url:CONF['api-host']+"/org_token?org_code="+code, async: false});
+		this.token = this.token.responseText;
+			
+		var screensCollection = new Screens([],{token: this.token}); // initialize screenCollection with org token
+		var screensView = new ScreensView({collection:screensCollection}); // initialize sceensView
+		
+		screensCollection.fetch({
+		  success : function(screens) {
+			console.log(screens);
+			screensView.render();
+		  },
+		  error: function() {
+			console.log('error fetching orgs collection!');
+		  }
+		});
+		/*
 		var data = $.ajax({
 							type: 'GET',
 							url: '/json/iota.json',
@@ -53,6 +71,7 @@ var LoadingView = Backbone.View.extend({
 		
 		var menuView = new MenuView();
 		menuView.render(data);
+		*/
 	}
 									   
 

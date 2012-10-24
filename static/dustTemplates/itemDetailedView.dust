@@ -1,4 +1,4 @@
-<div id="title" class="alpha60">{title}</div>
+<div id="title" class="alpha60">{name}</div>
 
 <img src="{imgPath}" id="image">
 

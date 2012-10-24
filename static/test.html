@@ -2,48 +2,93 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Backbone Test</title>
-
+<title>Untitled Document</title>
 <script src="lib/jquery-1.7.1.js"></script>
-<script src="lib/underscore-min.js"></script>
-<script src="lib/backbone-min.js"></script>
-<script>
-//Backbone.emulateHTTP = true;
-//Backbone.emulateJSON = true;
-
-var Comment = Backbone.Model.extend({
-	url: 'http://localhost:8080/comment_create',
-	
-	defaults: {
-		item_token: '111222',
-		name: 'Masha',
-		rating: '4',
-		comment_text: 'Testing Backbone'
-	},
-	
-	save: function(){
-		var data = {'item_token':this.get('item_token'), 'name':this.get('name'),'rating':this.get('rating'),'comment_text':this.get('comment_text')};
-			console.log(JSON.stringify(data));
-			$.ajax({
-				   type:'POST',
-				   url:'http://localhost:8080/comment_create',
-				   headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
-				   data:JSON.stringify(data),
-				   success: function(res){
-							console.log(res);
-							}
-				});
-	}
-	
-});
-
-var comment = new Comment();
-comment.save();
-</script>
 
 </head>
 
 <body>
-Hello
+
+ <form action="http://192.168.1.102:8080/upload_photo?id=lala" method="POST" enctype="multipart/form-data">
+      <input type="file" id="files" name="files[]" multiple />
+      <!--<input type="file" name="upload"></input>
+      <input type="submit">submit</input> -->
+    </form>
+
+<script>
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+function apipost(method, body, authed, onErr, onSuc) {
+	var reqObj={
+		type:'POST',
+		data: JSON.stringify(body),
+		url: 'http://192.168.1.102:8080/'+method,
+		success: function(res){
+			if (onSuc) {onSuc(res)};
+		}	
+	}
+	
+	reqObj.beforeSend = function(xhr) {
+		if (authed) {
+		  xhr.setRequestHeader('Authorization','Basic ZGFuaGFrOndlYmkyMDEyIQ==');
+		}
+	}
+	
+	$.ajax(reqObj);
+
+}
+
+
+function handleFileSelect(evt){
+	evt.stopPropagation();
+	evt.preventDefault();
+	//var files = evt.dataTransfer.files; // FileList object
+	var files = evt.target.files; // FileList object
+	
+	
+	// Loop through the FileList and render image files as thumbnails.
+	for (var i = 0, f; f = files[i]; i++) {
+	  // save file!
+	  var formData = new FormData();
+	  formData.append('file', f);
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('POST', 'http://api.webitap.com/upload_photo?id=bbb&path=IOTA/cake');
+	  xhr.send(formData);
+	  
+	  /*$.ajax({type:"POST",
+	    processData: false,
+	    data: formData,
+	  	url:'http://192.168.1.102:8080/upload_photo?id=aaaa',
+		success: function(res){console.log(res);} 
+	  });
+	  
+	  */
+	  
+	  
+	  
+	}
+	 /*
+	  // Only process image files.
+	  if (!f.type.match('image.*')) {
+		continue;
+	  }
+
+	  var reader = new FileReader();
+	  var that = this;
+
+	  // Closure to capture the file information.
+	  reader.onload = (function(theFile) {
+		return function(e) {
+		  console.log(e);
+		  that.add_item({'imgPath':e.target.result, 'changed':true})
+		};
+	  })(f);
+
+	  // Read in the image file as a data URL.
+	  reader.readAsDataURL(f);
+	  */
+	}
+
+</script> 
 </body>
 </html>

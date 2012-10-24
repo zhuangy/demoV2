@@ -70,6 +70,8 @@ a:focus{
 	-ms-backface-visibility: hidden;
 	-o-backface-visibility: hidden;
 	backface-visibility: hidden;
+	
+	display:block;
 }
 
 /*HEADER*/
@@ -635,7 +637,7 @@ img.shadow{
 }
 
 #overlay #item-content{
-	height:38%;
+	height:44%;
 	width:100%;
 	position:relative;
 	top:6%;

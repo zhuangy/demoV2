@@ -40,7 +40,7 @@ html, body{
 li{
 	-webkit-backface-visibility:hidden;
 }
-#menu-view, #noNFC_view{
+#screens_view, #noNFC_view{
 	position:absolute;
 	height:100%;
 	top:0px;
@@ -112,6 +112,7 @@ li{
 <script type="text/javascript" src="http://www.youtube.com/player_api"></script>
 
 <script src="initialize.js"></script>
+<script src="lib/api.js"></script>
 <script type="text/javascript" src="/useragents.js"></script>
 <script type="text/javascript" src="/track_events.js"></script>
 
@@ -123,12 +124,14 @@ li{
 <script type="text/javascript" src="jsTemplates/singleComment.js"></script>
 
 <!--Backbone Views -->
-<script src="views/menu_view.js"></script>
+<!--<script src="views/menu_view.js"></script> -->
+<script src="views/screens_viewmodel.js"></script>
+<script src="views/items_viewmodel.js"></script>
 <script src="views/loading_view.js"></script>
 <script src="views/noNFC_view.js"></script>
-<script src="views/screen_view.js"></script>
+<!--<script src="views/screen_view.js"></script> -->
 <script src="views/front_screen_view.js"></script>
-<script src="views/item_view.js"></script>
+<!--<script src="views/item_view.js"></script> -->
 <script src="views/item_detailed_view.js"></script>
 <script src="models/models.js"></script>
 <script src="views/comments.js"></script>
@@ -148,7 +151,7 @@ li{
     </div>
     
     <div id="menu_screen">
-        <div id="menu_view"></div>
+        <div id="screens_view"></div>
     </div>
 	
     <div id="overlay"></div>

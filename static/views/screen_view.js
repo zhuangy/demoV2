@@ -19,7 +19,7 @@ var ScreenView = Backbone.View.extend({
 		$('#header_view').append(headerStr);
 		
 		// add screen
-		var str = '<div class="col" id="col'+index+'" scrollable="true" style="display:block"><div class="scroller" id="scroller'+index+'"><ul class"scrollContent"><div class="video" style="margin:0; padding:0;"></div></ul></div></div>';
+		var str = '<div class="col" id="col'+index+'" scrollable="true"><div class="scroller" id="scroller'+index+'"><ul class"scrollContent"><div class="video" style="margin:0; padding:0;"></div></ul></div></div>';
 		$('#menu_view').append(str);
 		
 		//add video to first menu column

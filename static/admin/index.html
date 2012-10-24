@@ -6,9 +6,17 @@
 <script type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
 <script>
 
+var users;
 $.ajax({
 	type:"GET",
-	url:"http://api.webitap.com/events", 
+	url:"http://192.168.1.102:8080/users", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, async: false,
+	success:function(res){users=res;}
+});
+
+$.ajax({
+	type:"GET",
+	url:"http://192.168.1.102:8080/events", 
 	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
 	success:function(res){
 		var str = '';
@@ -17,11 +25,11 @@ $.ajax({
 		count = 0;
 		for (i in res){
 			var date = res[i].datestamp;
-			if((parseFloat(date.substr(3,2))>11 && parseFloat(date.substr(11,2))>16) || parseFloat(date.substr(3,2))>12){
+			//if((parseFloat(date.substr(3,2))>12 && parseFloat(date.substr(11,2))>16) || parseFloat(date.substr(3,2))>13){
 				var ev = res[i];
-				str = str + '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+ev.tag_id+'</td><td>'+ev.user_agent+'</td><td>'+ev.datestamp+'</td></tr>';
+				str = str + '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+ev.tag_id+'</td><td>'+ev.user_agent+'</td><td>'+ev.datestamp+'</td><td>'+users.indexOf(ev.cookie_id)+'</td></tr>';
 				count = count+1;
-			}
+			//}
 		}
 		document.getElementById('events').innerHTML = str;
 

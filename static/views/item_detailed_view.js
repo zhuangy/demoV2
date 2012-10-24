@@ -53,9 +53,9 @@ var ItemDetailedView = Backbone.View.extend({
 		$('#overlay').css('display', 'block');
 		$('#backButton').css('display', 'block');
 		
-		// adjust height of item-content div
-		//var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
-		//$('#item-content').css('height', h+'px');
+		//adjust height of item-content div
+		var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
+		$('#item-content').css('height', h+'px');
 		
 		new iScroll('item-content', {vScrollbar:false});
 			
@@ -84,8 +84,7 @@ var ItemDetailedView = Backbone.View.extend({
 		
 		this.commentsCollection.fetch({
 		  success : function(collection) {
-			$('#item-content').html(commentsView.render().el);
-			new iScroll('item-content', {vScrollbar:false});
+			commentsView.render();			
 		  },
 		  error: function() {
 			console.log('error!');
@@ -105,7 +104,9 @@ var ItemDetailedView = Backbone.View.extend({
 		
 		// render view
 		$("#item-content").html('<div id="item-description">'+this.model.get('description')+'</div>');
-		new iScroll('item-content', {vScrollbar:false});
+		setTimeout(function(){
+			new iScroll('item-content', {vScrollbar:false});
+		},100)
 	
 	},
 	

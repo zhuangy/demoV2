@@ -1,0 +1,16 @@
+.business_slideshow{
+	width:900px;
+	height:393px;
+	position:relative;
+	z-index:-2;
+	padding:0;
+	overflow:hidden;
+	margin:auto;
+	margin-top:10%;
+}
+.business_slideshow img{
+
+	margin:auto;
+	padding:0;
+	margin:0;
+}

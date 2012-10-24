@@ -1,12 +1,10 @@
-<li class='itemView {itemNum}' data-token='{token}'> 
-
 <div class="menu-image">
-	<img src="thumb/{imgPath}"  class="itemImg shadow "/>
+	<img src="{imgPath}"  class="itemImg shadow "/>
 </div>
 
 <div class="menu-description">
 	<div class="ellipsis menu-dish">
-		{title}
+		{name}
 	</div>
 	
 	<div class="itemDescription smallFont">
@@ -14,17 +12,16 @@
 	</div>
 	
 	<div class="menu-rating">
-		<img src="img/star_yellow.png"  class="star"/>
-		<img src="img/star_yellow.png"  class="star"/>
-		<img src="img/star_yellow.png"  class="star"/>
-		<img src="img/star_yellow.png"  class="star"/>
+		<img src="img/star_grey.png"  class="star"/>
+		<img src="img/star_grey.png"  class="star"/>
+		<img src="img/star_grey.png"  class="star"/>
+		<img src="img/star_grey.png"  class="star"/>
 		<img src="img/star_grey.png"  class="star"/>
 		
 		<div class="price alpha60">${price}</div>
 	</div>   
 </div>
 <div style="clear:both;"></div>
-</li>
 		
 		
 

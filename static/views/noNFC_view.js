@@ -223,8 +223,12 @@ var noNFCView = Backbone.View.extend({
 		$('.input').each(function(){
 			code = code + $(this).html();					  
 		});
-
-		return (code == ACCESS_CODE);
+		
+		// check if this code exists
+		token = $.ajax({type:"GET", url:CONF['api-host']+"/org_token?org_code="+code, async: false});
+		
+		return token.responseText;
+		//return (code == ACCESS_CODE);
 	},
 	
 	/*
@@ -281,8 +285,8 @@ var noNFCView = Backbone.View.extend({
 			// if this is GO button - validate
 			else if ($(ev.target).attr('class') == 'goBtn'){
 				//check entry
-				var correct = this.validate();
-				if(!correct){
+				var token = this.validate();
+				if(!token || token=='Bad Request'){
 					$('li').each(function(){
 						$(this).css({'color': '#006595', 'text-shadow': '1px 1px 5px black'});
 					});
@@ -319,14 +323,30 @@ var noNFCView = Backbone.View.extend({
 						$(this).css('color', '#cd4314');
 					});
 					
-					var correct = this.validate();
-					if(correct){
+					//var correct = this.validate();
+					var token = this.validate();
+					if(token && token!='Bad Request'){
 						
 						this.animationOn = 1;
 						this.animateLogo();
-					
+						
 						//setTimeout - so that the last digit appears on screen
 						setTimeout(function(){
+							var screensCollection = new Screens([],{token: token});
+							var screensView = new ScreensView({collection:screensCollection});
+							
+							screensCollection.fetch({
+							  success : function(screens) {
+								console.log(screens);
+								screensView.render();
+							  },
+							  error: function() {
+								console.log('error fetching orgs collection!');
+							  }
+							});
+												
+							
+							/*
 							// LOAD MENU DATA FROM JSON FILE							
 							var data = $.ajax({
 											type: 'GET',
@@ -342,6 +362,7 @@ var noNFCView = Backbone.View.extend({
 							// initialize manu panel
 							var menuView = new MenuView();
 							menuView.render(data);
+							*/
 						}, 100);
 					}
 			

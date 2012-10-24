@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>WebiTap</title>
+    <meta name="msvalidate.01" content="EE1F94E2CA40C7A89678C67A5EB84B26" />
+    <!--bing search engine validation -->
+    <meta name="description"
+		content = "WebiTap - bridging the physical and virtual worlds"
+        content="WebiTap nfc rfid mobile cell phone"/>
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.latest.js"></script>
+    <script type="text/javascript" src="http://www.youtube.com/player_api"></script>
+    <link rel="stylesheet"	href="about.css"/>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBPkyV2p6F75FuQyCA538R9S8umQAqJuNI&sensor=true&&region=US"></script>   
+	<script type="text/javascript" src="googlemapapi.js"></script>
+    <script type="text/javascript">
+    function resize(){
+    	console.log("resize");
+    	var width=$(window).innerWidth();
+    	if(width<918) width=918;
+    	$('body').css("width",width+"px");
+    	$('.banner_container').css("width",width);
+    	$('body').css("font-size",width/80+"px");
+    	$('.banner_container').css("height",width/1376*177);
+    	$('.top_menu').css("height",width/1376*177);
+    	
+    
+    };
+    
+    
+    
+    
+	$(document).ready(function(e) {
+		resize();
+		$(window).resize(function() {
+			resize();
+		});
+		$.ajax({  
+			   type: "GET",  
+			   url: "home.html",
+			   success: function(msg){          
+				 $("#content").html(msg); 
+				   
+			   }  
+			 });
+		
+		$('.home_button').click(function()
+		{
+			$.ajax({  
+			   type: "GET",  
+			   url: "home.html",
+			   success: function(msg){          
+				 $("#content").html(msg); 
+				   
+			   }  
+			 });
+		
+		});
+        $(".top_menu li div").click(function()
+		{
+			var url=$(this).attr("href");
+			$.ajax({  
+			   type: "GET",  
+			   url: url,
+			   success: function(msg){          
+				 $("#content").html(msg); 
+				   
+			   }  
+			 }).done(
+			
+			 );
+		});
+    });
+
+
+	
+
+    </script>
+    </head>
+    <body >
+<div class="banner_container"> <img class="banner" src="img/top_banner.png" />
+      <div class="top_container">
+    <div class="home_button"></div>
+    <div class="top_menu">
+          <ul>
+        <li>
+              <div href="login.html">Login</div>
+            </li>
+        <li>
+              <div href="businesses.html">Businesses</div>
+            </li>
+        <li>
+              <div href="about.html">About</div>
+            </li>
+        <li>
+              <div href="locations.html">Locations</div>
+            </li>
+      </ul>
+        </div>
+    <div style="clear:both;"></div>
+  </div>
+      <div style="clear:both;"></div>
+    </div>
+</div>
+<div id="content"></div>
+<div class="footer content"> &copy; WebiTap 2012. Contact us at webitap@gmail.com </div>
+</body>
+</html>

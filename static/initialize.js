@@ -30,7 +30,11 @@ if (user.mobile){
 }
 
 var ACCESS_CODE = '1111';
-var API_address = "http://192.168.1.102:8080";
+
+CONF={
+	'api-host' : 'http://192.168.1.107:8080'	
+}
+
 var FACEBOOK_POST= getQueryVariable('post_id');
 
 /* FUNCTIONS */
@@ -44,7 +48,6 @@ function setStarsRating(id, rating){
 			$(this).attr('src', 'img/star_grey.png');	
 		}
 	})
-
 }
 
 function checkOrientation() {  
@@ -132,9 +135,9 @@ $(document).ready(function (){
 		Load the app!
 	*/	
 	var code = getQueryVariable('code');
-	if (code && code == ACCESS_CODE) {
+	if (code) {
 		// TAP - load the app :)
-		var loadingView = new LoadingView();
+		var loadingView = new LoadingView({});
 		$('[data-role="page"]').append(loadingView.render().el);
 		loadingView.loadMenu();
 	} else if (!code) {

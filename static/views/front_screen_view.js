@@ -14,7 +14,7 @@ var FrontScreenView = Backbone.View.extend({
 			url : "/htmlTemplates/frontScreen.html",
 			success : function(string){
 				
-				$('#menu_view').append(string);
+				$('#screens_view').append(string);
 				
 				var width = $('#menu_screen').width();
 				var height = $('#menu_screen').height();

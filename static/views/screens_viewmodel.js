@@ -1,17 +1,91 @@
 Backbone.emulateHTTP = true;
 Backbone.emulateJSON = true;
 
-var MenuView = Backbone.View.extend({
-	el: '#screens_view',									
-	
+/***
+	SCREENS COLLECTION - input{token: org_token}
+***/
+var Screens = Backbone.Collection.extend({
+  model: Screen,
+  initialize : function(models, options) {
+	/*var code = getQueryVariable('code');
+	this.token = $.ajax({type:"GET", url:CONF['api-host']+"/org_token?org_code="+code, async: false});
+	this.token = this.token.responseText;
+	*/
+	this.token = options.token;
+  },
+  url : function() {
+    return CONF['api-host']+"/org_screens?token="+this.token;
+  }
+});
+
+/***
+	SINGLE SCREEN MODEL. attributes: org_token, token, name, type
+***/
+var Screen = Backbone.Model.extend({
+	url: CONF['api-host']
+});
+
+/***
+	SINGLE SCREEN VIEW. Model: Screen
+***/
+var ScreenView = Backbone.View.extend({
+	initialize: function(index){
+		// every function that uses 'this' as the current object should be in here
+		_.bindAll(this, 'render');
+	},
+	render: function(index){
+		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
+		$('#header_view').append(headerStr);
+		
+		$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div>')
+		
+		// some css
+		$('#'+this.model.get('token')).css({'left': (index+1)*size.width+'px',
+					  'width': size.width+'px',
+					  'background-image': 'url("../img/background_texture.jpg")',
+					  'color':'white',
+					  'height': 0.925*size.height+'px',
+					  'top': 0.075*size.height+'px',
+					  'padding-top': size.height*0.012+'px'});
+		
+		
+		// render items into this.el!!!!
+		var itemsCollection = new Items([],{token: this.model.get('token')});
+		var itemsView = new ItemsView({collection: itemsCollection, model: this.model});
+		// render to screen
+		var that = this;
+		itemsCollection.fetch({
+		  success : function(items) {
+			console.log(items);
+			itemsView.render();
+			//$('#scroller'+that.model.get('token')).html(itemsView.render().el); // inserts a <ul class='scrollableContent'>...list...</ul>
+		  },
+		  error: function() {
+			console.log('error fetching items collection!');
+		  }
+		});
+		
+		// if video - prepend video
+		// <ul class"scrollContent"><div class="video" style="margin:0; padding:0;"></div>..<li></li>..</ul>'
+		
+		// wrap this.el unto .col divs
+		
+	},
+});
+
+/*** 
+	SCREENS LIST VIEW
+***/		
+var ScreensView = Backbone.View.extend({
+	el: '#screens_view',
 	events: {
-		//"mousedown":"ontouchstart",
-		//"mousemove":"ontouchmove",
-		//"mouseup":"ontouchend",
+		"mousedown":"ontouchstart",
+		"mousemove":"ontouchmove",
+		"mouseup":"ontouchend",
 		"touchstart":"ontouchstart",
 		"touchmove":"ontouchmove",
 		"touchend":"ontouchend",
-		"click":"openOverlay"
+		//"click":"openOverlay"
 	},
 	
 	initialize: function() {
@@ -22,10 +96,10 @@ var MenuView = Backbone.View.extend({
 		this.screenView = new Object();
 		
 		//this.data = data;
-		this.BrowserWidth = size.width;
-		this.BrowserHeight = size.height;
+		size.width = size.width;
+		size.height = size.height;
 		
-		$(this.el).css('height', this.BrowserHeight);
+		$(this.el).css('height', size.height);
 		
 		this.index = 0;
 		this.speed = 300;
@@ -33,7 +107,7 @@ var MenuView = Backbone.View.extend({
 		
 	},
 	
-	render: function(data){
+	render : function() {
 		$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
 		
@@ -50,25 +124,21 @@ var MenuView = Backbone.View.extend({
 		// header - swipe on tap
 		$('#headerBlur').click(this.tap_header);
 		
-		this.data = data;
-		this.numSlides = data.length+1;
+		this.numSlides = this.collection.length+1;
 		
 		// some css
-		$(this.el).css('width', this.numSlides*this.BrowserWidth+'px');
-		$('#header_view').css('width', this.numSlides*this.BrowserWidth+'px');
-		$('.h').css('width', (this.BrowserWidth/2)+'px');
-		$('#h_front').css('margin-left', this.BrowserWidth/4+'px');
+		$(this.el).css('width', this.numSlides*size.width+'px');
+		$('#header_view').css('width', this.numSlides*size.width+'px');
+		$('.h').css('width', (size.width/2)+'px');
+		$('#h_front').css('margin-left', size.width/4+'px');
 
-		// initialize front screen
+		// initialize front screen !!!!!!!!!!!!!!CHECK
 		var frontscreenView = new FrontScreenView();
 		frontscreenView.render();
 		
-		//var menu_screen = new Screen();
-		//Screens.add(menu_screen);
-		
 		// render 1 screen out of collection!!
-		this.screenView[0] = new ScreenView({model:menu_screen});
-		this.screenView[0].render(0, this.data[0]);
+		var screenView = new ScreenView({model:this.collection.models[0]});
+		screenView.render(0);
 		
 		console.log('rendered menu_view');
 		
@@ -140,10 +210,10 @@ var MenuView = Backbone.View.extend({
 	},
 	
 	tap_header: function(ev){
-		if (ev.pageX>this.BrowserWidth*3/4 && this.index<this.numSlides-1){
+		if (ev.pageX>size.width*3/4 && this.index<this.numSlides-1){
 			this.slide(this.index+1, 300, -1);
 		}
-		else if (ev.pageX<this.BrowserWidth*1/4 && this.index>0){
+		else if (ev.pageX<size.width*1/4 && this.index>0){
 			this.slide(this.index-1, 300, 1);
 		}
 	},
@@ -174,9 +244,10 @@ var MenuView = Backbone.View.extend({
 		});
 	},
 	
-	loadNextScreen: function(index, data, length){
-		this.screenView[index] = new ScreenView();
-		this.screenView[index].render(index, data);
+	loadNextScreen: function(index, length){
+		//render next screen
+		var screenView = new ScreenView({model:this.collection.models[index]});
+		screenView.render(index);
 		this.length++;
 	},
 	
@@ -187,9 +258,9 @@ var MenuView = Backbone.View.extend({
 		}
 	
 		$(this.el).css({'webkitTransitionDuration':duration+'ms',
-						 'webkitTransform': 'translate3d(' + -(index * this.BrowserWidth) + 'px,0,0)'});
+						 'webkitTransform': 'translate3d(' + -(index * size.width) + 'px,0,0)'});
 		$('#header_view').css({'webkitTransitionDuration':duration+'ms',
-						 'webkitTransform': 'translate3d(' + -(index * this.BrowserWidth/2) + 'px,0,0)'});
+						 'webkitTransform': 'translate3d(' + -(index * size.width/2) + 'px,0,0)'});
 
 		
 		this.index = index;
@@ -197,12 +268,17 @@ var MenuView = Backbone.View.extend({
 		  if(direction<0 && $('#menu_view').children('.col').length<=index+1 && $('#menu_view').children().length<this.numSlides){
 			var that = this; 
 			setTimeout(function(){
-				that.loadNextScreen(index, that.data[index], that.numSlides)
+				// load next screen
+				var screenView = new ScreenView({model:that.collection.models[index]});
+				screenView.render(index);
+				that.length++;
+		
+				//that.loadNextScreen(index, that.numSlides)
 			},301);
 
 		  }
 		if (this.index!=1){
-			window.video.stopVideo();	
+			//window.video.stopVideo();	 !!!!!!!!!!VIDEOO
 		}
 	},
 	
@@ -257,12 +333,12 @@ var MenuView = Backbone.View.extend({
 				|| this.index == this.length - 1              // or if last slide and sliding right
 				&& this.deltaX < 0                            // and if sliding at all
 			  ) ?                      
-			  ( Math.abs(this.deltaX) / this.BrowserWidth + 1 )      // determine resistance level
+			  ( Math.abs(this.deltaX) / size.width + 1 )      // determine resistance level
 			  : 1 );                                          // no resistance if false
 			  
 		  // translate immediately 1-to-1
-		  $(this.el).css({'webkitTransform': 'translate3d(' +(this.deltaX-this.index*this.BrowserWidth)+ 'px,0,0)'});
-		  $('#header_view').css({'webkitTransform': 'translate3d(' +(this.deltaX/2 - this.index * this.BrowserWidth/2)+ 'px,0,0)'});
+		  $(this.el).css({'webkitTransform': 'translate3d(' +(this.deltaX-this.index*size.width)+ 'px,0,0)'});
+		  $('#header_view').css({'webkitTransform': 'translate3d(' +(this.deltaX/2 - this.index * size.width/2)+ 'px,0,0)'});
 		  
 		  e.stopPropagation(e);
 		}
@@ -274,7 +350,7 @@ var MenuView = Backbone.View.extend({
 		var isValidSlide = 
 			  Number(new Date()) - this.start.time < 250      // if slide duration is less than 250ms
 			  && Math.abs(this.deltaX) > 20                   // and if slide amount is greater than 20px
-			  || Math.abs(this.deltaX) > this.BrowserWidth/2,        // or if slide amt is greater than half the width
+			  || Math.abs(this.deltaX) > size.width/2,        // or if slide amt is greater than half the width
 	
 		 //determine if slide attempt is past start and end
 			isPastBounds = 
@@ -292,22 +368,4 @@ var MenuView = Backbone.View.extend({
 		
 		e.stopPropagation();
 	}
-	
 });
-
-
-/***
-	SCREENS COLLECTION - ingput{token: org_token}
-
-var Screens = Backbone.Collection.extend({
-  model: Screen,
-  initialize : function(models, options) {
-	var code = getQueryVariable('code');
-	this.token = $.ajax({type:"GET", url:"http://192.168.1.102:8080/org_token?org_code="+code, async: false});
-	this.token = this.token.responseText;
-  },
-  url : function() {
-    return API_address+"/org_screens?token="+this.token;
-  }
-});
-***/
