@@ -12,7 +12,7 @@ function checkUserAgent(){
 	  }
 }
  
-//checkUserAgent(); !!!!!!!!!!!!
+checkUserAgent(); !!!!!!!!!!!!
 
 /*
 	Store all events as TAPs or LOGINs
