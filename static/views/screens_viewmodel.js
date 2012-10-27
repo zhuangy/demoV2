@@ -12,6 +12,7 @@ var Screens = Backbone.Collection.extend({
 	this.token = this.token.responseText;
 	*/
 	this.token = options.token;
+	this.code = options.code;
   },
   url : function() {
     return CONF['api-host']+"/org_screens?token="+this.token;
@@ -37,10 +38,14 @@ var ScreenView = Backbone.View.extend({
 		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
 		$('#header_view').append(headerStr);
 		
+		if(index==0){
+			$('#h'+this.model.get('token')).css('margin-left', size.width/4+'px');	
+		}
+		
 		$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div>')
 		
 		// some css
-		$('#'+this.model.get('token')).css({'left': (index+1)*size.width+'px',
+		$('#'+this.model.get('token')).css({'left': (index)*size.width+'px',
 					  'width': size.width+'px',
 					  'background-image': 'url("../img/background_texture.jpg")',
 					  'color':'white',
@@ -105,10 +110,13 @@ var ScreensView = Backbone.View.extend({
 		this.speed = 300;
 		this.ended = 1;
 		
+		this.code = this.options.code;
+		
 	},
 	
 	render : function() {
-		$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
+		//$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
+		$('#menu_screen').append('<div id="header"><div id="header_view"></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
 		
 		// Navigation screen
@@ -124,7 +132,7 @@ var ScreensView = Backbone.View.extend({
 		// header - swipe on tap
 		$('#headerBlur').click(this.tap_header);
 		
-		this.numSlides = this.collection.length+1;
+		this.numSlides = this.collection.length;
 		
 		// some css
 		$(this.el).css('width', this.numSlides*size.width+'px');
@@ -132,6 +140,7 @@ var ScreensView = Backbone.View.extend({
 		$('.h').css('width', (size.width/2)+'px');
 		$('#h_front').css('margin-left', size.width/4+'px');
 
+		/*
 		// initialize front screen !!!!!!!!!!!!!!CHECK
 		var frontscreenView = new FrontScreenView();
 		frontscreenView.render();
@@ -139,6 +148,18 @@ var ScreensView = Backbone.View.extend({
 		// render 1 screen out of collection!!
 		var screenView = new ScreenView({model:this.collection.models[0]});
 		screenView.render(0);
+		*/
+		// RENDER FIRST 2 SCREENS
+		for (i=0; i<2; i++){
+			if(this.collection.models[i].get('type')=='menu_list'){
+				var screenView = new ScreenView({model:this.collection.models[i]});
+				screenView.render(i);
+			}
+			else if (this.collection.models[i].get('type')=='splash'){
+				var frontscreenView = new FrontScreenView({model:this.collection.models[i]});
+				frontscreenView.render(i, this.code);	
+			}
+		}
 		
 		console.log('rendered menu_view');
 		
@@ -264,15 +285,27 @@ var ScreensView = Backbone.View.extend({
 
 		
 		this.index = index;
-		
-		  if(direction<0 && $('#menu_view').children('.col').length<=index+1 && $('#menu_view').children().length<this.numSlides){
+		console.log($('#screens_view').children('.col').length);
+		  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#menu_view').children().length<this.numSlides){
 			var that = this; 
 			setTimeout(function(){
+				console.log(index);
+				if(that.collection.models[index+1].get('type')=='menu_list'){
+					var screenView = new ScreenView({model:that.collection.models[index+1]});
+					screenView.render(index+1);
+					that.length++;
+				}
+				else if (that.collection.models[index+1].get('type')=='splash'){
+					var frontscreenView = new FrontScreenView({model:that.collection.models[index+1]});
+					frontscreenView.render(index+1);	
+				}
+				
+				/*
 				// load next screen
 				var screenView = new ScreenView({model:that.collection.models[index]});
 				screenView.render(index);
 				that.length++;
-		
+				*/
 				//that.loadNextScreen(index, that.numSlides)
 			},301);
 
@@ -355,7 +388,7 @@ var ScreensView = Backbone.View.extend({
 		 //determine if slide attempt is past start and end
 			isPastBounds = 
 			  !this.index && this.deltaX > 0                          // if first slide and slide amt is greater than 0
-			  || this.index == this.numSlides - 1 && this.deltaX < 0;    // or if last slide and slide amt is less than 0
+			  || this.index == this.numSlides-1 && this.deltaX < 0;    // or if last slide and slide amt is less than 0
 
 		
 		// if not scrolling vertically

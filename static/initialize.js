@@ -32,7 +32,7 @@ if (user.mobile){
 var ACCESS_CODE = '1111';
 
 CONF={
-	'api-host' : 'http://192.168.1.107:8080'	
+	'api-host' : 'http://api.webitap.com'	
 }
 
 var FACEBOOK_POST= getQueryVariable('post_id');

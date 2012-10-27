@@ -45,8 +45,8 @@ var LoadingView = Backbone.View.extend({
 		this.token = $.ajax({type:"GET", url:CONF['api-host']+"/org_token?org_code="+code, async: false});
 		this.token = this.token.responseText;
 			
-		var screensCollection = new Screens([],{token: this.token}); // initialize screenCollection with org token
-		var screensView = new ScreensView({collection:screensCollection}); // initialize sceensView
+		var screensCollection = new Screens([],{token: this.token, code:code}); // initialize screenCollection with org token
+		var screensView = new ScreensView({collection:screensCollection, code: code}); // initialize sceensView
 		
 		screensCollection.fetch({
 		  success : function(screens) {

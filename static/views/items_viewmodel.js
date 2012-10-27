@@ -98,6 +98,26 @@ var ItemsView = Backbone.View.extend({
 		  setStarsRating('[data-token="'+id+'"] .star', Item.get('rating'));
 		}, this);
 		//return this;
+		
+		// append spacer after last item
+		$('#scroller'+this.model.get('token')+' .scrollableContent').append('<div class="bottomListSpacer" style="height:'+size.height*0.1+'px;"></div>');
+		
+		var that = this;
+		// add video if needed. Check if screen token is in screen_video list
+		API.get('video?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
+			if(res){
+				$('#scroller'+that.model.get('token')+' .scrollableContent').prepend('<div class="video"></div>');
+				$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="coffee_video" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
+				$('#scroller'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
+				$('#scroller'+that.model.get('token')+' .video').css('width',size.width+'px');
+				
+				function onYouTubeIframeAPIReady() {
+				  window.video = new YT.Player('coffee_video');
+				}	
+			}
+		});
+		// turn on iscroll for this screen
+		new iScroll(this.model.get('token'), {vScrollbar:false});
 	},
 });
 
@@ -118,7 +138,7 @@ var ItemView = Backbone.View.extend({
 		
 	},
 	render: function(id){
-		data = {'token':this.model.get('token'), 'title':this.model.get('title'), 'imgPath':this.model.get('imgPath'), 'description':this.model.get('description'), 'price':this.model.get('price')};		
+		data = {'token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'description':this.model.get('description'), 'price':this.model.get('price')};		
 		var that = this;
 		// render item and append to screen
 		dust.render("itemView", data, function(err, out) {

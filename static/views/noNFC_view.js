@@ -327,13 +327,18 @@ var noNFCView = Backbone.View.extend({
 					var token = this.validate();
 					if(token && token!='Bad Request'){
 						
+						var code = "";
+						$('.input').each(function(){
+							code = code + $(this).html();					  
+						});
+						
 						this.animationOn = 1;
 						this.animateLogo();
 						
 						//setTimeout - so that the last digit appears on screen
 						setTimeout(function(){
 							var screensCollection = new Screens([],{token: token});
-							var screensView = new ScreensView({collection:screensCollection});
+							var screensView = new ScreensView({collection:screensCollection, code: code});
 							
 							screensCollection.fetch({
 							  success : function(screens) {

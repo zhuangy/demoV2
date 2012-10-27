@@ -21,7 +21,7 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
-		data = {'item_token':this.model.get('token'), 'title':this.model.get('title'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description')};
+		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description')};
 		console.log(data);
 		var that = this;
 		// render item and append to screen
@@ -54,7 +54,7 @@ var ItemDetailedView = Backbone.View.extend({
 		$('#backButton').css('display', 'block');
 		
 		//adjust height of item-content div
-		var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
+		var h = $('#overlay').height() - $('#overlay #name').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
 		$('#item-content').css('height', h+'px');
 		
 		new iScroll('item-content', {vScrollbar:false});
