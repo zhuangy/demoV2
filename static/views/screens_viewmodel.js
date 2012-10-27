@@ -150,7 +150,7 @@ var ScreensView = Backbone.View.extend({
 		screenView.render(0);
 		*/
 		// RENDER FIRST 2 SCREENS
-		for (i=0; i<2; i++){
+		for (i=0; i<3; i++){
 			if(this.collection.models[i].get('type')=='menu_list'){
 				var screenView = new ScreenView({model:this.collection.models[i]});
 				screenView.render(i);
@@ -291,13 +291,13 @@ var ScreensView = Backbone.View.extend({
 			setTimeout(function(){
 				console.log(index);
 				if(that.collection.models[index+1].get('type')=='menu_list'){
-					var screenView = new ScreenView({model:that.collection.models[index+1]});
-					screenView.render(index+1);
+					var screenView = new ScreenView({model:that.collection.models[index+2]});
+					screenView.render(index+2);
 					that.length++;
 				}
 				else if (that.collection.models[index+1].get('type')=='splash'){
 					var frontscreenView = new FrontScreenView({model:that.collection.models[index+1]});
-					frontscreenView.render(index+1);	
+					frontscreenView.render(index+1);
 				}
 				
 				/*
