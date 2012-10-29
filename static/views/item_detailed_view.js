@@ -54,7 +54,7 @@ var ItemDetailedView = Backbone.View.extend({
 		$('#backButton').css('display', 'block');
 		
 		//adjust height of item-content div
-		var h = $('#overlay').height() - $('#overlay #name').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
+		var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
 		$('#item-content').css('height', h+'px');
 		
 		new iScroll('item-content', {vScrollbar:false});

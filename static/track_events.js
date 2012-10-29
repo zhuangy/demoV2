@@ -12,7 +12,7 @@ function checkUserAgent(){
 	  }
 }
  
-checkUserAgent(); !!!!!!!!!!!!
+//checkUserAgent(); !!!!!!!!!!!!
 
 /*
 	Store all events as TAPs or LOGINs
@@ -74,7 +74,7 @@ else if(!tag_id && !code && !post_id){
 if(data && Browsers.device.type!='desktop'){
 	$.ajax({
 		type:"POST",
-		url:"http://192.168.1.102:8080/event_create", 
+		url:"http://"+CONF['api-host']+"/event_create", 
 		data:JSON.stringify(data), 
 		success:function(res){console.log(res)}
 	});
