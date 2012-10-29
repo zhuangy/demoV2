@@ -273,6 +273,7 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	slide: function(index, duration, direction){
+		console.log('slide:  ' + index + ' ' + direction);
 		// fallback to default speed
 		if (duration == undefined) {
 			duration = this.speed;
@@ -283,35 +284,36 @@ var ScreensView = Backbone.View.extend({
 		$('#header_view').css({'webkitTransitionDuration':duration+'ms',
 						 'webkitTransform': 'translate3d(' + -(index * size.width/2) + 'px,0,0)'});
 
-		
-		this.index = index;
-		console.log($('#screens_view').children('.col').length);
-		  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#menu_view').children().length<this.numSlides){
-			var that = this; 
-			setTimeout(function(){
-				console.log(index);
-				if(that.collection.models[index+1].get('type')=='menu_list'){
-					var screenView = new ScreenView({model:that.collection.models[index+4]});
-					screenView.render(index+4);
+		if (this.index != index){
+			this.index = index;
+			console.log($('#screens_view').children('.col').length);
+			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#menu_view').children().length<this.numSlides){
+				var that = this; 
+				setTimeout(function(){
+					console.log(index);
+					if(that.collection.models[index+1].get('type')=='menu_list'){
+						var screenView = new ScreenView({model:that.collection.models[index+4]});
+						screenView.render(index+4);
+						that.length++;
+					}
+					else if (that.collection.models[index+1].get('type')=='splash'){
+						var frontscreenView = new FrontScreenView({model:that.collection.models[index+1]});
+						frontscreenView.render(index+1);
+					}
+					
+					/*
+					// load next screen
+					var screenView = new ScreenView({model:that.collection.models[index]});
+					screenView.render(index);
 					that.length++;
-				}
-				else if (that.collection.models[index+1].get('type')=='splash'){
-					var frontscreenView = new FrontScreenView({model:that.collection.models[index+1]});
-					frontscreenView.render(index+1);
-				}
-				
-				/*
-				// load next screen
-				var screenView = new ScreenView({model:that.collection.models[index]});
-				screenView.render(index);
-				that.length++;
-				*/
-				//that.loadNextScreen(index, that.numSlides)
-			},301);
-
-		  }
-		if (this.index!=1){
-			//window.video.stopVideo();	 !!!!!!!!!!VIDEOO
+					*/
+					//that.loadNextScreen(index, that.numSlides)
+				},301);
+	
+			  }
+			if (this.index!=1){
+				//window.video.stopVideo();	 !!!!!!!!!!VIDEOO
+			}
 		}
 	},
 	
