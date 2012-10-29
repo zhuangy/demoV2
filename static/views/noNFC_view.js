@@ -224,6 +224,8 @@ var noNFCView = Backbone.View.extend({
 			code = code + $(this).html();					  
 		});
 		
+		CONF['code'] = code;
+		
 		// check if this code exists
 		token = $.ajax({type:"GET", url:CONF['api-host']+"/org_token?org_code="+code, async: false});
 		
