@@ -97,6 +97,9 @@ var ScreensView = Backbone.View.extend({
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen', 'openOverlay');
 		
+		//post event to database
+		saveEvent();
+		
 		//this.ScreenCollection = new Screens();
 		this.screenView = new Object();
 		
@@ -111,6 +114,7 @@ var ScreensView = Backbone.View.extend({
 		this.ended = 1;
 		
 		this.code = this.options.code;
+		
 		
 	},
 	
@@ -149,8 +153,9 @@ var ScreensView = Backbone.View.extend({
 		var screenView = new ScreenView({model:this.collection.models[0]});
 		screenView.render(0);
 		*/
-		// RENDER FIRST 2 SCREENS
-		for (i=0; i<5; i++){
+		
+		// RENDER INITIAL SCREENS
+		for (i=0; i<3; i++){
 			if(this.collection.models[i].get('type')=='menu_list'){
 				var screenView = new ScreenView({model:this.collection.models[i]});
 				screenView.render(i);
@@ -287,18 +292,18 @@ var ScreensView = Backbone.View.extend({
 		if (this.index != index){
 			this.index = index;
 			console.log($('#screens_view').children('.col').length);
-			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#menu_view').children().length<this.numSlides){
+			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides){
 				var that = this; 
 				setTimeout(function(){
 					console.log(index);
-					if(that.collection.models[index+1].get('type')=='menu_list'){
-						var screenView = new ScreenView({model:that.collection.models[index+4]});
-						screenView.render(index+4);
+					if(that.collection.models[index+2].get('type')=='menu_list'){
+						var screenView = new ScreenView({model:that.collection.models[index+2]});
+						screenView.render(index+2);
 						that.length++;
 					}
-					else if (that.collection.models[index+1].get('type')=='splash'){
-						var frontscreenView = new FrontScreenView({model:that.collection.models[index+1]});
-						frontscreenView.render(index+1);
+					else if (that.collection.models[index+2].get('type')=='splash'){
+						var frontscreenView = new FrontScreenView({model:that.collection.models[index+2]});
+						frontscreenView.render(index+2);
 					}
 					
 					/*
