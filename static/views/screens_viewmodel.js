@@ -292,7 +292,7 @@ var ScreensView = Backbone.View.extend({
 		if (this.index != index){
 			this.index = index;
 			console.log($('#screens_view').children('.col').length);
-			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides){
+			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#screens_view').children('.col').length<this.index+3 ){
 				var that = this; 
 				setTimeout(function(){
 					console.log(index);
