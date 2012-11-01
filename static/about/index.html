@@ -16,96 +16,112 @@
     <link rel="stylesheet"	href="about.css"/>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBPkyV2p6F75FuQyCA538R9S8umQAqJuNI&sensor=true&&region=US"></script>   
 	<script type="text/javascript" src="googlemapapi.js"></script>
-    <script type="text/javascript">
-    function resize(){
-    	console.log("resize");
-    	var width=$(window).innerWidth();
-    	if(width<918) width=918;
-    	$('body').css("width",width+"px");
-    	$('.banner_container').css("width",width);
-    	$('body').css("font-size",width/80+"px");
-    	$('.banner_container').css("height",width/1376*177);
-    	$('.top_menu').css("height",width/1376*177);
-    	
+	<script src="../lib/jquery.tools.min.js"></script>
     
-    };
-    
-    
-    
-    
-	$(document).ready(function(e) {
-		resize();
-		$(window).resize(function() {
-			resize();
-		});
-		$.ajax({  
-			   type: "GET",  
-			   url: "home.html",
-			   success: function(msg){          
-				 $("#content").html(msg); 
-				   
-			   }  
-			 });
-		
-		$('.home_button').click(function()
-		{
-			$.ajax({  
-			   type: "GET",  
-			   url: "home.html",
-			   success: function(msg){          
-				 $("#content").html(msg); 
-				   
-			   }  
-			 });
-		
-		});
-        $(".top_menu li div").click(function()
-		{
-			var url=$(this).attr("href");
-			$.ajax({  
-			   type: "GET",  
-			   url: url,
-			   success: function(msg){          
-				 $("#content").html(msg); 
-				   
-			   }  
-			 }).done(
-			
-			 );
-		});
-    });
-
-
 	
-
+	<script type="text/javascript">
+		function resize(){
+			console.log("resize");
+			var width=$(window).innerWidth();
+			if(width<918) width=918;
+			$('body').css("width",width+"px");
+			$('.banner_container').css("width",width);
+		};
+	
+		$(document).ready(function(e) {
+			resize();
+			$(window).resize(function() {
+				resize();
+			});
+			$.ajax({  
+				   type: "GET",  
+				   url: "home.html",
+				   success: function(msg){          
+					 $("#content").html(msg); 
+					   
+				   }  
+				 });
+			
+			$('.home_button').click(function()
+			{
+				$.ajax({  
+				   type: "GET",  
+				   url: "home.html",
+				   success: function(msg){          
+					 $("#content").html(msg); 
+					 
+				   }  
+				 });
+			
+			});
+			$(".top_menu li div").click(function()
+			{
+				var url=$(this).attr("href");
+				$.ajax({  
+				   type: "GET",  
+				   url: url,
+				   success: function(msg){          
+					 $("#content").html(msg); 
+					   
+				   }  
+				 }).done(
+				
+				 );
+			});
+			
+			/*
+			$('body').click(function(event){
+				if (event.target.id!="watch_video"){
+					player.stopVideo();
+					$('#video-popup').fadeOut(1000);
+				}
+				else{
+					console.log('play vid');
+					// Start player
+					var player;
+					function onYouTubeIframeAPIReady() {
+					  player = new YT.Player('player');
+					}
+					
+					$('#video-popup').fadeIn(1000, function(){
+						player.playVideo();
+					});
+				}
+			});
+			*/
+			
+			
+		});
     </script>
+    
     </head>
+    
     <body >
-<div class="banner_container"> <img class="banner" src="img/top_banner.png" />
-      <div class="top_container">
-    <div class="home_button"></div>
-    <div class="top_menu">
-          <ul>
-        <li>
-              <div href="login.html">Login</div>
-            </li>
-        <li>
-              <div href="businesses.html">Businesses</div>
-            </li>
-        <li>
-              <div href="about.html">About</div>
-            </li>
-        <li>
-              <div href="locations.html">Locations</div>
-            </li>
-      </ul>
+		<div class="banner_container"> 
+            <div class="top_container">
+                <div class="home_button"></div>
+                <div class="top_menu">
+                    <ul>
+                        <li>
+                              <div href="login.html">Login</div>
+                        </li>
+                        <li>
+                              <div href="businesses.html">Businesses</div>
+                        </li>
+                        <li>
+                              <div href="about.html">About</div>
+                        </li>
+                        <li>
+                              <div href="locations.html">Locations</div>
+                        </li>
+                   </ul>
+               </div>
+               <div style="clear:both;"></div>
+           </div>
+           <div style="clear:both;"></div>
         </div>
-    <div style="clear:both;"></div>
-  </div>
-      <div style="clear:both;"></div>
-    </div>
-</div>
-<div id="content"></div>
-<div class="footer content"> &copy; WebiTap 2012. Contact us at webitap@gmail.com </div>
-</body>
+        
+        <div id="content"></div>
+        <div class="footer content"> &copy; WebiTap 2012. Contact us at webitap@gmail.com </div>
+    </body>
 </html>

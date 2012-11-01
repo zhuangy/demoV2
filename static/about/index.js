@@ -1,6 +1,6 @@
-
-$(document).ready(function() {
-    // Set sizes
+//$(document).ready(function() {
+/*
+// Set sizes
 	var w = $('body').width();
 	w = w*0.90;
 	$('.slideshow_container').css('width', w + 'px');
@@ -27,16 +27,21 @@ $(document).ready(function() {
 	});
 });
 
-// Start player
-var player;
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player');
-}
+*/
+
+
 
 // play video
      $(document).ready(function() {
-	
+		
+		// Start player
+		var player;
+		function onYouTubeIframeAPIReady() {
+		  player = new YT.Player('player');
+		}
+		
 		$('#click').click(function() {
+								   console.log('play vid');
 			$('#video-popup').fadeIn(1000, function(){
 			  		player.playVideo();
 			 });

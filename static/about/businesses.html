@@ -2,12 +2,66 @@
 <div class="business_slideshow">
             <img src="img/Business Page 1.png" />
             <img src="img/Business Page 2.png" />
+			<img src="img/Business Page 3.png" />
+			<img src="img/Business Page 4.png" />
 			
 </div>
 <div id="phone_shell">
 	<img src="img/phone.png" />
 </div>
-<div>
+
+</div>
+<!--REQUEST DEMO BUTTON -->
+<!--
+<div id="request_demo_button">
+	<img width="240"height="59.2"style="cursor:pointer"src="img/request_demo_button.jpg" rel="#mies1"/>
+</div>
+--> 
+<div class="simple_overlay" id="mies1">
+	<form  class="request_name_form"autocomplete="on">
+		<div class="request_name_label">First name:</div><input class="request_name_input" type="text" name="fname"><br>
+		<div class="request_name_label">Last name: </div><input  class="request_name_input" type="text" name="lname"><br>
+		<div class="request_name_label">E-mail:</div> <input   class="request_name_input" type="email" name="email" autocomplete="off"><br>
+		<input type="submit">
+	</form>
+	
+</div>
+	
+<img class="horizonLine"src="img/thinShadow.png" />
+<div id="businessText" >
+	
+    <!--
+	
+    <div class="aboutWebi_block"">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
+    </div>
+	<div class="aboutWebi_block">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
+    </div>
+	<div style="clear:both"></div>
+	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
+    <div class="aboutWebi_row">
+        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img2.png" style="width:100%;position:relative"/> </div>
+        <div class="aboutWebi_block" style="padding-top:10%;">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.</span>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+	<img class="horizonLine"src="../img/webitap/about-horizon.png" />
+    <div class="aboutWebi_row">
+        <div class="aboutWebi_block" >Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
+        </div>
+        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img1.png" style="width:100%;position:relative;" /> </div>
+        <div style="clear:both"></div>
+    </div>
+	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
+    
+    <div class="aboutWebi_row">
+        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img2.png" style="width:100%;position:relative"/> </div>
+        <div class="aboutWebi_block" style="padding-top:10%;">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.</span>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
+</div>
+ -->
 <script type="text/javascript">
 	$(document).ready(function(e) {
 	$('.business_slideshow').cycle({
@@ -16,4 +70,5 @@
 		timeout: 4000
 	});
 	})
+	 $("img[rel]").overlay();
 </script>

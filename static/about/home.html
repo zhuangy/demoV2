@@ -15,7 +15,7 @@
 	});
 	})
 	</script>
-<div id="click"></div>
+<div id="watch_video"></div>
 <div id="socialMedia"> <a href="http://www.facebook.com/webitap" TARGET="_blank"><img src="img/facebook.png" title="Visit us on Facebook" width="50px" border="0"/></a> <a href="http://twitter.com/WebiTap" TARGET="_blank"><img src="img/twitter.png" title="Visit us on Twitter" alt="twitter" width="51px" border="0"/></a> </div>
 <div style="position:absolute; top:0; left:0; width:100%;">
   <div id="video-popup">
@@ -24,3 +24,23 @@
     </div>
   </div>
 </div>
+
+<script>
+// Start player
+var player = new YT.Player('player');
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player');
+}
+$('body').click(function(event){
+	if (event.target.id!="watch_video"){
+		player.stopVideo();
+		$('#video-popup').fadeOut(1000);
+	}
+	else{
+		console.log('play vid');
+		$('#video-popup').fadeIn(1000, function(){
+			player.playVideo();
+		});
+	}
+});
+</script>

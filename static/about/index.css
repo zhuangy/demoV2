@@ -31,6 +31,12 @@ body{
 	margin-top:120px;
 	padding-bottom:100px;
 }
+#content{
+	width:918px;
+	margin:auto;
+	z-index:-1;
+	margin-top:130px;
+}
 .page_container{
 	
 	
@@ -41,13 +47,12 @@ body{
 	position:fixed;
 	z-index:10;
 	top:0;
-}
+	height:151.2px;
 
-.banner_container img{
-	
-	position:absolute;
-	width:100%;
-	z-index:-5;	
+	background-image:url(img/top_banner.png);
+	background-size:2310.7px 151.2px;
+	background-position:center center; 
+	background-repeat: no-repeat;
 }
 
 .logo_container{
@@ -93,10 +98,9 @@ img.logo{
 }
 
 #video-popup{
-	width:100%;
-	height:335px;
+	width:900px;
+	height:500px;
 	margin:auto;
-	margin-top:60px;
 	background:rgba(255, 255, 255, 0.7);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff);
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff)";
@@ -105,7 +109,7 @@ img.logo{
 
 #video-placer{
 	width:516px;
-	height:315px;
+	height:330px;
 	margin:auto;
 	padding:10px;
 }
@@ -121,7 +125,7 @@ img.logo{
 	margin-top:20px;
 }
 
-#click{
+#watch_video{
 	width:200px;
 	height:70px;
 	margin:auto;
@@ -133,7 +137,7 @@ img.logo{
 	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/play.png',sizingMethod='scale')";
 }
 
-#click:hover{
+#watch_video:hover{
 	background-image: url("img/play_hover.png");
 	background-size: 100%;
 	cursor: pointer;
@@ -155,23 +159,20 @@ img.logo{
 	
 	
 .top_menu {
-	margin-top: auto;
-	width:35%;
-	float: right;
-	margin-right: 15%;
-	z-index:0;
-	height: 100%;
-	top: 10%;
+       margin-top: auto;
+       width:544px;
+       position:absolute;
+       left: 50%;
+       z-index:0;
+       margin-left: -60px;
+       
 }
 
 .top_menu ul{
-	list-style-type: none;
-	float:right;
-	width:100%;
-	
-	
+       list-style-type: none;
+       float:right;
+       width:100%;        
 }
-
 .top_menu li {
 	float: right;
 	width:25%;
@@ -188,13 +189,13 @@ img.logo{
 		font-family:Gotham_Light;
 }
 .top_menu ul div:hover {
-	color:#000;
+	text-shadow: 0px 0px 5px #72CDF9;
 	cursor:pointer;
 }
 .map_page{
-	padding-top:12%;
+	padding-top:3%;
 	z-index:-1;
-	width:80%;
+	width:90%;
 	margin:auto;
 	
 }
@@ -234,7 +235,7 @@ img.logo{
 	width:47%;
 	padding:0;
 	float:right;
-	height:500px;
+	height:400px;
 	margin-left:3%;
 	
 }
@@ -281,8 +282,9 @@ img.logo{
 	margin:0;
 	width:60%;	
 	float:left;
-	margin-top:7%;
-	font-size:0.81em;
+	margin-top:8%;
+	font-size:0.75em;
+	font-family: Gotham_Light;
 	
 	
 }
@@ -321,6 +323,8 @@ img.logo{
 	padding:4% 2%;
 	height:100%;
 	text-align:center;
+	color:#cd4314;
+	font-family: Gotham_Bold;
 }
 #business_slideshow_container{
 	width:900px;
@@ -331,7 +335,7 @@ img.logo{
 	z-index:-2;
 	padding:50px;
 	overflow:hidden;
-	margin-bottom:5%;
+	margin-bottom:0;
 }
 .business_slideshow{
 	width:100%;
@@ -351,9 +355,85 @@ img.logo{
 	height:102%;
 	right:5%;
 	top:1%;
-	z-index:3;
+	z-index:10;
 }
 #phone_shell img{
 	width:100%;
 	height:100%
 }
+#businessText{
+	//width:100%;
+	//height:100%;
+	padding:0;
+	margin:auto;
+	font-family: GothamLight;
+	width:900px;
+	text-align:center;
+}
+.simple_overlay {
+ 
+    /* must be initially hidden */
+    display:none;
+ 
+    /* place overlay on top of other elements */
+    z-index:10000;
+ 
+    /* styling */
+    background-color:#333;
+	opacity:0.8;
+    width:675px;
+    min-height:400px;
+    border:1px solid #666;
+	color: #fff;
+	text-align:center;
+	padding-top:100px;
+	font-size:25px;
+	font-family:Gotham_Light;
+    /* CSS3 styling for latest browsers */
+    -moz-box-shadow:0 0 90px 5px #000;
+    -webkit-box-shadow: 0 0 90px #000;
+}
+ 
+/* close button positioned on upper right corner */
+.simple_overlay .close {
+    background-image:url(img/close.png);
+    position:absolute;
+    right:-15px;
+    top:-15px;
+    cursor:pointer;
+    height:35px;
+    width:35px;
+}
+  .details {
+  position:absolute;
+  top:15px;
+  right:15px;
+  font-size:11px;
+  color:#fff;
+  width:150px;
+  }
+ 
+.details h3 {
+  color:#aba;
+  font-size:15px;
+  }
+ #request_demo_button{
+	margin:auto;
+	text-align:center;
+	top:-70px;
+	position:relative;
+ 
+ 
+ }
+ .request_name_label{
+	width:200px;
+	float: left;
+ }
+ .request_name_input{
+ 	width:200px;
+ 	float: left;
+ }
+ .request_name_form{
+ 	padding-left: 100px;
+ 	padding-right: 100px;
+ }
