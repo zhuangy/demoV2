@@ -2,9 +2,9 @@ var ItemDetailedView = Backbone.View.extend({
 	el: '#overlay',
 	
 	events: {
-		"tap #itemComments_button":"showComments",
-		"tap #itemDescription_button":"showDescription",
-		"tap #addComment":"showCommentForm"
+		"touchstart #comments_touch":"showComments",
+		"touchstart #description_touch":"showDescription",
+		"touchstart #addComment":"showCommentForm"
 	},
 	
 	initialize: function(){

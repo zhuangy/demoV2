@@ -43,6 +43,10 @@
 	height:8%;
 }
 
+#commentBar_touchArea{
+	height:10%;
+}
+
 #enterCommentOverlay{
 	border: 5px solid rgba(30,30,30,0.6);
 	margin: 3% 2% 0% 2%;

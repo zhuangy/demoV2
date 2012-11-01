@@ -3,9 +3,9 @@ var AddCommentForm = Backbone.View.extend({
 	
 	el: '#enterCommentOverlay',
 	events: {
-		"click #addComment_button" : "addComment",
-		"click #cancelComment_button" : "cancelComment",
-		"click .enterComment_stars": "rate",
+		"touchstart #addComment_button" : "addComment",
+		"touchstart #cancelComment_button" : "cancelComment",
+		"touchstart .enterComment_stars": "rate",
 		"focus #rating_title_text": "typeNameEvent",
 		"blur #rating_title_text": "stopTypeName",
 		"focus #rating_field_text": "typeTextEvent",

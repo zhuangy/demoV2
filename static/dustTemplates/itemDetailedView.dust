@@ -20,6 +20,11 @@
 	<div style="clear:both"></div>
  </div>
  
+ <div id="commentBar_touchArea">
+ 	<div id="description_touch"></div>
+	<div id="comments_touch"></div>
+ </div>
+ 
  <!--<table id="comment_topBar" cellspacing="0px">
 	 <tr>
 		<td id="itemDescription_button" class="selected left">DESCRIPTION</td>

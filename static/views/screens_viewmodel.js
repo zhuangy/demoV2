@@ -89,13 +89,12 @@ var ScreensView = Backbone.View.extend({
 		"mouseup":"ontouchend",
 		"touchstart":"ontouchstart",
 		"touchmove":"ontouchmove",
-		"touchend":"ontouchend",
-		//"click":"openOverlay"
+		"touchend":"ontouchend"
 	},
 	
 	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen', 'openOverlay');
+		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen');
 		
 		//post event to database
 		saveEvent();
@@ -243,33 +242,7 @@ var ScreensView = Backbone.View.extend({
 			this.slide(this.index-1, 300, 1);
 		}
 	},
-	
-	openOverlay: function(ev){
-		console.log('you tapped');
-		ev = ev.originalEvent.touches ? ev.originalEvent.touches[0] : ev;
-		
-		// find token of tapped item
-		var $li = $(ev.target).closest('li');
-		var cl = $li.attr('class');
-		var tapped_token = $li.attr('data-token');
-		console.log(tapped_token);
-		
-		// detect which menu sreen was tapped
-		var $div = $(ev.target).parent().closest('div[id]');
-		var idstr = $div.attr('id');
-		var screenNum = idstr.substr(8)
-		
-		// search through corresponding items collection to find model with this token
-		this.screenView[screenNum].collection.each(function(item) {
-			if (item.get('token') == tapped_token){
-				console.log(item.get('token'));
-				var itemOverlay = new ItemDetailedView({model:item});
-				itemOverlay.render();
-				// initialize overlay veiew with this model
-			}
-		});
-	},
-	
+
 	loadNextScreen: function(index, length){
 		//render next screen
 		var screenView = new ScreenView({model:this.collection.models[index]});
@@ -322,7 +295,8 @@ var ScreensView = Backbone.View.extend({
 		}
 	},
 	
-	ontouchstart: function(e){
+	ontouchstart: function(e){	
+		
 		console.log('touchstart');
 		this.start = {
 		  // get touch coordinates for delta calculations in onTouchMove
@@ -332,7 +306,27 @@ var ScreensView = Backbone.View.extend({
 		  // set initial timestamp of touch sequence
 		  time: Number( new Date() )
 		};
-
+		
+		
+		// Display touch response image..
+		/*
+		t=document.createElement("img");
+		document.body.appendChild(t);
+		t.setAttribute('id','haha');
+		//t.setAttribute('src','img/trackButton.gif');
+		t.setAttribute('src','img/ajax-loader-1.gif');
+		//$("#haha").html("haha");
+		$("#haha").css("position","absolute");
+		$("#haha").css("top",this.start.pageY*0.95);
+		$("#haha").css("left", this.start.pageX*0.95);
+		$("#haha").css("z-index",100);
+		$("#haha").css("opacity",1);
+		$("#haha").css("width","8%");
+		setTimeout(function(){
+			$("#haha").remove();
+		},1000);
+		*/
+		
 		// used for testing first onTouchMove event
 		this.isScrolling = undefined;
 		
@@ -348,6 +342,9 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	ontouchmove: function(e){
+		// remove touch response image
+		$("#haha").remove();
+		
 		if (this.ended) return;
 		// ensure swiping with one touch and not pinching
 		if((e.originalEvent.touches && e.originalEvent.touches.length > 1) || e.scale && e.scale !== 1) return; 
