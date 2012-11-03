@@ -214,16 +214,22 @@ img.logo{
 	
 }
 .map_left_container{
-	margin:0;
-	width:43%;
-	padding:2%;
+	
 	float:left;
+	width:47%;
+	margin:0;
 	margin-right:3%;
+	
+}
+.left_item{
+	margin:0;
+	width:100%;
+	padding:2%;
 	height:100%;
 	background-image:url(img/location_item.png);
 	background-size:cover;
-	
-	
+	margin-bottom: 10px;
+	cursor: pointer;
 }
 .map_left_container .left_title{
 	font-size:200%;
