@@ -94,7 +94,7 @@ var ScreensView = Backbone.View.extend({
 	
 	initialize: function() {
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen');
+		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen', 'viewCart');
 		
 		//post event to database
 		saveEvent();
@@ -187,7 +187,7 @@ var ScreensView = Backbone.View.extend({
 	viewCart: function(){
 		console.log('view cart');
 		//render #cartView
-		var cartView = new CartView({collection:CART});
+		var cartView = new CartView({collection:CART, token:this.collection.token});
 		$('#cartView').html(cartView.render().el);
 		$('#cartView').css('display', 'block');
 		$('#backButton').css('display', 'block');

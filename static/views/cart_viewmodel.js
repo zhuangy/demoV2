@@ -40,16 +40,32 @@ var CartItemView = Backbone.View.extend({
 var CartView = Backbone.View.extend({
 	tagName: "ul",
 	className: "cart_list",
+	events: {
+		"click .submitCart"	: "submit_cart"
+	},
 	initialize: function(){
-		_.bindAll(this, 'render');
+		_.bindAll(this, 'render', 'submit_cart');
 	},
 	render: function(){
 		this.collection.each(function(Item) {
 		  var cartItemView = new CartItemView({ model:Item, collection:this.collection });
 		  $(this.el).append(cartItemView.render().el);
 		},this);
+		
+		$(this.el).append('<div class="submitCart">Submit</div>');
 		return this;
+	},
 	
+	submit_cart: function(){
+		var postObj = JSON.stringify(this.collection.models);
+		$.ajax({
+			type:"POST",
+			url: "http://192.168.1.106:8080/cart_submit?org_token="+this.options.token,
+			data: postObj, 
+			headers: {'Authorization': 'Basic bWFzaGE6MTIzNDU='},
+			success:function(res){console.log(res);},
+			error: function(err){console.log(err);}
+		});
 	}
 	
 });

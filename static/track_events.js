@@ -12,7 +12,7 @@ function checkUserAgent(){
 	  }
 }
  
-checkUserAgent(); // !!!!!!!!!!!!
+//checkUserAgent(); // !!!!!!!!!!!!
 
 /*
 	Store all events as TAPs or LOGINs
@@ -68,7 +68,6 @@ function saveEvent(){
 		var data = {'type':type, 'code':code, 'user_agent':user_agent, 'cookie_id':cookie_id};
 	}
 	
-	console.log(CONF['api-host']);
 	
 	// post event to database !!!!!!!!!!!!!!!!!!!!!!
 	if(data && Browsers.device.type!='desktop'){
