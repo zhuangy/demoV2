@@ -11,6 +11,7 @@
 	<img class="itemDetailstar"/>
 		
 	<div class="price" style="font-size: 1.3em;">${price}</div>
+	<div class="add_to_cart">+</div>
 </div>
 
 <!--Description and Comments -->

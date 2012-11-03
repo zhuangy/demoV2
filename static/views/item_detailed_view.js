@@ -4,12 +4,13 @@ var ItemDetailedView = Backbone.View.extend({
 	events: {
 		"touchstart #comments_touch":"showComments",
 		"touchstart #description_touch":"showDescription",
-		"touchstart #addComment":"showCommentForm"
+		"touchstart #addComment":"showCommentForm",
+		"click .add_to_cart": "addItemToCart"
 	},
 	
 	initialize: function(){
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'makeMeVisible', 'showComments', 'showCommentForm', 'showDescription', 'updateRating');
+		_.bindAll(this, 'render', 'makeMeVisible', 'showComments', 'showCommentForm', 'showDescription', 'updateRating', 'addItemToCart');
 		
 		this.model.bind('change', this.updateRating);
 		window.scroll(0,1);
@@ -116,5 +117,14 @@ var ItemDetailedView = Backbone.View.extend({
 	showCommentForm: function(){
 		var commentForm = new AddCommentForm({model:this.model, collection : this.commentsCollection, token: this.model.get('token')});
 		$('#enterCommentOverlay').css('display', 'block');
+	}, 
+	
+	/*
+		Add Current Ito to users cart
+	*/
+	addItemToCart: function(){
+		CART.add(this.model);
+		alert(this.model.get('name') + ' added to cart!');
+		console.log(CART.models);
 	}
 });

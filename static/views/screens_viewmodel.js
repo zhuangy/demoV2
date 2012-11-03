@@ -114,26 +114,28 @@ var ScreensView = Backbone.View.extend({
 		
 		this.code = this.options.code;
 		
-		
+		// Global Cart Collection
+		CART =new Cart();
 	},
 	
 	render : function() {
 		//$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div id="header"><div id="header_view"></div></div><div id="headerBlur"></div>');
-		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
+		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="cartButton">C</div><div id="homeButton"></div></div>');
 		
 		// Navigation screen
 		if (!FACEBOOK_POST) {
 			$('[data-role="page"]').append('<div id="navigationOverlay"></div>'); // navigation overlay screen
 		}
 		
+		// Bind Events
 		$("#homeButton").click(this.tap_home);
 		$("#backButton").click(this.tap_back);
+		$("#cartButton").click(this.viewCart);
 		$('#navigationOverlay').bind('touchstart', function(ev){
 			$('#navigationOverlay').remove();
 		});
-		// header - swipe on tap
-		$('#headerBlur').click(this.tap_header);
+		$('#headerBlur').click(this.tap_header); // header - swipe on tap
 		
 		this.numSlides = this.collection.length;
 		
@@ -182,6 +184,15 @@ var ScreensView = Backbone.View.extend({
 		},800);
 	},
 	
+	viewCart: function(){
+		console.log('view cart');
+		//render #cartView
+		var cartView = new CartView({collection:CART});
+		$('#cartView').html(cartView.render().el);
+		$('#cartView').css('display', 'block');
+		$('#backButton').css('display', 'block');
+	},
+	
 	tap_home: function(){
 		console.log('button tap');
 		if ($('#overlay').css('display')=='none'){
@@ -211,12 +222,15 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	tap_back: function(){
-		if ($('#overlay').css('display')=='none') {
+		if ($('#overlay').css('display')=='none' && $('#cartView').css('display')=='none') {
 		  //$('#tap').css('display', 'block').html($(ev.target).attr('id'));
 		  this.slide(0, 300, -1);
 		}
 		else if($('#enterCommentOverlay').css('display')=='block'){
 			$('#enterCommentOverlay').css('display','none');
+		}
+		else if($('#cartView').css('display')=='block'){
+			$('#cartView').css('display','none');
 		}
 		else if ($('#overlay').css('display')=='block') {
 		  

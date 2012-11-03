@@ -29,11 +29,13 @@ if (user.mobile){
 	}
 }
 
-var ACCESS_CODE = '1111';
+//var ACCESS_CODE = '1111';
 
 CONF={
 	'api-host' : 'http://api.webitap.com'	
 }
+
+var CART; //initialize global cart variable
 
 var FACEBOOK_POST= getQueryVariable('post_id');
 
