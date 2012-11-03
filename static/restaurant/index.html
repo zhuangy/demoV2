@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Restauran Orders</title>
+
+<!--LIB -->
+<script src="../lib/jquery-1.7.1.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="../lib/backbone-min.js"></script>
+<script src="../lib/dust-core-1.0.0.js"></script>
+
+<script src="../lib/api.js"></script>
+
+<!--BACKBONE VIEMODELS -->
+<script src="../views/org_cart_viewmodel.js"></script>
+
+<script>
+$(document).ready(function (){
+	var cartsCollection = new Carts([],{token: '49453b62-8eda-4dcb-8f3a-4510d7d5f2dd'});
+	var cartListView = new CartListView({collection: cartsCollection});
+	
+	updateOrders = function(){
+		console.log('update');
+		cartsCollection.fetch({
+			success: function(carts){
+				$('#main').append(cartListView.render().el);
+			}
+		});
+		setTimeout(updateOrders, 5000);
+	}
+	
+	updateOrders();
+
+});
+</script>
+
+</head>
+
+<body>
+	<div id='main'></div>
+</body>
+</html>
