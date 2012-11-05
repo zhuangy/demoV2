@@ -64,7 +64,7 @@ var CartView = Backbone.View.extend({
 		
 		$.ajax({
 			type:"POST",
-			url: "http://192.168.1.106:8080/cart_submit",
+			url: "http://192.168.1.107:8080/cart_submit",
 			data: JSON.stringify(postObj), 
 			headers: {'Authorization': 'Basic bWFzaGE6MTIzNDU='},
 			success:function(res){

@@ -10,7 +10,7 @@ var Carts = Backbone.Collection.extend({
     this.token = options.token; // org_token
   },
   url : function() {
-    return "http://192.168.1.106:8080/cart_list?org_token="+this.token;
+    return "http://192.168.1.107:8080/cart_list?org_token="+this.token;
   }
 });
 
@@ -23,7 +23,7 @@ var CartItems = Backbone.Collection.extend({
     this.token = options.token; // org_token
   },
   url : function() {
-    return "http://192.168.1.106:8080/cart?cart_token="+this.token;
+    return "http://192.168.1.107:8080/cart?cart_token="+this.token;
   }
 });
 
