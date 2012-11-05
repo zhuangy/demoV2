@@ -888,3 +888,11 @@ textarea{
 	border: 5px solid rgba(30,30,30, .5);
 	margin: 3% 2% 0% 2%;
 }
+
+#cartView .submitCart{
+	width:40%;
+	text-align: center;
+	margin:2%;
+	background-color: #FFFFFF;
+	border: 2px solid black;
+}

@@ -57,15 +57,28 @@ var CartView = Backbone.View.extend({
 	},
 	
 	submit_cart: function(){
-		var postObj = JSON.stringify(this.collection.models);
+		//var postObj = JSON.stringify(this.collection.models);
+		var postObj = {org_token: this.options.token, tag_id: getQueryVariable('?tag_id'), user_id: getCookie('cookie_id'), cart_items: this.collection.models};
+		console.log(postObj);
+		console.log(JSON.stringify(postObj));
+		
 		$.ajax({
 			type:"POST",
-			url: "http://192.168.1.106:8080/cart_submit?org_token="+this.options.token,
-			data: postObj, 
+			url: "http://192.168.1.106:8080/cart_submit",
+			data: JSON.stringify(postObj), 
 			headers: {'Authorization': 'Basic bWFzaGE6MTIzNDU='},
-			success:function(res){console.log(res);},
+			success:function(res){
+				console.log(res);
+				alert('your cart was submitted!');
+				
+				$('#cartView').css('display', 'none');
+				$('#cartView').html('');
+				$('#backButton').css('display', 'none');
+				
+			},
 			error: function(err){console.log(err);}
 		});
+		
 	}
 	
 });

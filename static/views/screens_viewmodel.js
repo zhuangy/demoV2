@@ -61,7 +61,6 @@ var ScreenView = Backbone.View.extend({
 		var that = this;
 		itemsCollection.fetch({
 		  success : function(items) {
-			console.log(items);
 			itemsView.render();
 			//$('#scroller'+that.model.get('token')).html(itemsView.render().el); // inserts a <ul class='scrollableContent'>...list...</ul>
 		  },
@@ -265,7 +264,6 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	slide: function(index, duration, direction){
-		console.log('slide:  ' + index + ' ' + direction);
 		// fallback to default speed
 		if (duration == undefined) {
 			duration = this.speed;
@@ -278,11 +276,9 @@ var ScreensView = Backbone.View.extend({
 
 		if (this.index != index){
 			this.index = index;
-			console.log($('#screens_view').children('.col').length);
 			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#screens_view').children('.col').length<this.index+3 ){
 				var that = this; 
 				setTimeout(function(){
-					console.log(index);
 					if(that.collection.models[index+2].get('type')=='menu_list'){
 						var screenView = new ScreenView({model:that.collection.models[index+2]});
 						screenView.render(index+2);

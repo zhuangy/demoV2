@@ -47,6 +47,11 @@ var CartListView = Backbone.View.extend({
 	className: 'cart_list',
 	initialize: function(){
 		_.bindAll(this, 'render');
+		
+		this.collection.bind("add", function(Cart) {
+		  var cartView = new CartView({model:Cart});
+		  $(this.el).append(cartView.render().el);
+		}, this);
 	},
 	render: function(){
 		$(this.el).html(''); //clear element
@@ -69,7 +74,7 @@ var CartView = Backbone.View.extend({
 		_.bindAll(this, 'render');	
 	},
 	render: function(){
-		$(this.el).append('<h2>Cart #' + this.model.get('cart_token')+'</h2><br/>');
+		$(this.el).append('<b>Cart #' + this.model.get('cart_token')+'<br/>Tag id: '+this.model.get('tag_id')+'<br/>User_id: '+this.model.get('user_token')+'</b>');
 		
 		// initialize items collection
 		var cartItems = new CartItems([],{token: this.model.get('cart_token')});

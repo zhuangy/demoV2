@@ -19,12 +19,16 @@
 $(document).ready(function (){
 	var cartsCollection = new Carts([],{token: '49453b62-8eda-4dcb-8f3a-4510d7d5f2dd'});
 	var cartListView = new CartListView({collection: cartsCollection});
+	$('#main').append(cartListView.render().el);
 	
 	updateOrders = function(){
 		console.log('update');
+		var L = cartsCollection.length;
 		cartsCollection.fetch({
 			success: function(carts){
-				$('#main').append(cartListView.render().el);
+				if (cartsCollection.length != L){
+					$('#main').append(cartListView.render().el);
+				}
 			}
 		});
 		setTimeout(updateOrders, 5000);
