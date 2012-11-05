@@ -75,7 +75,7 @@ function saveEvent(){
 			type:"POST",
 			url: CONF['api-host']+"/event_create", 
 			data:JSON.stringify(data), 
-			success:function(res){console.log(res)},
+			success:function(res){},
 			error: function(err){console.log(err)}
 		});
 	}
