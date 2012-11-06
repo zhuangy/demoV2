@@ -123,8 +123,14 @@ var ItemDetailedView = Backbone.View.extend({
 		Add Current Ito to users cart
 	*/
 	addItemToCart: function(){
+		try{
 		CART.add(this.model);
 		alert(this.model.get('name') + ' added to cart!');
 		console.log(CART.models);
+		} catch(err){
+			if(err.message=="Can't add the same model to a set twice,"){
+				alert(this.model.get('name') + ' is already in cart')
+			}
+		}
 	}
 });
