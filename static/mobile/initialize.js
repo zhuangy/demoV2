@@ -31,6 +31,8 @@ if (user.mobile){
 
 var ACCESS_CODE = '1111';
 
+var VIDEO = []; //initialize global VIDEO variable;
+
 CONF={
 	'api-host' : 'http://api.webitap.com'	
 }

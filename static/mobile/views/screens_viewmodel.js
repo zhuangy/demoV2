@@ -33,8 +33,10 @@ var ScreenView = Backbone.View.extend({
 	initialize: function(index){
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render');
+		
 	},
 	render: function(index){
+		this.model.set({index: index});
 		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
 		$('#header_view').append(headerStr);
 		
@@ -289,9 +291,13 @@ var ScreensView = Backbone.View.extend({
 				},301);
 	
 			  }
-			if (this.index!=1){
-				//window.video.stopVideo();	 !!!!!!!!!!VIDEOO
-			}
+			setTimeout(function(){
+				for(i=0; i<VIDEO.length;i++){
+					if (VIDEO[i] && this.index!=i){
+						VIDEO[i].pauseVideo();	 // STOP videos
+					}
+				}
+			},300);
 		}
 	},
 	

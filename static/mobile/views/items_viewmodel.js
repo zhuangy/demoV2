@@ -107,13 +107,11 @@ var ItemsView = Backbone.View.extend({
 		API.get('video?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
 			if(res){
 				$('#scroller'+that.model.get('token')+' .scrollableContent').prepend('<div class="video"></div>');
-				$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="coffee_video" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
+				$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="video'+that.model.get("index")+'" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
 				$('#scroller'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
 				$('#scroller'+that.model.get('token')+' .video').css('width',size.width+'px');
 				
-				function onYouTubeIframeAPIReady() {
-				  window.video = new YT.Player('coffee_video');
-				}	
+				VIDEO[that.model.get('index')] = new YT.Player('video'+that.model.get("index"));
 			}
 		});
 		// turn on iscroll for this screen
