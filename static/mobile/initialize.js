@@ -39,7 +39,7 @@ function store_actions(){
 	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
 	$.ajax({
 	type:"POST",
-	url:CONF['api-host']+"/actions_update", 
+	url:"http://api.webitap.com/actions_update", 
 	data: JSON.stringify(data),
 	headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
 	success: function(res){} });
