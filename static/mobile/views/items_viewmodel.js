@@ -104,18 +104,48 @@ var ItemsView = Backbone.View.extend({
 		
 		var that = this;
 		// add video if needed. Check if screen token is in screen_video list
+		
+		
 		API.get('video?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
 			if(res){
-				$('#scroller'+that.model.get('token')+' .scrollableContent').prepend('<div class="video"></div>');
-				$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="video'+that.model.get("index")+'" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
-				$('#scroller'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
-				$('#scroller'+that.model.get('token')+' .video').css('width',size.width+'px');
+				//resize scrolling element
+				$('#'+that.model.get('token')+'iscroll').css({'height':(0.925*size.height-size.width*0.9/1.6*0.9)+'px'});
 				
-				VIDEO[that.model.get('index')] = new YT.Player('video'+that.model.get("index"));
+				//insert video
+				var vid_el = "<video class='video' id='"+that.model.get('token')+"Video' poster='"+res.poster+"' controls><source src='"+res.vid_mp4+"'><source src='"+res.vid_ogv+"' type='video/ogg'></video>";
+				//$('#scroller'+that.model.get('token')+' .scrollableContent').prepend(vid_el);
+				$('#'+that.model.get('token')).prepend(vid_el); //insert before scroller
+
+				
+				//$('#scroller'+that.model.get('token')+' .scrollableContent').prepend('<div class="video"></div>');
+				//$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="video'+that.model.get("index")+'" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
+				//$('#scroller'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
+				//$('#scroller'+that.model.get('token')+' .video').css('width',size.width+'px');
+				//adjust video size
+				$('#'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
+				$('#'+that.model.get('token')+' .video').css('width',size.width+'px');
+				
+				//video start/stop controls
+				var video = document.getElementById(that.model.get('token')+'Video');
+				video.addEventListener('click',function(){
+					if (video.paused) 
+					  video.play(); 
+					else 
+					  video.pause(); 
+				},false);
+				
+				//save video id
+				//VIDEO[that.model.get('index')] = new YT.Player('video'+that.model.get("index")); //for youtube vid
+				VIDEO[that.model.get('index')] = document.getElementById(that.model.get('token')+'Video'); // for html5 vid
+				// turn on iscroll for this screen
+				new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
+			}else{
+				// turn on iscroll for this screen
+				new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
 			}
 		});
-		// turn on iscroll for this screen
-		new iScroll(this.model.get('token'), {vScrollbar:false});
+		
+		
 	},
 });
 

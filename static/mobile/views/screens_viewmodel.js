@@ -44,7 +44,7 @@ var ScreenView = Backbone.View.extend({
 			$('#h'+this.model.get('token')).css('margin-left', size.width/4+'px');	
 		}
 		
-		$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div>')
+		$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div id="'+this.model.get('token')+'iscroll"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div></div>')
 		
 		// some css
 		$('#'+this.model.get('token')).css({'left': (index)*size.width+'px',
@@ -54,7 +54,13 @@ var ScreenView = Backbone.View.extend({
 					  'height': 0.925*size.height+'px',
 					  'top': 0.075*size.height+'px',
 					  'padding-top': size.height*0.012+'px'});
-		
+
+		$('#'+this.model.get('token')+'iscroll').css({'ovrflow':'hidden',
+													 'position':'relative',
+													 'z-index':'1',
+													 'height':'100%',
+													 'margin-top':'1%'
+													 });
 		
 		// render items into this.el!!!!
 		var itemsCollection = new Items([],{token: this.model.get('token')});
@@ -294,7 +300,8 @@ var ScreensView = Backbone.View.extend({
 			setTimeout(function(){
 				for(i=0; i<VIDEO.length;i++){
 					if (VIDEO[i] && this.index!=i){
-						VIDEO[i].pauseVideo();	 // STOP videos
+						VIDEO[i].pause(); // STOP html5 video
+						//VIDEO[i].pauseVideo();	 // STOP youtube video
 					}
 				}
 			},300);
