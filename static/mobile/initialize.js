@@ -41,7 +41,7 @@ function store_actions(){
 	type:"POST",
 	url:"http://api.webitap.com/actions_update", 
 	data: JSON.stringify(data),
-	headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
 	success: function(res){} });
 	
 	setInterval(function(){
