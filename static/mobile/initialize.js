@@ -49,7 +49,7 @@ function store_actions(){
 	},20000);
 }
 
-store_actions();
+//store_actions();
 
 CONF={
 	'api-host' : 'http://api.webitap.com'	
