@@ -72,8 +72,11 @@ function saveEvent(){
 		$.ajax({
 			type:"POST",
 			url: CONF['api-host']+"/event_create", 
+			//url: "http://192.168.1.107:8080/event_create",
 			data:JSON.stringify(data), 
-			success:function(res){},
+			success:function(res){
+				EVENT_TOKEN = res.event_token; //store event token for use in actions updates
+			},
 			error: function(err){console.log(err)}
 		});
 	}

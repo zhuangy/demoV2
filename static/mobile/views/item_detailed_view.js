@@ -90,6 +90,9 @@ var ItemDetailedView = Backbone.View.extend({
 			console.log('error!');
 		  }
 		});
+		
+		//store commentView action
+		ACTIONS.push({action: 'commentView', time: new Date().getTime()});
 	},
 	
 	/* 

@@ -32,6 +32,24 @@ if (user.mobile){
 var ACCESS_CODE = '1111';
 
 var VIDEO = []; //initialize global VIDEO variable;
+var ACTIONS = []; // initialize global variable to record user Actions
+var EVENT_TOKEN; //initialize event_token variable
+
+function store_actions(){
+	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	$.ajax({
+	type:"POST",
+	url:CONF['api-host']+"/actions_update", 
+	data: JSON.stringify(data),
+	headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
+	success: function(res){} });
+	
+	setInterval(function(){
+		store_actions();
+	},20000);
+}
+
+store_actions();
 
 CONF={
 	'api-host' : 'http://api.webitap.com'	
@@ -165,6 +183,7 @@ $(document).ready(function (){
 			return "You will be redirected to Facebook";
 		}
 		else{
+			store_actions();
 			return "You are about to leave WebiTap";	
 		}
 	}

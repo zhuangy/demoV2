@@ -191,6 +191,8 @@ var ItemView = Backbone.View.extend({
 	openOverlay: function(ev){
 		var itemOverlay = new ItemDetailedView({model:this.model});
 		itemOverlay.render();
-		// initialize overlay veiew with this model
+		
+		//store itemView action
+		ACTIONS.push({action: 'itemView', time: new Date().getTime()});
 	},
 });

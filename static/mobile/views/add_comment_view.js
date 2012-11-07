@@ -92,13 +92,11 @@ var AddCommentForm = Backbone.View.extend({
 					console.log('rating: '+comment.get('rating'));
 					sum = sum + parseFloat(comment.get('rating')); 
 				})
-				console.log(sum);
-				console.log(that.collection.length);
-				console.log(Math.round(sum/that.collection.length));
 				that.model.set({'rating': Math.round(sum/that.collection.length)});
 				that.model.update();
 				
-				
+				//store addComment action
+				ACTIONS.push({action: 'addComment', time: new Date().getTime()});
 				
 				that.unrender();
 			});

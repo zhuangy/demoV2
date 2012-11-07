@@ -306,6 +306,9 @@ var ScreensView = Backbone.View.extend({
 				}
 			},300);
 		}
+		
+		//store slide action
+		ACTIONS.push({action: 'slide', time: new Date().getTime()});
 	},
 	
 	ontouchstart: function(e){	
