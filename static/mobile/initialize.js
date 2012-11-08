@@ -34,26 +34,31 @@ var ACCESS_CODE = '1111';
 var VIDEO = []; //initialize global VIDEO variable;
 var ACTIONS = []; // initialize global variable to record user Actions
 var EVENT_TOKEN; //initialize event_token variable
+CONF={
+	'api-host' : 'http://api.webitap.com'	
+}
 
 function store_actions(){
 	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	console.log(EVENT_TOKEN);
+	console.log(JSON.stringify(data));
 	$.ajax({
-	type:"POST",
-	url:"http://api.webitap.com/actions_update", 
-	data: JSON.stringify(data),
-	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
-	success: function(res){} });
+		type:"POST",
+		url: CONF['api-host']+"/actions_update", 
+		//url:"http://192.168.1.107:8080/actions_update", 
+		data: JSON.stringify(data),
+		headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
+		//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
+		success: function(res){},
+		error: function(err){}
+	});
 	
 	setInterval(function(){
 		store_actions();
 	},20000);
 }
 
-//store_actions();
-
-CONF={
-	'api-host' : 'http://api.webitap.com'	
-}
+store_actions();
 
 var FACEBOOK_POST= getQueryVariable('post_id');
 
