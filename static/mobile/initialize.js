@@ -58,7 +58,7 @@ function store_actions(){
 	},20000);
 }
 
-store_actions();
+//store_actions();
 
 var FACEBOOK_POST= getQueryVariable('post_id');
 
