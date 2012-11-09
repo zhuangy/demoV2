@@ -1,9 +1,150 @@
-#businessText{
-	//width:100%;
-	//height:100%;
-	padding:0;
-	//margin:0;
-	font-family: GothamLight;
-	width:900px;
+.business_text_block {
+	display: block;
+	width:45%;
+	padding:0% 2.5% 0% 2.5%;
+	float:left;
+	-webkit-hyphens:auto;
+	font-family:Gotham_Bold;
+	color:#636363;
+	font-size:1.2em;
+	text-align:justify;
+	
+}
+.business_block {
+	display: block;
+	width:45%;
+	padding:0% 2.5% 0% 2.5%;
+	float:left;
+	-webkit-hyphens:auto;
+	font-family:Gotham_Light;
+	color:#000;
+	font-size:1.2em;
+	text-align:justify;
+	
+}
+.business_text_block  img{
+	width:20px;
+	margin:3px 7px;
+}
+.business_text_block  p{
+	color:#000;
+	text-align:right;
+}
+.business_block .business_page_title{
+	font-size:1.4em;
+	text-align:left;
+	font-family:Gotham_Bold;
+}
+ #click-request{
+	margin:auto;
 	text-align:center;
+	top:-70px;
+	position:relative;
+ 
+ 
+ }
+ #request-popup{
+	width:100%;
+	margin:auto;
+	background:rgba(255, 255, 255, 0.7);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff)";
+	//display:none;
+}
+#request-placer{
+	width:300px;
+	height:300px;
+	margin:auto;
+}
+
+#request-background{
+	width:350px;
+	height:300px;
+	padding:20px 0px;
+		
+	border-radius:5px;
+	-moz-border-radius: 5px;
+	background-color: rgba(216, 224, 234, 0.9);
+	
+	box-shadow: 0px 0px 50px 30px #FFFFFF;
+	
+	text-align:center;
+	color:#727678;
+	font-size:25px;
+	text-shadow: 0px -1px #000000;
+}
+
+#click-request{
+	width:200px;
+	height:60px;
+	margin:2px 0px;
+	float:left;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale')";
+	
+}
+
+
+
+#submit-invite{
+	width:150px;
+	height:40px;
+	margin:auto;
+	background-image: url("img/request_demo_button.jpg");
+	background-size: 100% 100%;
+	background: no-repeat center center fixed\0/; /* IE8 HACK */
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale')";
+}
+
+#submit-invite:hover{
+	/*background-image: url("img/request_hover.png");*/
+	background-size: 100% 100%;
+	cursor: pointer;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request_hover.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/requst_hover.png',sizingMethod='scale')";
+}
+
+#request-form{
+	//margin-top:10px;
+}
+
+#request-form .fieldbox.name{
+	background: transparent url("img/name_not_selected.png") no-repeat top left;
+	background-size: 250px 50px;
+}
+
+#request-form .fieldbox.email{
+	background: transparent url("img/email_not_selected.png") no-repeat top left;
+	background-size: 250px 50px;
+}
+
+#request-form .fieldbox.phone{
+	background: transparent url("img/phone_not_selected.png") no-repeat top left;
+	background-size: 250px 50px;
+}
+
+#request-form .fieldbox{
+	height:50px;
+	width:250px;
+	margin:auto;
+	vertical-align:middle;
+	margin-bottom:10px;
+}
+
+#request-form .fieldbox:focus{
+	background: transparent url("img/name_not_selected.png") no-repeat top left;
+}
+
+input{
+	border: none;
+	background:transparent;
+	/*background: transparent url("img/name_not_selected.png") no-repeat top left; */
+	width:200px;
+	height:25px;
+	margin:10px 35px 0px 10px;
+}
+
+input:focus{
+	outline:none;
 }

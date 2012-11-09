@@ -8,6 +8,8 @@
 	font-family: Gotham_Light;
 	src:url(../font/Gotham-Light.otf)
 }
+
+
 body{
 	margin:auto;
 	padding:0;
@@ -17,6 +19,7 @@ body{
 	position:relative;
 	
 }
+
 .home_button{
 	position:absolute;
 	width:40%;
@@ -332,7 +335,7 @@ img.logo{
 	height:100%;
 	text-align:center;
 	color:#cd4314;
-	font-family: Gotham_Bold;
+	font-family: "Lucida Console", Monaco, monospace;
 }
 #business_slideshow_container{
 	width:900px;
@@ -425,14 +428,7 @@ img.logo{
   color:#aba;
   font-size:15px;
   }
- #request_demo_button{
-	margin:auto;
-	text-align:center;
-	top:-70px;
-	position:relative;
- 
- 
- }
+
  .request_name_label{
 	width:200px;
 	float: left;

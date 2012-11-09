@@ -1,3 +1,21 @@
+<link rel="stylesheet" href="businesses.css" type="text/css" />
+<link rel="stylesheet" href="popbox.css" type="text/css" />
+<script type="text/javascript" src="popbox.min.js"></script>
+<script style="text/javascript">
+function focusField(id){
+	var idstr = '.fieldbox_' + id;
+	$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_selected.png") no-repeat top left');
+	$('.fieldbox.'+id).css('background-size', '250px 50px');
+}
+
+function leaveField(id){
+	var value = $('#'+id).val();
+	if (!value){
+		$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_not_selected.png") no-repeat top left');
+		$('.fieldbox.'+id).css('background-size', '250px 50px');
+	}
+}
+</script>
 <div id="business_slideshow_container">
 <div class="business_slideshow">
             <img src="img/Business Page 1.png" />
@@ -12,63 +30,132 @@
 
 </div>
 <!--REQUEST DEMO BUTTON -->
-<!--
-<div id="request_demo_button">
-	<img width="240"height="59.2"style="cursor:pointer"src="img/request_demo_button.jpg" rel="#mies1"/>
-</div>
---> 
-<div class="simple_overlay" id="mies1">
-	<form  class="request_name_form"autocomplete="on">
-		<div class="request_name_label">First name:</div><input class="request_name_input" type="text" name="fname"><br>
-		<div class="request_name_label">Last name: </div><input  class="request_name_input" type="text" name="lname"><br>
-		<div class="request_name_label">E-mail:</div> <input   class="request_name_input" type="email" name="email" autocomplete="off"><br>
-		<input type="submit">
-	</form>
-	
-</div>
-	
+ <div class='popbox'>
+          <img class="open"width="240"height="59.2"style="cursor:pointer"src="img/request_demo_button.jpg" rel="#mies1"/>
+
+          <div class='collapse'>
+            <div class='box'>
+              <div id="request-popup">
+				<div id="request-placer">
+					<div id="request-background">
+						<div id="request_title">Request an Invite!</div>
+						<div id="request_loading" style="display:none"><img src='ajax-loader.gif' /></div>
+						<form id="request-form">
+							<div class="fieldbox name"><input type="text" id="name" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>
+							<div class="fieldbox email"><input type="text" id="email" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>
+							<div class="fieldbox phone"><input type="text" id="phone" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>          
+						</form>     
+						<div id="submit-invite"></div>
+					</div>
+				</div>
+			  </div>	
+            </div>
+          </div>
+</div>	
 <img class="horizonLine"src="img/thinShadow.png" />
 <div id="businessText" >
 	
-    <!--
+    
 	
-    <div class="aboutWebi_block"">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
-    </div>
-	<div class="aboutWebi_block">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
-    </div>
+    <div class="business_text_block"><img src="img/left_quote.png">I see my customers smiling and showing each other what they want to order. It's great they love it. And, I have seen positive feedback on our Yelp page.<img src="img/right_quote.png"><p>Brian, IOTA</p></div>
+    
+	<div class="business_text_block"><img src="img/left_quote.png">I always wanted an app for my restaurant, but it was too expensive to make and nobody would download it. WebiTap solves all that. It helps my customers discover new things on my menu.<img src="img/right_quote.png"><p>Brian, IOTA</p></div>
 	<div style="clear:both"></div>
 	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
+    
     <div class="aboutWebi_row">
-        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img2.png" style="width:100%;position:relative"/> </div>
-        <div class="aboutWebi_block" style="padding-top:10%;">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.</span>
+        <div class="business_block"> <img src="img/business_pic1.png" style="width:100%;position:relative"/> </div>
+        <div class="business_block"><p class="business_page_title">Tap into the mobile market</p>WebiTap empowers you to tap into the growing mobile audience and allows you to bring interactive content to each and every of your customers. Your customers can view pictures, ratings and comments for individual food items and explore your menu like never before.</span>
         </div>
         <div style="clear:both"></div>
     </div>
 	<img class="horizonLine"src="../img/webitap/about-horizon.png" />
+    
     <div class="aboutWebi_row">
-        <div class="aboutWebi_block" >Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.
-        </div>
-        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img1.png" style="width:100%;position:relative;" /> </div>
+        <div class="business_block" ><p class="business_page_title">An app that's not an app</p>You can now have an app for your restaurant without having to invest tens of thousands of dollars. You also don't have to worry about convincing your customers to download your app. Your app is accessible through a simple tap. See WebiTap in action.</div>
+        <div class="business_block">  <div class="business_block"> <iframe width="400" height="225"   src="http://www.youtube.com/embed/DT5I2015l08" frameborder="0" allowfullscreen></iframe></div> </div>
         <div style="clear:both"></div>
     </div>
 	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
     
     <div class="aboutWebi_row">
-        <div class="aboutWebi_block"> <img src="../img/webitap/about-page1-img2.png" style="width:100%;position:relative"/> </div>
-        <div class="aboutWebi_block" style="padding-top:10%;">Here at WebiTap we believe that you should never have to download and install an app, becausemost apps are only useful when you are in certain places or only when you interact with certain objects.</span>
-        </div>
+        <div class="business_block"> <img src="img/business_pic3.png" style="width:100%;position:relative"/> </div>
+        <div class="business_block" ><p class="business_page_title">Grow your business</p>It's time to bring your business into the 21st century. WebiTaps interactive menu can help drive up your sales, improve your service, increase customer loyalty, and ultimately grow your business.</div>
         <div style="clear:both"></div>
     </div>
 	<img class="horizonLine" src="../img/webitap/about-horizon.png" />
 </div>
- -->
+
 <script type="text/javascript">
-	$(document).ready(function(e) {
+$(document).ready(function(e) {
 	$('.business_slideshow').cycle({
 		fx: 'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
 		speed:  2000,
 		timeout: 4000
 	});
-	})
-	 $("img[rel]").overlay();
+		
+		
+	$('#submit-invite').click(function() {
+		var name = $('#name').val();
+		var email = $('#email').val();
+		var phone = $('#phone').val();
+		var emailPattern = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}/i;
+		var emailIsValid = emailPattern.test(email);
+		var phonePattern = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+		var phoneIsValid = phonePattern.test(phone);
+		if (!email || !phone || !emailIsValid || !phoneIsValid){
+			if(!email || !emailIsValid){
+				console.log("email is wrong");
+				$('.fieldbox.email').css('background', 'transparent url("img/email_red.png") no-repeat top left');
+				$('.fieldbox.email').css('background-size', '250px 50px');
+				$('#email').val("");
+			}
+			if(!phone || !phoneIsValid){
+				$('.fieldbox.phone').css('background', 'transparent url("img/phone_red.png") no-repeat top left');
+				$('.fieldbox.phone').css('background-size', '250px 50px');
+				console.log("phone is wrong");
+				$('#phone').val("");
+			}
+			//return；
+		}
+		else{
+			var data={tel:phone, name:name, email:phone};
+			
+			$.ajax({
+				type:"POST",
+				url: "http://api.webitap.com/email_req", 
+				data: JSON.stringify(data),
+				headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+				beforeSend: function () {
+					//$("#request_title").fadeOut("fast");
+					$("#request_loading").fadeIn("fast");
+    				
+  				},
+				success: function(res){
+						//console.log(res);
+						$("#request_loading").fadeOut("fast");
+						//$("#request_title").fadeIn("fast");
+						$(".box").fadeOut("fast");
+				}, 
+				error:function(err){console.log(JSON.stringify(err));}
+			});
+
+		}
+
+
+	});
+		
+	$('body').unbind('click');
+	
+
+	
+	
+	// show form
+	$('#click-request').click(function() {
+		$('#request-popup').fadeIn(300);
+	});
+
+    $('.popbox').popbox();
+
+});
 </script>
