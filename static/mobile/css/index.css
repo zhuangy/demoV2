@@ -170,6 +170,7 @@ ul{
 
 .scroller li{
 	width:100%;
+	position:relative;
 }
 
 #topListSpacer{
@@ -479,6 +480,14 @@ img.shadow{
 	vertical-align:top;
 	border-bottom:2px solid  rgba(102, 102, 102, .5);
 	float:left;
+}
+
+.item_highlight{
+	width:100%;
+	position:absolute;
+	top: 0px;
+	left:0px;
+	background-color: rgba(255,255,255,0.5);
 }
 
 /* OVERLAY */

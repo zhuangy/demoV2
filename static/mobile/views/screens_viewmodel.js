@@ -149,16 +149,6 @@ var ScreensView = Backbone.View.extend({
 		$('#header_view').css('width', this.numSlides*size.width+'px');
 		$('.h').css('width', (size.width/2)+'px');
 		$('#h_front').css('margin-left', size.width/4+'px');
-
-		/*
-		// initialize front screen !!!!!!!!!!!!!!CHECK
-		var frontscreenView = new FrontScreenView();
-		frontscreenView.render();
-		
-		// render 1 screen out of collection!!
-		var screenView = new ScreenView({model:this.collection.models[0]});
-		screenView.render(0);
-		*/
 		
 		// RENDER INITIAL SCREENS
 		for (i=0; i<Math.min(3,this.collection.models.length); i++){
@@ -338,6 +328,12 @@ var ScreensView = Backbone.View.extend({
 			$("#haha").remove();
 		},1000);
 		*/
+		
+		//highlight the row
+		var target = e.originalEvent.target ? e.originalEvent.target : e.target;
+		$(target).closest('li').append('<div class="item_highlight"></div>');
+		$('.item_highlight').css('height', $(target).closest('li').css('height'))
+		
 		
 		// used for testing first onTouchMove event
 		this.isScrolling = undefined;

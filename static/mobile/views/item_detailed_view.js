@@ -4,7 +4,8 @@ var ItemDetailedView = Backbone.View.extend({
 	events: {
 		"touchstart #comments_touch":"showComments",
 		"touchstart #description_touch":"showDescription",
-		"touchstart #addComment":"showCommentForm"
+		"touchstart #addComment":"showCommentForm",
+		"touchstart #rating":"showCommentForm"
 	},
 	
 	initialize: function(){
