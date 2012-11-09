@@ -23,23 +23,16 @@ Browsers = new UserAgents(navigator.userAgent, {
 	detectCamouflage:	true
 });
 
+/*
 function setCookie(c_name,value,exdays){
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate() + exdays);
 	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
 	document.cookie=c_name + "=" + c_value;
 }
-function getCookie(c_name){
-	var i,x,y,ARRcookies=document.cookie.split(";");
-	for (i=0;i<ARRcookies.length;i++){
-	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-	  x=x.replace(/^\s+|\s+$/g,"");
-	  if (x==c_name){
-		return unescape(y);
-	  }
-	}
-}
+*/
+
+
 
 function saveEvent(){
 	// query strings
@@ -53,7 +46,7 @@ function saveEvent(){
 	var cookie_id=getCookie("cookie_id");
 	if (cookie_id==null || cookie_id==""){
 		cookie_id=n;
-		setCookie("cookie_id",cookie_id,365);
+		setCookie("cookie_id",cookie_id,365*24);
 	}
 	
 	// generate data strings
@@ -67,7 +60,7 @@ function saveEvent(){
 		var data = {'type':type, 'code':code, 'user_agent':user_agent, 'cookie_id':cookie_id};
 	}
 	
-	// post event to database !!!!!!!!!!!!!!!!!!!!!!
+	// post New event to database !!!!!!!!!!!!!!!!!!!!!!
 	if(data && Browsers.device.type!='desktop'){
 		$.ajax({
 			type:"POST",
@@ -76,8 +69,31 @@ function saveEvent(){
 			data:JSON.stringify(data), 
 			success:function(res){
 				EVENT_TOKEN = res.event_token; //store event token for use in actions updates
+				ACTIONS = [];// empty actions var
+				// set event cookie to expire in 2 hours
+				setCookie("webitap_event",EVENT_TOKEN,2);
 			},
 			error: function(err){console.log(err)}
 		});
 	}
+		
+	/*
+	else if (Browsers.device.type=='desktop' && !post_id){
+		var data = {'type':'desktop', 'code':'test', 'user_agent':'desktop', 'cookie_id':'123456789'};
+		
+		$.ajax({
+			type:"POST",
+			url: CONF['api-host']+"/event_create", 
+			//url: "http://192.168.1.107:8080/event_create",
+			data:JSON.stringify(data), 
+			success:function(res){
+				EVENT_TOKEN = res.event_token; //store event token for use in actions updates
+				ACTIONS = [];// empty actions var
+				// set event cookie to expire in 2 hours
+				setCookie("webitap_event",EVENT_TOKEN,2);
+			},
+			error: function(err){console.log(err)}
+		});
+	}
+	*/
 }

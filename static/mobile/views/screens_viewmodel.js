@@ -269,6 +269,9 @@ var ScreensView = Backbone.View.extend({
 						 'webkitTransform': 'translate3d(' + -(index * size.width/2) + 'px,0,0)'});
 
 		if (this.index != index){
+			//store slide action
+			ACTIONS.push({action: 'slide', time: new Date().getTime()});
+		
 			this.index = index;
 			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#screens_view').children('.col').length<this.index+3 ){
 				var that = this; 
@@ -303,8 +306,6 @@ var ScreensView = Backbone.View.extend({
 			},300);
 		}
 		
-		//store slide action
-		ACTIONS.push({action: 'slide', time: new Date().getTime()});
 	},
 	
 	ontouchstart: function(e){	

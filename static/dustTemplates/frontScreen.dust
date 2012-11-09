@@ -12,16 +12,16 @@
         </div>
         <div class="welcome-img">
             <div id="facebookOverlay">
-                <a href='https://www.facebook.com/dialog/feed?
+                <!-- <a href='https://www.facebook.com/dialog/feed?
                 app_id=150769608397642&
                 link={fbook_link}&
                 picture={img_fbook}&
                 name={fbook_name}&
                 caption=Brought%20to%20you%20by%20WebiTap&
                 description=Using%20Dialogs%20to%20interact%20with%20users.&
-                redirect_uri=http://www.webitap.com/?code={code}' >
+                redirect_uri=http://www.webitap.com/mobile/?code={code}' > -->
                 	<div id="fbookButton"><img id='facebook' src="img/iota/facebookBttn.png" width='100%'/></div>
-                </a>
+                <!--</a>-->
             </div>
             <div class = "slideshow">
                 <img class = "sRight" id = "slideR0" src = "{img4}"/>

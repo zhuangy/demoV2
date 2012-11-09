@@ -1,4 +1,42 @@
-/* VARIABLES */
+/*** FUNCTIONS ***/
+
+// SET COOKIE in browser with expiration time in hours
+function setCookie(c_name,value,exhours){
+	var now = new Date();
+	var time = now.getTime();
+	time += exhours*3600 * 1000;
+	now.setTime(time);
+	
+	var c_value=escape(value) + ((exhours==null) ? "" : "; expires="+now.toGMTString() );
+	document.cookie=c_name + "=" + c_value;
+}
+
+// GET COOKIE
+function getCookie(c_name){
+	var i,x,y,ARRcookies=document.cookie.split(";");
+	for (i=0;i<ARRcookies.length;i++){
+	  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+	  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+	  x=x.replace(/^\s+|\s+$/g,"");
+	  if (x==c_name){
+		return unescape(y);
+	  }
+	}
+}
+
+// GET QUERY VARIABLE
+function getQueryVariable(variable) {
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split("=");
+		if (pair[0] == variable) {
+			return pair[1];
+		}
+	}
+}
+
+/*** VARIABLES ***/
 
 var user ={
 	mobile: (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase())),
@@ -14,10 +52,6 @@ var size={
 	height: user.iphone ? Math.max(window.innerWidth, $(window).height()-60) : Math.max(window.outerWidth, window.outerHeight+1)
 }
 
-//console.log(window.innerWidth);
-//console.log(window.outerWidth);
-//console.log(screen.width);
-
 // if app loaded in landscape mode - adjust for potential status bar
 if (user.mobile){
 	var wS = Math.min(screen.width, screen.height); //screen width
@@ -29,36 +63,59 @@ if (user.mobile){
 	}
 }
 
-var ACCESS_CODE = '1111';
-
-var VIDEO = []; //initialize global VIDEO variable;
-var ACTIONS = []; // initialize global variable to record user Actions
-var EVENT_TOKEN; //initialize event_token variable
+var tappedFacebook = false; //global variable - used to check if user tapped the facebook share link
+var VIDEO = []; //initialize global VIDEO variable - store video objects from each screen, if present
+var ACTIONS = []; // initialize global variable to record user Actions - to store user interactions with the app
+var EVENT_TOKEN; //initialize event_token variable - event toke is stored in a cookie when the user first loads the app
 CONF={
-	'api-host' : 'http://api.webitap.com'	
+	'api-host' : 'http://api.webitap.com' // api address
 }
 
-function store_actions(){
-	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
-	console.log(EVENT_TOKEN);
-	console.log(JSON.stringify(data));
+// Check if webitap_event cookie is stored
+var ev_token=getCookie("webitap_event");
+if (ev_token!=null && ev_token!=""){
+	EVENT_TOKEN = ev_token;
+	// if yes -> fill in ACTIONS variable with actions from the server
 	$.ajax({
-		type:"POST",
-		url: CONF['api-host']+"/actions_update", 
-		//url:"http://192.168.1.107:8080/actions_update", 
-		data: JSON.stringify(data),
+		type:"GET",
+		url: CONF['api-host']+"/actions_get?event_token="+EVENT_TOKEN,
+		//url:"http://192.168.1.107:8080/actions_get?event_token="+EVENT_TOKEN,
 		headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
 		//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
-		success: function(res){},
-		error: function(err){}
-	});
-	
-	setInterval(function(){
-		store_actions();
-	},20000);
+		success: function(res){
+				ACTIONS = res;
+				if(getQueryVariable('post_id')){
+					//store event (returned from facebook share)
+					ACTIONS.push({action: 'sharedFacebook', time: new Date().getTime()});
+				}
+				console.log(JSON.stringify(ACTIONS));
+		}, 
+		error:function(err){console.log(JSON.stringify(err));} 
+	})
 }
 
-//store_actions();
+//store actions function - called periodically while user interacts with the app
+var num_actions = ACTIONS.length;
+function store_actions(){
+	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	if(ACTIONS.length>num_actions){
+		num_actions = ACTIONS.length;
+		$.ajax({
+			type:"POST",
+			url: CONF['api-host']+"/actions_update", 
+			//url:"http://192.168.1.107:8080/actions_update", 
+			data: JSON.stringify(data),
+			headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
+			//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
+			success: function(res){console.log('updated');},
+			error: function(err){console.log(JSON.stringify(err));}
+		});
+	}
+}
+
+setInterval(function(){
+	store_actions();
+},120000);
 
 var FACEBOOK_POST= getQueryVariable('post_id');
 
@@ -95,16 +152,6 @@ function checkOrientation() {
 	}              
 } 
 
-function getQueryVariable(variable) {
-	var query = window.location.search.substring(1);
-	var vars = query.split("&");
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split("=");
-		if (pair[0] == variable) {
-			return pair[1];
-		}
-	}
-}
 
 $(document).ready(function (){
 	/*
@@ -175,22 +222,30 @@ $(document).ready(function (){
 	
 	/*
 		Display a warning when user is leaving the page
-	*/
-	var tappedFacebook = false;
-	$('#facebook').tap(function(){
-		tappedFacebook = true;
-		setTimeout(function(){
-			tappedFacebook = false;
-		},500);
-	});
+	*/	
 	window.onbeforeunload = function() {
+		store_actions();
 		if(tappedFacebook){
-			return "You will be redirected to Facebook";
+			return "You will be temporarily redirected to Facebook to share your story";
 		}
 		else{
-			store_actions();
 			return "You are about to leave WebiTap";	
 		}
+	}
+	/*
+		Catch when users close tab. Works on Android and Safari. Send the actions info one last time.
+	*/
+	window.onunload = function() {
+		var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+		$.ajax({
+			type:"POST",
+			async: false,
+			url: CONF['api-host']+"/actions_update", 
+			//url:"http://192.168.1.107:8080/actions_update", 
+			data: JSON.stringify(data),
+			headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}
+			//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}
+		});
 	}
 	
 });	
