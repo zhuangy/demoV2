@@ -193,6 +193,6 @@ var ItemView = Backbone.View.extend({
 		itemOverlay.render();
 		
 		//store itemView action
-		ACTIONS.push({action: 'itemView', time: new Date().getTime()});
+		ACTIONS.push({action: 'itemView', time: new Date().getTime(), name:this.model.get('name')});
 	},
 });
