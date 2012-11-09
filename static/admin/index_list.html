@@ -1,0 +1,80 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webitap Log</title>
+<script type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
+<script>
+
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+		var x = new Date(a[key]); var y = new Date(b[key]);
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
+
+var users;
+$.ajax({
+	type:"GET",
+	url:"http://api.webitap.com/users", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, async: false,
+	success:function(res){users=res;}
+});
+
+console.log(users);
+
+$.ajax({
+	type:"GET",
+	url:"http://api.webitap.com/events", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
+	success:function(res){
+		res = sortByKey(res, 'datestamp');
+		
+		var str = '';
+		//for(i=20; i<res.length; i++){
+		//console.log(JSON.stringify(res));
+		count = 0;
+		for (i in res){
+			var date = res[i].datestamp;
+			//if(parseFloat(date.substr(3,2))>28){
+				var ev = res[i];
+				var id = '';
+				var user = '';
+				var date = new Date([ev.datestamp + ' UTC']);
+				date = (parseFloat(date.getMonth())+1) + '/' + date.getDate()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+				
+				if(ev.tag_id){var id = ev.tag_id;}
+				else if(ev.code){var id = ev.code;}
+				
+				if(ev.cookie_id){var user = users.indexOf(String(ev.cookie_id));}
+				var admin = [-1,0,1,2,11,12,15,14];
+				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users
+					str = str + '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+id+'</td><td>'+ev.user_agent+'</td><td>'+date+'</td><td>'+user+'</td></tr>';
+					count = count+1;
+				}
+			//}
+		}
+		document.getElementById('events').innerHTML = str;
+
+	}
+});
+
+
+</script>
+<style>
+td{
+	width:200px;
+	border:1px solid black;
+}
+</style>
+</head>
+
+<body>
+<h3>WebiTap events at Iota</h3>
+<table id='events' cellspacing="0" cellpadding="5px">
+	
+</table>
+
+</body>
+</html>
