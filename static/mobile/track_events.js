@@ -70,6 +70,8 @@ function saveEvent(){
 			success:function(res){
 				EVENT_TOKEN = res.event_token; //store event token for use in actions updates
 				ACTIONS = [];// empty actions var
+				//store loaded action
+				ACTIONS.push({action: 'loaded', time: new Date().getTime()});
 				// set event cookie to expire in 2 hours
 				setCookie("webitap_event",EVENT_TOKEN,2);
 			},

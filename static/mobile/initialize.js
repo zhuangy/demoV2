@@ -223,7 +223,7 @@ $(document).ready(function (){
 	/*
 		Display a warning when user is leaving the page
 	*/	
-	window.onbeforeunload = function() {
+	window.onbeforeunload = function() {		
 		store_actions();
 		if(tappedFacebook){
 			return "You will be temporarily redirected to Facebook to share your story";
@@ -236,6 +236,9 @@ $(document).ready(function (){
 		Catch when users close tab. Works on Android and Safari. Send the actions info one last time.
 	*/
 	window.onunload = function() {
+		//store action
+		ACTIONS.push({action: 'leaving', time: new Date().getTime()});
+		
 		var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
 		$.ajax({
 			type:"POST",
