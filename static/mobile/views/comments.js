@@ -48,7 +48,7 @@ var CommentView = Backbone.View.extend({
   },
 	
   render : function() {
-	  var date = new Date(this.model.get('date')+' UTC');
+	  var date = new Date(this.model.get('date'));
 	  var date = (parseFloat(date.getMonth())+1)+'/'+date.getDate()+'/'+date.getFullYear();
     data={'name':this.model.get('name'), 'rating':this.model.get('rating'), 'date':date, 'comment_text':this.model.get('comment_text')};	
 	
