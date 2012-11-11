@@ -71,6 +71,7 @@ CONF={
 	'api-host' : 'http://api.webitap.com' // api address
 }
 
+/*
 // Check if webitap_event cookie is stored
 var ev_token=getCookie("webitap_event");
 if (ev_token!=null && ev_token!=""){
@@ -88,11 +89,11 @@ if (ev_token!=null && ev_token!=""){
 					//store event (returned from facebook share)
 					ACTIONS.push({action: 'sharedFacebook', time: new Date().getTime()});
 				}
-				console.log(JSON.stringify(ACTIONS));
 		}, 
 		error:function(err){console.log(JSON.stringify(err));} 
 	})
 }
+*/
 
 //store actions function - called periodically while user interacts with the app
 var num_actions = ACTIONS.length;
@@ -103,7 +104,7 @@ function store_actions(){
 		$.ajax({
 			type:"POST",
 			url: CONF['api-host']+"/actions_update", 
-			//url:"http://192.168.1.107:8080/actions_update", 
+			//url:"http://192.168.1.106:8080/actions_update", 
 			data: JSON.stringify(data),
 			headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
 			//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}, 
@@ -111,6 +112,7 @@ function store_actions(){
 			error: function(err){console.log(JSON.stringify(err));}
 		});
 	}
+	
 }
 
 setInterval(function(){
@@ -244,7 +246,7 @@ $(document).ready(function (){
 			type:"POST",
 			async: false,
 			url: CONF['api-host']+"/actions_update", 
-			//url:"http://192.168.1.107:8080/actions_update", 
+			//url:"http://192.168.1.106:8080/actions_update", 
 			data: JSON.stringify(data),
 			headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}
 			//headers:{'Authorization':'Basic bWFzaGE6MTIzNDU='}

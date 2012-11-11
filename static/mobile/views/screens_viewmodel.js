@@ -330,9 +330,9 @@ var ScreensView = Backbone.View.extend({
 		*/
 		
 		//highlight the row
-		var target = e.originalEvent.target ? e.originalEvent.target : e.target;
-		$(target).closest('li').append('<div class="item_highlight"></div>');
-		$('.item_highlight').css('height', $(target).closest('li').css('height'))
+		//var target = e.originalEvent.target ? e.originalEvent.target : e.target;
+		//$(target).closest('li').append('<div class="item_highlight"></div>');
+		//$('.item_highlight').css('height', $(target).closest('li').css('height'))
 		
 		
 		// used for testing first onTouchMove event
