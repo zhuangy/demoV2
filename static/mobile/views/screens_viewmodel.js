@@ -134,10 +134,15 @@ var ScreensView = Backbone.View.extend({
 			$('[data-role="page"]').append('<div id="navigationOverlay"></div>'); // navigation overlay screen
 		}
 		
+		var that = this;
 		$("#homeButton").click(this.tap_home);
 		$("#backButton").click(this.tap_back);
 		$('#navigationOverlay').bind('touchstart', function(ev){
 			$('#navigationOverlay').remove();
+			// slide after 3 seconds
+			setTimeout(function(){
+				that.slide(1,500,-1);
+			},3000);
 		});
 		// header - swipe on tap
 		$('#headerBlur').click(this.tap_header);
@@ -163,6 +168,7 @@ var ScreensView = Backbone.View.extend({
 		}
 		
 		console.log('rendered menu_view');
+		
 		
 		if($('#loading_screen')){
 			setTimeout(function(){
