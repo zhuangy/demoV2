@@ -307,6 +307,18 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	ontouchstart: function(e){	
+		/*
+		this.moving = false;
+		
+		this.target = e.originalEvent.target ? e.originalEvent.target : e.target;
+		var that = this;
+		setTimeout(function(){
+			if(!this.moving && that.index>0){
+				$(that.target).closest('li').append('<div class="item_highlight"></div>');
+				$('.item_highlight').css('height', $(that.target).closest('li').css('height'))
+			}
+		},0);
+		*/
 		
 		this.start = {
 		  // get touch coordinates for delta calculations in onTouchMove
@@ -337,10 +349,11 @@ var ScreensView = Backbone.View.extend({
 		},1000);
 		*/
 		
+		// if 200 ms later - still on the same spot - highlight row
+		
 		//highlight the row
-		//var target = e.originalEvent.target ? e.originalEvent.target : e.target;
-		//$(target).closest('li').append('<div class="item_highlight"></div>');
-		//$('.item_highlight').css('height', $(target).closest('li').css('height'))
+		
+		
 		
 		
 		// used for testing first onTouchMove event
@@ -359,7 +372,13 @@ var ScreensView = Backbone.View.extend({
 	
 	ontouchmove: function(e){
 		// remove touch response image
-		$("#haha").remove();
+		/*$("#haha").remove();
+		setTimeout(function(){
+		$('.item_highlight').remove();
+		},300);
+		
+		this.moving = true;
+		*/
 		
 		if (this.ended) return;
 		// ensure swiping with one touch and not pinching
@@ -399,6 +418,8 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	ontouchend: function(e){
+		//this.moving = false;
+		
 		// determine if slide attempt triggers next/prev slide
 		var isValidSlide = 
 			  Number(new Date()) - this.start.time < 250      // if slide duration is less than 250ms

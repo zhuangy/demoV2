@@ -1,0 +1,45 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webitap Log</title>
+<link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="RGraph/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="google_charts.js" ></script>
+
+
+<script>
+// Load the Visualization API and the piechart package.
+	google.load('visualization', '1.0', {'packages':['corechart', 'annotatedtimeline']});
+	
+	// Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawCharts);
+</script>
+<style>
+td{
+	width:200px;
+	border:1px solid black;
+}
+
+.timeline{
+	width:200px;
+	height:100px;
+}
+</style>
+</head>
+
+<body>
+<h3>WebiTap events</h3>
+
+
+<div id="chart_div" style="float:left;"></div>
+<div id="total_daily_bar" style="float:left;"></div>
+<table id='events' cellspacing="0" cellpadding="5px" >
+	
+</table>
+
+
+</body>
+</html>
