@@ -402,7 +402,7 @@ var ScreensView = Backbone.View.extend({
 		  this.deltaX = 
 			this.deltaX / 
 			  ( (!this.index && this.deltaX > 0               // if first slide and sliding left
-				|| this.index == this.length - 1              // or if last slide and sliding right
+				|| this.index == this.numSlides - 1              // or if last slide and sliding right
 				&& this.deltaX < 0                            // and if sliding at all
 			  ) ?                      
 			  ( Math.abs(this.deltaX) / size.width + 1 )      // determine resistance level

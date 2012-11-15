@@ -34,7 +34,7 @@
  
  <div id="item-content" style="padding:0; margin:0;">
 	<div id="item-description">
-		{description}
+		{description|s}
 	</div>
  </div>
 	

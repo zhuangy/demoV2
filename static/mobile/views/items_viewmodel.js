@@ -166,7 +166,7 @@ var ItemView = Backbone.View.extend({
 		
 	},
 	render: function(id){
-		data = {'token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath').replace('.jpg','_thumbnail.jpg'), 'description':this.model.get('description'), 'price':this.model.get('price')};		
+		data = {'token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath').replace('.jpg','_thumbnail.jpg'), 'description':this.model.get('description').replace(/\n\r?/g, '<br/>'), 'price':this.model.get('price')};		
 		var that = this;
 		// render item and append to screen
 		dust.render("itemView", data, function(err, out) {

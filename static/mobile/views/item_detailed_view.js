@@ -22,7 +22,7 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
-		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description')};
+		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
 		console.log(data);
 		var that = this;
 		// render item and append to screen
