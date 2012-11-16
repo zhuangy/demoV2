@@ -47,7 +47,7 @@ var Query = Class({
                         };
                         service.getDetails(request, function (place, status) {
                             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                                console.log(place);
+                                //console.log(place);
 
                                 var image = restaurant.logo;
                                 var marker = new google.maps.Marker({
