@@ -52,16 +52,16 @@
 	//display:none;
 }
 #request-placer{
-	width:300px;
+	width:350px;
 	height:300px;
 	margin:auto;
 }
 
 #request-background{
-	width:350px;
-	height:300px;
-	padding:20px 0px;
-		
+	width:100%;
+	height:100%;
+	
+	padding-top: 20px;
 	border-radius:5px;
 	-moz-border-radius: 5px;
 	background-color: rgba(216, 224, 234, 0.9);
@@ -92,6 +92,7 @@
 	margin:auto;
 	background-image: url("img/request_demo_button.jpg");
 	background-size: 100% 100%;
+	z-index:100;
 	background: no-repeat center center fixed\0/; /* IE8 HACK */
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale');
 	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale')";

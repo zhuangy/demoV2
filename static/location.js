@@ -7,18 +7,15 @@ $(document).ready(function(e) {
 	 //    if (UA.indexOf("MIDP") >= 0)  {
 	    // $.support.cors = true;
 	 //    }
-	// }  
+	// }
+	
+	
 	$.ajax({
 		type:"GET",
 		dataType: 'json',
-		url: "http://api.webitap.com/orgs", 
-		//contentType: "application/json",
-		headers: {'Authorization': 'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+		url: "http://api.webitap.com/orgs",
+		//headers: {'Authorization': 'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
 		success:function(res){
-		//console.log(res);
-		//res=JSON.parse(res);
-		//console.log(info.length);
-		//console.log("here");
 			for(i=0; i<res.length; i++){
 				//console.log("here");
 				  // DO SOMETHING WITH THE ORG INFO HERE!!		  
@@ -56,7 +53,7 @@ $(document).ready(function(e) {
 			
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
-		      alert(JSON.stringify(XMLHttpRequest));
+		      //alert(JSON.stringify(XMLHttpRequest));
 		        }
 	});
 
