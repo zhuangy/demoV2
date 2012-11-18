@@ -2,11 +2,11 @@
 /* CSS Document */
 @font-face {
 	font-family: Gotham_Bold;
-	src:url(../font/gotham_bold.ttf);
+	src:url(../font/gotham_bold.ttf)format('truetype');
 }
 @font-face {
 	font-family: Gotham_Light;
-	src:url(../font/Gotham-Light.otf)
+	src:url(../font/Gotham-Light.ttf)format('truetype');
 }
 
 
@@ -71,7 +71,6 @@ img.logo{
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	//margin-left: 80px;
 	position: relative;
 	float: left;
 }

@@ -13,7 +13,7 @@ var AddCommentForm = Backbone.View.extend({
 	},
 	initialize: function(options){
 		// every function that uses 'this' as the current object should be in here
-		_.bindAll(this, 'render', 'unrender', 'addComment', 'cancelComment', 'rate');
+		_.bindAll(this, 'render', 'unrender', 'addComment', 'cancelComment', 'rate', 'makeMeVisible');
 		
 		this.token = options.token;
 		this.render();
@@ -28,6 +28,7 @@ var AddCommentForm = Backbone.View.extend({
 				url : "htmlTemplates/addComment.html",
 				success : function(string){
 					$(that.el).html(string);
+					that.makeMeVisible();
 				},
 				error: function(err){
 				console.log('error');
@@ -37,6 +38,21 @@ var AddCommentForm = Backbone.View.extend({
 	cancelComment: function(e){
 		e.preventDefault();
 		this.unrender();
+	},
+	
+	makeMeVisible: function(){
+		if (user.iphone){
+			$(this.el).css('-webkit-transform', 'scale(0.5)');
+		}
+		
+		$(this.el).css('display', 'block');
+			
+		/*fadein*/
+		var that = this;
+		setTimeout( function(){
+		  $(that.el).css('-webkit-transform', 'scale(1)');
+		  $(that.el).css('opacity', '1');
+		}, 100);	
 	},
 	
 	 rate: function(ev) {
@@ -111,7 +127,11 @@ var AddCommentForm = Backbone.View.extend({
 	},
 	unrender: function() 
 	{
-		$(this.el).css('display', 'none');
+		$(this.el).css('display','none');
+		$(this.el).css('opacity', '0');
+		if(user.iphone) {
+			$(this.el).css('-webkit-transform', 'scale(.5)');
+		  }
 		$(this.el).html('');
 	},
 	

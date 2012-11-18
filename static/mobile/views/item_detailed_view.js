@@ -119,6 +119,6 @@ var ItemDetailedView = Backbone.View.extend({
 	*/
 	showCommentForm: function(){
 		var commentForm = new AddCommentForm({model:this.model, collection : this.commentsCollection, token: this.model.get('token')});
-		$('#enterCommentOverlay').css('display', 'block');
+		//$('#enterCommentOverlay').css('display', 'block');
 	}
 });

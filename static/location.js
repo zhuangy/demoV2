@@ -1,23 +1,23 @@
 $(document).ready(function(e) {
 	$('body').unbind('click');
-	//console.log("here");
-	//console.log(jQuery.support.cors);
-	var UA = navigator.userAgent;
-	// if (UA.indexOf("BlackBerry") >= 0)  {      
-	 //    if (UA.indexOf("MIDP") >= 0)  {
-	    // $.support.cors = true;
-	 //    }
-	// }
-	
-	
 	$.ajax({
+		beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Authorization","Basic bWFzaGE6MTIzNDU=");
+                //xhrObj.setRequestHeader("Accept","application/json");
+        },
+
 		type:"GET",
 		dataType: 'json',
-		url: "http://api.webitap.com/orgs",
-		//headers: {'Authorization': 'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+		url: "http://api.webitap.com/orgs", 
+		//url: "http://192.168.1.105:8080/orgs", 
+		//headers: {'Authorization': 'Basic bWFzaGE6MTIzNDU='},
 		success:function(res){
+			//console.log(res);
+		//console.log(res);
+		//res=JSON.parse(res);
+		//console.log(info.length);
 			for(i=0; i<res.length; i++){
-				//console.log("here");
+				
 				  // DO SOMETHING WITH THE ORG INFO HERE!!		  
 				  //console.log("lalal");
 				//var info=res[i];  
@@ -52,9 +52,13 @@ $(document).ready(function(e) {
 			
 			
 		},
-		error: function (XMLHttpRequest, textStatus, errorThrown) {
-		      //alert(JSON.stringify(XMLHttpRequest));
-		        }
+		error: function(xmlReq, status, errorMsg){
+        	console.log("Error Message: "+ errorMsg);
+        	console.log("Status: "+ status);
+        	console.log(JSON.stringify(xmlReq));
+
+        	throw(errorMsg);
+    	}
 	});
 
 

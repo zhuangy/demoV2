@@ -33,8 +33,10 @@ function onYouTubeIframeAPIReady() {
 }
 $('body').click(function(event){
 	if (event.target.id!="watch_video"){
+		
 		player.stopVideo();
 		$('#video-popup').fadeOut(1000);
+	
 	}
 	else{
 		console.log('play vid');

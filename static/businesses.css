@@ -64,8 +64,24 @@
 	padding-top: 20px;
 	border-radius:5px;
 	-moz-border-radius: 5px;
-	background-color: rgba(216, 224, 234, 0.9);
+	background-color: #D8E0EA;
 	
+	 -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=90);
+
+  /* Netscape */
+  -moz-opacity: 0.9;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.9;
+
+  /* Good browsers */
+  opacity: 0.9;
+
+
+
 	box-shadow: 0px 0px 50px 30px #FFFFFF;
 	
 	text-align:center;
@@ -90,20 +106,23 @@
 	width:150px;
 	height:40px;
 	margin:auto;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request_demo_button.jpg',sizingMethod='scale');
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request_demo_button.jpg',sizingMethod='scale')";
 	background-image: url("img/request_demo_button.jpg");
 	background-size: 100% 100%;
-	z-index:100;
 	background: no-repeat center center fixed\0/; /* IE8 HACK */
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale');
-	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request.png',sizingMethod='scale')";
+	
 }
 
 #submit-invite:hover{
 	/*background-image: url("img/request_hover.png");*/
+	src='img/request_demo_button.jpg',sizingMethod='scale');
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request_demo_button.jpg',sizingMethod='scale')";
 	background-size: 100% 100%;
 	cursor: pointer;
-	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/request_hover.png',sizingMethod='scale');
-	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/requst_hover.png',sizingMethod='scale')";
+	
 }
 
 #request-form{
@@ -111,18 +130,27 @@
 }
 
 #request-form .fieldbox.name{
-	background: transparent url("img/name_not_selected.png") no-repeat top left;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/name_not_selected.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/name_not_selected.png',sizingMethod='scale')";
+	background: transparent url("img/name_not_selected.png");
 	background-size: 250px 50px;
+	background: no-repeat center center fixed\0/;
 }
 
 #request-form .fieldbox.email{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/email_not_selected.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/email_not_selected.png',sizingMethod='scale')";
 	background: transparent url("img/email_not_selected.png") no-repeat top left;
 	background-size: 250px 50px;
+	background: no-repeat center center fixed\0/;
 }
 
 #request-form .fieldbox.phone{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/phone_not_selected.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/phone_not_selected.png',sizingMethod='scale')";
 	background: transparent url("img/phone_not_selected.png") no-repeat top left;
 	background-size: 250px 50px;
+	background: no-repeat center center fixed\0/;
 }
 
 #request-form .fieldbox{

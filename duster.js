@@ -14,7 +14,7 @@ console.log('got here');
 
 //watcher.on('fileModified', function(path, stats) {
 console.log('and here');
-path = "./static/dustTemplates/itemDetailedView.dust";
+path = "./static/dustTemplates/frontScreen.dust";
   fs.readFile(path, 'ascii', function (err, data) {
     if (err) throw err;
 	

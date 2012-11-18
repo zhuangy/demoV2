@@ -194,7 +194,7 @@ var ItemView = Backbone.View.extend({
 		var itemOverlay = new ItemDetailedView({model:this.model});
 		itemOverlay.render();
 		
-		$('.item_highlight').remove();
+		$('#item_highlight').remove();
 		
 		//store itemView action
 		ACTIONS.push({action: 'itemView', time: new Date().getTime(), name:this.model.get('name')});

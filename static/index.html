@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
     <head>
     <title>WebiTap</title>
     <meta name="msvalidate.01" content="EE1F94E2CA40C7A89678C67A5EB84B26" />
     <!--bing search engine validation -->
-    <!--<meta name="description" content = "WebiTap - bridging the physical and virtual worlds"/>  -->
+    <meta name="description"
+		content = "WebiTap - bridging the physical and virtual worlds"
+        content="WebiTap nfc rfid mobile cell phone"/>
     <link rel="stylesheet" href="index.css" type="text/css" />
-    <!--<link rel="shortcut icon" href="favicon.ico" /> -->
+    <link rel="shortcut icon" href="favicon.ico" />
     <link rel="icon" href="favicon.ico" />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src=../lib/jquery-1.8.2.min.js></script>
     <script type="text/javascript" src="http://cloud.github.com/downloads/malsup/cycle/jquery.cycle.all.latest.js"></script>
     <script type="text/javascript" src="http://www.youtube.com/player_api"></script>
     <link rel="stylesheet"	href="about.css"/>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBPkyV2p6F75FuQyCA538R9S8umQAqJuNI&sensor=true&region=US"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBPkyV2p6F75FuQyCA538R9S8umQAqJuNI&sensor=true&region=US" charset="utf-8"></script>
     
+	<script type="text/javascript" src="jQuery.XDomainRequest.js"></script>
 	<script type="text/javascript" src="googlemapapi.js"></script>
 	<script type="text/javascript" src="../lib/jquery.tools.min.js"></script>
-    <script type="text/javascript" src="../lib/jQuery.XDomainRequest.js"></script>
 	<script type="text/javascript" src="../lib/dust-core-1.0.0.js"></script>
     <script type="text/javascript" src="../jsTemplates/about.js"></script>
-	
+    <style rel="stylesheet"	href="about.css"></style>
      <script>
 	function checkUserAgent(){
 		var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
@@ -73,7 +75,7 @@
 				$.ajax({  
 				   type: "GET",  
 				   url: url,
-				   success: function(msg){          
+				   success: function(msg){ 
 					 $("#content").html(msg); 
 					   
 				   }  
@@ -82,26 +84,6 @@
 				 );
 			});
 			
-			/*
-			$('body').click(function(event){
-				if (event.target.id!="watch_video"){
-					player.stopVideo();
-					$('#video-popup').fadeOut(1000);
-				}
-				else{
-					console.log('play vid');
-					// Start player
-					var player;
-					function onYouTubeIframeAPIReady() {
-					  player = new YT.Player('player');
-					}
-					
-					$('#video-popup').fadeIn(1000, function(){
-						player.playVideo();
-					});
-				}
-			});
-			*/
 			
 			
 		});

@@ -1,4 +1,4 @@
-@font-face { font-family: GothamLight; src:url(../font/Gotham-Light.otf)}
+@font-face { font-family: GothamLight; src:url(../font/Gotham-Light.ttf)format('truetype')}
 #aboutWebitap{
 	//width:100%;
 	//height:100%;

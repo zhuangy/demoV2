@@ -231,27 +231,27 @@ ul{
 	float:left;
 }
 
-#col_front #welcome-content{
+.col_front #welcome-content{
 	width:100%;
 	height:100%;
 	background:#000000;
 }
 
-#col_front .welcome-img {
+.col_front .welcome-img {
   width: 100%;
   height: 50%;
   margin:auto;
   position:relative;
 }
 
-#col_front .welcome-bottomContainer {
+.col_front .welcome-bottomContainer {
 	width: 100%;
 	height: 50%;
 	color: #FFFFFF;
 	position:relative;
 }
 
-#col_front .welcome-text{
+.col_front .welcome-text{
 	width: 100%;
 	height: 50%;	
 	
@@ -398,11 +398,11 @@ ul{
 }
 
 img.shadow{
-  -moz-box-shadow: 2px 2px 2px #000000;
+ /* -moz-box-shadow: 2px 2px 2px #000000;
   -webkit-box-shadow: 2px 2px 2px #000000;
   box-shadow: 2px 2px 2px #000000;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000')";
-  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000');
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000');*/
 }
 
 .menu-dish{
@@ -482,12 +482,12 @@ img.shadow{
 	float:left;
 }
 
-.item_highlight{
+#item_highlight{
 	width:100%;
 	position:absolute;
 	top: 0px;
 	left:0px;
-	background-color: rgba(255,255,255,0.5);
+	background-color: rgba(255,255,255,0.4);
 }
 
 /* OVERLAY */
@@ -566,12 +566,12 @@ img.shadow{
 	text-align:center;
 	background-image: url(../img/overlay_background.png);
 	background-size: 100% 100%;
-
+	
+	/*
 	-moz-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     -webkit-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#000000')";
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#000000');
+	*/
 
 	overflow:hidden;
 	z-index: 120;
@@ -753,19 +753,21 @@ img.shadow{
 /* ADD COMMENT FORM */
 #enterCommentOverlay{
   	display: none;
+	opacity: 0;
+	-webkit-transition: all .2s linear;
+	
 	position: absolute;
 	width: 95%;
 	height: 55%;
 	padding:0;
 	background-color: #D4D4D4;
 	background-size: 100% 100%;
-
+	
+	/*
 	-moz-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     -webkit-box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
     box-shadow: 10px 10px 5px rgba(0,0,0,0.8);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#000000')";
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=135, Color='#000000');
-
+	*/
 	overflow:hidden;
 	z-index: 130;
 }
@@ -808,9 +810,11 @@ textarea{
 	font-size:0.9em !important;
 	padding:2%;
 	border: 0px;
+	
 	box-shadow: inset 2px 2px 2px #666;
 	-moz-box-shadow: inset 2px 2px 2px #666;
 	-webkit-box-shadow: inset 2px 2px 2px #666;
+	
 	position:relative;
 	-webkit-appearance: none;
 }
@@ -828,8 +832,12 @@ textarea{
 }
 
 .emptyTextField{
-	-webkit-box-shadow: 0px 0px 12px red !important;
-	-box-shadow: 0px 0px 12px red;
+	/*
+	-webkit-box-shadow: 0px 0px 10px red !important;
+	-box-shadow: 0px 0px 10px red;
+	*/
+	color:red;
+	
 }
 
 #addComment_button {

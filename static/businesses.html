@@ -4,15 +4,21 @@
 <script style="text/javascript">
 function focusField(id){
 	var idstr = '.fieldbox_' + id;
-	$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_selected.png") no-repeat top left');
+	$('.fieldbox.'+id).css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/'+id+'_selected.png",sizingMethod="scale")');
+	$('.fieldbox.'+id).css('-ms-filter', "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/"+id+"_selected.png',sizingMethod='scale')");
+	$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_selected.png") ');
 	$('.fieldbox.'+id).css('background-size', '250px 50px');
+	$('.fieldbox.'+id).css('background', 'no-repeat center center fixed\0/');
 }
 
 function leaveField(id){
 	var value = $('#'+id).val();
 	if (!value){
-		$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_not_selected.png") no-repeat top left');
+		$('.fieldbox.'+id).css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/'+id+'_not_selected.png",sizingMethod="scale")');
+		$('.fieldbox.'+id).css('-ms-filter', "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/"+id+"_not_selected.png',sizingMethod='scale')");
+		$('.fieldbox.'+id).css('background', 'transparent url("img/'+id+'_not_selected.png")');
 		$('.fieldbox.'+id).css('background-size', '250px 50px');
+		$('.fieldbox.'+id).css('background', 'no-repeat center center fixed\0/');
 	}
 }
 </script>
@@ -41,9 +47,9 @@ function leaveField(id){
 						<div id="request_title">Request an Invite!</div>
 						<div id="request_loading" style="display:none"><img src='ajax-loader.gif' /></div>
 						<form id="request-form">
-							<div class="fieldbox name"><input type="text" id="name" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>
-							<div class="fieldbox email"><input type="text" id="email" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>
-							<div class="fieldbox phone"><input type="text" id="phone" onfocus="focusField(this.id)" onblur="leaveField(this.id)"/></div>          
+							<div class="fieldbox name"><input type="text" id="name"/></div>
+							<div class="fieldbox email"><input type="text" id="email"/></div>
+							<div class="fieldbox phone"><input type="text" id="phone"/></div>          
 						</form>     
 						<div id="submit-invite"></div>
 					</div>
@@ -73,7 +79,7 @@ function leaveField(id){
     
     <div class="aboutWebi_row">
         <div class="business_block" ><p class="business_page_title">An app that's not an app</p>You can now have an app for your restaurant without having to invest tens of thousands of dollars. You also don't have to worry about convincing your customers to download your app. Your app is accessible through a simple tap. See WebiTap in action.</div>
-        <div class="business_block">  <div class="business_block"> <iframe width="400" height="225"   src="http://www.youtube.com/embed/DT5I2015l08?wmode=transparent" frameborder="0" allowfullscreen></iframe></div> </div>
+        <div class="business_block"><iframe width="400" height="225"   src="http://www.youtube.com/embed/DT5I2015l08?wmode=transparent" frameborder="0" allowfullscreen></iframe></div>
         <div style="clear:both"></div>
     </div>
 	<img class="horizonLine" src="mobile/img/webitap/about-horizon.png" />
@@ -88,6 +94,26 @@ function leaveField(id){
 
 <script type="text/javascript">
 $(document).ready(function(e) {
+	$("#name").focus(function(){
+		focusField("name");
+	})
+	$("#name").blur(function(){
+		leaveField("name");
+	})
+	$("#email").focus(function(){
+		focusField("email");
+	})
+	$("#email").blur(function(){
+		leaveField("email");
+	})
+	$("#phone").focus(function(){
+		focusField("phone");
+	})
+	$("#phone").blur(function(){
+		leaveField("phone");
+	})
+
+
 	$('.business_slideshow').cycle({
 		fx: 'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
 		speed:  2000,
@@ -105,15 +131,21 @@ $(document).ready(function(e) {
 		var phoneIsValid = phonePattern.test(phone);
 		if (!email || !phone || !emailIsValid || !phoneIsValid){
 			if(!email || !emailIsValid){
-				console.log("email is wrong");
+				//console.log("email is wrong");
+				$('.fieldbox.email').css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/email_red.png",sizingMethod="scale")');
+				$('.fieldbox.email').css('-ms-filter', "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/email_red.png',sizingMethod='scale')");
 				$('.fieldbox.email').css('background', 'transparent url("img/email_red.png") no-repeat top left');
 				$('.fieldbox.email').css('background-size', '250px 50px');
+				$('.fieldbox.email').css('background', 'no-repeat center center fixed\0/');
 				$('#email').val("");
 			}
 			if(!phone || !phoneIsValid){
+				$('.fieldbox.phone').css('filter', 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/email_red.png",sizingMethod="scale")');
+				$('.fieldbox.phone').css('-ms-filter', "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/email_red.png',sizingMethod='scale')");
 				$('.fieldbox.phone').css('background', 'transparent url("img/phone_red.png") no-repeat top left');
 				$('.fieldbox.phone').css('background-size', '250px 50px');
-				console.log("phone is wrong");
+				$('.fieldbox.phone').css('background', 'no-repeat center center fixed\0/');
+				//console.log("phone is wrong");
 				$('#phone').val("");
 			}
 			//return；
@@ -125,7 +157,8 @@ $(document).ready(function(e) {
 				type:"POST",
 				url: "http://api.webitap.com/email_req", 
 				data: JSON.stringify(data),
-				headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+				dataType: 'json',
+				//headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
 				beforeSend: function () {
 					//$("#request_title").fadeOut("fast");
 					$("#request_loading").fadeIn("fast");

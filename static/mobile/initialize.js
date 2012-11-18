@@ -116,7 +116,7 @@ function store_actions(){
 }
 
 setInterval(function(){
-	store_actions();
+	// store_actions();
 },120000);
 
 var FACEBOOK_POST= getQueryVariable('post_id');

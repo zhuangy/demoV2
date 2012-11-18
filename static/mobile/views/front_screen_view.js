@@ -24,7 +24,9 @@ var FrontScreenView = Backbone.View.extend({
 		// get screen data from redis
 		API.get('splash?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
 			
-			data={'img1': res['img1'], 'img2': res['img2'], 'img3': res['img3'], 'img4': res['img4'], 'img5': res['img5'], 'img6': res['img6'], 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
+			 data={token: that.model.get('token'), 'img1': res['img1'], 'img2': res['img2'], 'img3': res['img3'], 'img4': res['img4'], 'img5': res['img5'], 'img6': res['img6'], 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
+			
+			//data={token: that.model.get('token'), 'img1': 'img/backButton.png', 'img2': 'img/backButton.png', 'img3': 'img/backButton.png', 'img4': 'img/backButton.png', 'img5': 'img/backButton.png', 'img6': 'img/backButton.png', 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
 			
 			that.fbook_name = res['fbook_name'];
 			that.fbook_link = res['fbook_link'];
@@ -38,7 +40,7 @@ var FrontScreenView = Backbone.View.extend({
 					var width = $('#menu_screen').width();
 					var height = $('#menu_screen').height();
 					
-					$('#col_front').css({'left': (index)*size.width+'px',
+					$('.col_front').css({'left': (index)*size.width+'px',
 								  'width': width+'px',
 								  'height': height+'px',
 								  'background-color': 'black',
