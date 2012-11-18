@@ -1,0 +1,417 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webitap Log</title>
+<link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="RGraph/libraries/RGraph.common.core.js" ></script>
+<script type="text/javascript" src="RGraph/libraries/RGraph.bar.js" ></script>
+<!--[if lt IE 9]><script src="RGraph/excanvas/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="RGraph/libraries/jquery.min.js"></script>
+
+<script type="text/javascript" src="RGraph/libraries/RGraph.common.dynamic.js" ></script>
+<script type="text/javascript" src="RGraph/libraries/RGraph.common.effects.js" ></script>
+<script type="text/javascript" src="RGraph/libraries/RGraph.common.tooltips.js" ></script>
+
+<script type="text/javascript" src="RGraph/libraries/RGraph.pie.js" ></script>
+<script>
+Array.prototype.indexOf = function(vItem){
+	for(i=0;i<this.length;i++){
+		if(vItem == this[i]){
+			return i;
+		}
+	}
+	return -1;
+}
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+		var x = new Date(a[key]); var y = new Date(b[key]);
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
+
+var users;
+$.ajax({
+	type:"GET",
+	url:"http://api.webitap.com/users", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, async: false,
+	success:function(res){users=res;}
+});
+
+//console.log(users);
+
+$.ajax({
+	type:"GET",
+	url:"http://api.webitap.com/events", 
+	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
+	success:function(res){
+		res = sortByKey(res, 'datestamp');
+		
+		var str = '';
+		//for(i=20; i<res.length; i++){
+		//console.log(JSON.stringify(res[100]));
+		count = 0;
+		var c=new Array();
+		var graphData=new Array();
+		for (i in res){
+			var date = res[i].datestamp;
+			//if(parseFloat(date.substr(3,2))>28){
+				var ev = res[i];
+				//console.log(ev);
+				var id = '';
+				var user = '';
+				var time = '';
+				var date = new Date([ev.datestamp + ' UTC']);
+				date = (parseFloat(date.getMonth())+1) + '/' + date.getDate()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+				
+				if(ev.tag_id){var id = ev.tag_id;}
+				else if(ev.code){var id = ev.code;}
+				
+				if(ev.cookie_id){var user = users.indexOf(String(ev.cookie_id));}
+				
+				if(ev.actions&& ev.actions.length>0){
+					var act = ev.actions;
+					var l = ev.actions.length;
+					time = (act[l-1].time - act[0].time)/1000;
+					if (time<60){
+						time = Math.ceil(time)+' seconds';
+					}
+					else if(time>=60){
+						time = (time/60)+' minutes';
+					}
+					console.log(user);
+					console.log(time);
+					console.log(JSON.stringify(ev));
+					
+				}
+				
+				var admin = [-1,0,1,2,11,12,14,15,114,130,133,134,144,146,147,150,152,149, 155,158,159,147,157,148,153,198,199,202,215,224];
+				//133 mom; 134 dad; 0 masha local; 1 masha; 15 masha webitap;
+				// 144 Ryan; 146 TengFei; 12 Aram; 14 John; 141 John Ipad;
+				// 199 198 masha home;
+				// 224 masha
+				// 202 Edwin;
+				
+				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users					
+					
+					str = str + '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+id+'</td><td>'+ev.user_agent+'</td><td>'+date+'</td><td>'+user+'</td><td>'+time+'</td></tr>';
+					
+					if (user==181){console.log(ev);}
+					
+					graphData[count]={
+								id:count,
+								type:ev.type,
+								tag:id,
+								agent:ev.user_agent,
+								date:date,
+								user:user
+							}
+					count = count+1;
+					
+				}
+		}
+		var stat=setGraphData(graphData,"Daily");
+		var from;
+		var to;
+		$("#dateSelecterFrom").change(function () {
+          	from=new Date($("#dateSelecterFrom").val().toString().replace(/_/g," "));
+          	
+          	
+         	 $("#dateSelecterTo option").each(function () {
+         	 
+         	 	var temp=new Date($(this).val().toString().replace(/_/g," "));
+         	 	//console.log(temp);
+	      		if(temp<from) 
+	      		{
+	      			$(this).attr("disabled","disabled");
+	      			if($(this).attr("selected")==true) 
+	      			{
+	      				$(this).attr("selected",false);
+	      				to=from;
+	      			}
+	      			//console.log("hah");
+	      		}
+	      		else $(this).removeAttr( "disabled")
+      		 });
+      		
+      		
+          if(typeof to === "undefined") to=from;
+          drawGraph(graphDataFilter(stat,from,to));
+          
+        }).trigger('change');
+		$("#dateSelecterTo").change(function () {
+		         to=new Date($("#dateSelecterTo").val().toString().replace(/_/g," "));
+		         if(typeof from === "undefined") from=to;
+		         drawGraph(graphDataFilter(stat,from,to));
+		        })
+		        .trigger('change');
+		        
+		$("#dateSelecterScale").change(function () {
+//		          $("#dateSelecterScale option:selected").each(function () {
+//		                console.log($(this).text());
+//		                stat=setGraphData(graphData,$(this).text());
+//		                
+//		              });
+
+				//console.log($(this).val());
+				stat=setGraphData(graphData,$(this).val());
+				
+				to=new Date($("#dateSelecterTo").val().toString().replace(/_/g," ")); 
+				from=new Date($("#dateSelecterFrom").val().toString().replace(/_/g," "));
+				
+				
+				
+				//console.log($("#dateSelecterTo").val());
+				//console.log($("#dateSelecterFrom").val());
+				
+				
+				
+				if($(this).val()=="Weekly") {to=7;from=0;$("#dateSelecterTo").attr("disabled","disabled");$("#dateSelecterFrom").attr("disabled","disabled");$("#dateSelecterTo").val(0)}
+				else {$("#dateSelecterTo").removeAttr( "disabled");$("#dateSelecterFrom").removeAttr( "disabled");}
+				
+				
+				
+		         //console.log(graphDataFilter(stat,from,to));
+		        //from= $("#dateSelecterFrom option:selected").text();
+		        //to= $("#dateSelecterTo option:selected").text();
+		        //console.log(from+" "+to);
+		        drawGraph(graphDataFilter(stat,from,to));
+		         
+		        });
+		        
+		        
+		        
+		
+		document.getElementById('events').innerHTML = str;
+		
+		
+		
+		
+		
+//		function isBigEnough(element, index, array) {
+//		  return (element >= 10);
+//		}
+//		var temp=new Array();
+//		temp["hah"]=5;
+//		temp["lala"]=15;
+//		var filtered = temp.filter(isBigEnough);
+//		console.log(filtered);
+		// filtered is [12, 130, 44] 
+		//drawGraph(stat);
+	}
+});
+
+
+
+function setGraphData(data,scale){
+	var stat=new Array();
+	var selecterStr="";
+	var monthNames = [ "January", "February", "March", "April", "May", "June",
+	    "July", "August", "September", "October", "November", "December" ];
+	var weekDays = ['Sunday','Monday','Tuesday','Wednesday',
+	'Thursday','Friday','Saturday'];
+	for(var i in data){
+	
+	
+		switch(scale){
+			case "Daily":var date=data[i].date.split(' ')[0];
+					var timeStamp=new Date(date);
+					break;
+					
+			case "Monthly":var date=new Date(data[i].date);
+					date=monthNames[date.getMonth()]+" "+(date.getYear()+1900);
+					//console.log(date);
+					var timeStamp=new Date("1 "+date);
+					//console.log(timeStamp);
+					break;
+					
+			case "Annually":var date=new Date(data[i].date);
+					date=(date.getYear()+1900).toString();
+					var timeStamp=new Date(date);
+					break;
+					
+			case "Weekly":var date=new Date(data[i].date);
+					date=date.getDay();
+					//console.log(data[i].date)
+					//console.log(date);
+					var timeStamp=date;
+					date=weekDays[date];
+					break;
+					
+		}
+		//date=date.toString();
+		//date=new Date(date);
+		//console.log(date);
+		//from=new Date(from.toString());
+		//to=new Date(to.toString());
+		//console.log(scale);
+	
+	
+		
+		//var date=data[i].date.split(' ')[0];
+		//date=new Date(data[i].date);
+		//date=date.getMonth()+1;
+		//date=date.getYear()+1900;
+		
+		
+		
+		//var timeStamp=new Date(date);
+		//console.log(timeStamp.toString().replace(/ /g,"_"));
+		type=data[i].type;
+		agent=data[i].agent;
+		//console.log(agent);
+		
+		if(stat[date]) {
+			if(type=="tap") stat[date].tap++;
+			else stat[date].login++;
+			if(agent.indexOf("Android")>0) stat[date].Android++;
+			else if (agent.indexOf("iOS")>0) stat[date].IOS++;
+			//else stat[date].other++
+		}
+		else {
+			selecterStr+="<option value="+timeStamp.toString().replace(/ /g,"_")+">"+date+"</option>";
+			stat[date]={
+				date:date,
+				login:0,
+				tap:0,
+				Android:0,
+				IOS:0,
+				other:0
+			}
+			if(type=="tap") stat[date].tap++;
+			else stat[date].login++;
+			if(agent.indexOf("Android")) stat[date].Android++;
+			else if (agent.indexOf("iOS")>0) stat[date].IOS++;
+			//else stat[date].other++
+			
+		}
+	}
+	//for(var key in stat){
+	//	console.log(key+":"+stat[key]);
+	//}
+	document.getElementById('dateSelecterFrom').innerHTML=selecterStr;
+	document.getElementById('dateSelecterTo').innerHTML=selecterStr;
+	return stat;
+}
+
+
+
+function graphDataFilter(stat,from,to) {
+	//console.log("from:"+from+" to:"+to);
+	//var from=new Date(from);
+	//var to=new Date(to);
+	var weekDays = ['Sunday','Monday','Tuesday','Wednesday',
+	'Thursday','Friday','Saturday'];
+	var filteredStat=new Array();
+	
+	for(var key in stat){
+		var weekday=weekDays.indexOf(key);
+		if(weekday==-1){
+			if(key.indexOf(' ')>0) tempDate=new Date('1 '+key);
+			else tempDate=new Date(key)
+		}
+		else{
+			tempDate=weekday;
+		}
+		//console.log(key);
+		//var tempDate=new Date(key);
+		if(tempDate>=from&&tempDate<=to){
+				
+				filteredStat[key]=stat[key];
+			}
+			
+	}
+	//console.log(filteredStat[key])
+	return filteredStat;
+}
+
+
+
+
+function drawGraph(stat){
+	//document.getElementById('cvs').innerHTML="lalalla";
+	RGraph.ObjectRegistry.Clear();
+	RGraph.Clear(document.getElementById('cvs'));
+	var data=new Array();
+	var label =new Array();
+	var type_data=new Array();
+	var agent_data=new Array();
+	var count=0;
+	
+	
+	
+	for(key in stat){
+		label[count]=key;
+		data[count]=stat[key].tap+stat[key].login;
+		//console.log(key+":"+stat[key]);
+		type_data[count]=[stat[key].tap,stat[key].login];
+		agent_data[count]=[stat[key].Android,stat[key].IOS];
+		count++;
+	}
+	
+	var bar8 = new RGraph.Bar('cvs', data)
+    bar8.Set('chart.labels', label);
+    
+    bar8.Set('chart.tooltips', function (index) {var label = bar8.Get('chart.labels')[index];return '<h2 style="text-align: center">' + label + '</h2><canvas id="type_canvas" width="250" height="110"></canvas><canvas id="agent_canvas" width="250" height="110"></canvas>';});
+    //bar8.Draw();
+    RGraph.Effects.Bar.Grow(bar8);
+
+    /**
+    * The ontooltip event runs when a tooltip is shown and creates the Pie chart in the tooltip
+    */
+    bar8.ontooltip = function (obj)
+    {
+        var pie_data =type_data; 
+        var tooltip = RGraph.Registry.Get('chart.tooltip');
+        var index   = tooltip.__index__;
+
+        var pie = new RGraph.Pie('type_canvas', pie_data[index]);
+        pie.Set('chart.labels', ['Tap','Login']);
+        pie.Set('chart.gutter.top', 20);
+        pie.Set('chart.gutter.bottom', 25);
+        pie.Draw();
+        var pie_data =agent_data; 
+        var pie = new RGraph.Pie('agent_canvas', pie_data[index]);
+        pie.Set('chart.labels', ['Android','iOS']);
+        pie.Set('chart.gutter.top', 20);
+        pie.Set('chart.gutter.bottom', 25);
+        pie.Draw();
+    }
+	
+	
+
+}
+</script>
+<style>
+td{
+	width:200px;
+	border:1px solid black;
+}
+</style>
+</head>
+
+<body>
+<h3>WebiTap events at Iota</h3>
+
+
+<div style="text-align: center; font-family: Comic sans MS; width: 800px">
+    <h1>IOTA daily visit statistics</h1>
+	<select id="dateSelecterScale">
+		<option value="Daily">Daily</option>
+		<option value="Monthly">Monthly</option>
+		<option value="Annually">Annually</option>
+		<option value="Weekly">Weekly</option>
+	</select> 
+	From:<select id="dateSelecterFrom"></select>To:<select id="dateSelecterTo"></select>
+    <canvas id="cvs" width="800" height="250">[No canvas support]</canvas>
+
+</div>
+<table id='events' cellspacing="0" cellpadding="5px" >
+	
+</table>
+
+
+</body>
+</html>
