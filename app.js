@@ -8,6 +8,7 @@ var app = express.createServer();
 app.configure(function() {
   app.register('dust', cons.dust);
   app.use(express.static(__dirname+'/static'));
+  app.use(express.compress());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
