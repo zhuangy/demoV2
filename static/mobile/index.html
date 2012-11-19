@@ -106,8 +106,8 @@ li{
 
 </style>
 
-<script src="../lib/jquery-1.7.1.js"></script>
-<script src="../lib/jquery-mobile.js"></script>
+<script src="../lib/jquery.min.js"></script>
+<script src="../lib/jquery-mobile.min.js"></script>
 <script src="../lib/underscore-min.js"></script>
 <script src="../lib/backbone-min.js"></script>
 <script src="../lib/dust-core-1.0.0.js"></script>
@@ -128,14 +128,45 @@ li{
 <script type="text/javascript" src="../jsTemplates/frontScreen.js"></script>
 
 <!--Backbone Views -->
-<script src="views/screens_viewmodel.js"></script>
-<script src="views/items_viewmodel.js"></script>
-<script src="views/loading_view.js"></script>
-<script src="views/noNFC_view.js"></script>
+<script asynch src="views/screens_viewmodel.js"></script>
+<script asynch src="views/items_viewmodel.js"></script>
+<script asynch src="views/loading_view.js"></script>
+<script asynch src="views/noNFC_view.js"></script>
 <script src="views/front_screen_view.js"></script>
-<script src="views/item_detailed_view.js"></script>
+<!--<script src="views/item_detailed_view.js"></script>
 <script src="views/comments.js"></script>
-<script src="views/add_comment_view.js"></script>
+<script src="views/add_comment_view.js"></script>-->
+
+<script type="text/javascript">
+
+ // Add a script element as a child of the body
+ function downloadJSAtOnload() {
+	 var s1 = document.createElement("script");
+	 s1.src = "views/item_detailed_view.js";
+	 document.body.appendChild(s1);
+
+	 var s2 = document.createElement("script");
+	 s2.src = "views/comments.js";
+	 document.body.appendChild(s2);
+
+	 var s3 = document.createElement("script");
+	 s3.src = "views/add_comment_view.js";
+	 document.body.appendChild(s3);
+
+	 var s4 = document.createElement("script");
+	 s4.src = "views/items_viewmodel.js";
+	 document.body.appendChild(s4);
+
+ }
+
+ // Check for browser support of event handling capability
+ if (window.addEventListener)
+ window.addEventListener("load", downloadJSAtOnload, false);
+ else if (window.attachEvent)
+ window.attachEvent("onload", downloadJSAtOnload);
+ else window.onload = downloadJSAtOnload;
+
+</script>
 
 <script>
 
