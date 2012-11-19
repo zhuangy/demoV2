@@ -151,27 +151,51 @@ $(document).ready(function(e) {
 			//return；
 		}
 		else{
-			var data={tel:phone, name:name, email:phone};
-			
-			$.ajax({
-				type:"POST",
-				url: "http://api.webitap.com/email_req", 
-				data: JSON.stringify(data),
-				dataType: 'json',
-				//headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
-				beforeSend: function () {
-					//$("#request_title").fadeOut("fast");
-					$("#request_loading").fadeIn("fast");
-    				
-  				},
-				success: function(res){
-						//console.log(res);
-						$("#request_loading").fadeOut("fast");
-						//$("#request_title").fadeIn("fast");
-						$(".box").fadeOut("fast");
-				}, 
-				error:function(err){console.log(JSON.stringify(err));}
-			});
+			var data={tel:phone, name:name, email:email};
+			console.log(JSON.stringify(data));
+
+			if ($.browser.msie && window.XDomainRequest) {
+  			  // Use Microsoft XDR
+  			  	$("#request_loading").fadeIn("fast");
+  			  	console.log("xdr");
+  			 	 var xdr = new XDomainRequest();
+   				 xdr.open("POST", "http://192.168.1.107:8080/email_req");
+   				 xdr.onload = function () {
+   				 	$("#request_loading").fadeOut("fast");
+							//$("#request_title").fadeIn("fast");
+							$(".box").fadeOut("fast");
+  			 	 };
+  			 	xdr.dataType='json';
+				xdr.send(JSON.stringify(data)); 
+
+			} else {
+				console.log("ajax");
+				$.ajax({
+					type:"POST",
+					url: "http://192.168.1.107:8080/email_req", 
+					data: JSON.stringify(data),
+					dataType: 'json',
+					//headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
+					beforeSend: function () {
+						//$("#request_title").fadeOut("fast");
+						$("#request_loading").fadeIn("fast");
+	    				
+	  				},
+					success: function(res){
+							//console.log(res);
+							$("#request_loading").fadeOut("fast");
+							//$("#request_title").fadeIn("fast");
+							$(".box").fadeOut("fast");
+					}, 
+					error: function(xmlReq, status, errorMsg){
+	        			console.log("Error Message: "+ errorMsg);
+	        			console.log("Status: "+ status);
+	        			console.log(JSON.stringify(xmlReq));
+
+	        			throw(errorMsg);
+	    			}
+				});
+			}
 
 		}
 
