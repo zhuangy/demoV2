@@ -67,7 +67,7 @@ function leaveField(id){
     
 	<div class="business_text_block"><img src="img/left_quote.png">I always wanted an app for my restaurant, but it was too expensive to make and nobody would download it. WebiTap solves all that. It helps my customers discover new things on my menu.<img src="img/right_quote.png"><p>Ziad, Lucia's</p></div>
 	<div style="clear:both"></div>
-	<img class="horizonLine" src="mobile/img/webitap/about-horizon.png" />
+	<img class="horizonLine" src="m/img/webitap/about-horizon.png" />
     
     <div class="aboutWebi_row">
         <div class="business_block"> <img src="img/business_pic1.png" style="width:100%;position:relative"/> </div>
@@ -75,21 +75,21 @@ function leaveField(id){
         </div>
         <div style="clear:both"></div>
     </div>
-	<img class="horizonLine"src="mobile/img/webitap/about-horizon.png" />
+	<img class="horizonLine"src="m/img/webitap/about-horizon.png" />
     
     <div class="aboutWebi_row">
         <div class="business_block" ><p class="business_page_title">An app that's not an app</p>You can now have an app for your restaurant without having to invest tens of thousands of dollars. You also don't have to worry about convincing your customers to download your app. Your app is accessible through a simple tap. See WebiTap in action.</div>
         <div class="business_block"><iframe width="400" height="225"   src="http://www.youtube.com/embed/DT5I2015l08?wmode=transparent" frameborder="0" allowfullscreen></iframe></div>
         <div style="clear:both"></div>
     </div>
-	<img class="horizonLine" src="mobile/img/webitap/about-horizon.png" />
+	<img class="horizonLine" src="m/img/webitap/about-horizon.png" />
     
     <div class="aboutWebi_row">
         <div class="business_block"> <img src="img/business_pic3.png" style="width:100%;position:relative"/> </div>
         <div class="business_block" ><p class="business_page_title">Grow your business</p>It's time to bring your business into the 21st century. WebiTaps interactive menu can help drive up your sales, improve your service, increase customer loyalty, and ultimately grow your business.</div>
         <div style="clear:both"></div>
     </div>
-	<img class="horizonLine" src="mobile/img/webitap/about-horizon.png" />
+	<img class="horizonLine" src="m/img/webitap/about-horizon.png" />
 </div>
 
 <script type="text/javascript">
@@ -152,12 +152,10 @@ $(document).ready(function(e) {
 		}
 		else{
 			var data={tel:phone, name:name, email:email};
-			console.log(JSON.stringify(data));
 
 			if ($.browser.msie && window.XDomainRequest) {
   			  // Use Microsoft XDR
   			  	$("#request_loading").fadeIn("fast");
-  			  	console.log("xdr");
   			 	 var xdr = new XDomainRequest();
    				 xdr.open("POST", "http://192.168.1.107:8080/email_req");
    				 xdr.onload = function () {
