@@ -157,7 +157,7 @@ $(document).ready(function(e) {
   			  // Use Microsoft XDR
   			  	$("#request_loading").fadeIn("fast");
   			 	 var xdr = new XDomainRequest();
-   				 xdr.open("POST", "http://192.168.1.107:8080/email_req");
+   				 xdr.open("POST", "http://api.webitap.com/email_req");
    				 xdr.onload = function () {
    				 	$("#request_loading").fadeOut("fast");
 							//$("#request_title").fadeIn("fast");
@@ -170,7 +170,7 @@ $(document).ready(function(e) {
 				console.log("ajax");
 				$.ajax({
 					type:"POST",
-					url: "http://192.168.1.107:8080/email_req", 
+					url: "http://api.webitap.com/email_req", 
 					data: JSON.stringify(data),
 					dataType: 'json',
 					//headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='},
