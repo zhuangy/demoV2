@@ -5,7 +5,7 @@ var noNFCView = Backbone.View.extend({
 	el: '#noNFC_view',									
 	
 	events: {
-		"tap #keyboard li":"input_number",
+		//"tap #keyboard li":"input_number",
 		"touchstart #keyboard li":"highlight_key",
 		"touchend #keyboard li":"unhighlight_key",
 		"touchstart #aboutNFCbutton": "go_to_aboutNFC",
@@ -245,6 +245,9 @@ var noNFCView = Backbone.View.extend({
 				$(ev.target).css({'color': '#cd4314' ,'text-shadow': '-1px -1px 0px black'});
 			}
 		}
+
+		//enter this number
+		this.input_number(ev);
 	},
 	
 	unhighlight_key: function(ev){
