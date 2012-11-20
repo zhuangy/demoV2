@@ -316,6 +316,7 @@ var ScreensView = Backbone.View.extend({
 			},300);
 			
 			// unload/hide screens that are not in field of view
+			/*
 			for(s in this.Screens){
 				if(Math.abs(s-this.index)>1){
 					$('#'+this.Screens[s].model.get('token')).css('display', 'none');
@@ -323,6 +324,7 @@ var ScreensView = Backbone.View.extend({
 					$('#'+this.Screens[s].model.get('token')).css('display', 'block');
 				}
 			}
+			*/
 		}
 		
 	},
