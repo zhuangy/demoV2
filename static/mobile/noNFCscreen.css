@@ -1,5 +1,5 @@
 @font-face { font-family: GothamBold; src: url('../font/gotham_bold.ttf'); } 
-@font-face { font-family: GothamLight; src: url('../font/Gotham-Light.otf'); }
+@font-face { font-family: GothamLight; src: url('../font/Gotham-Light.ttf'); }
 
 #aboutNFCbutton{
 	width:50%;
