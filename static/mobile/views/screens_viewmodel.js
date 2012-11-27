@@ -86,9 +86,9 @@ var ScreensView = Backbone.View.extend({
 		"mousedown":"ontouchstart",
 		"mousemove":"ontouchmove",
 		"mouseup":"ontouchend",
-		"touchstart":"ontouchstart",
-		"touchmove":"ontouchmove",
-		"touchend":"ontouchend"
+		"touchstart #screens_view":"ontouchstart",
+		"touchmove #screens_view":"ontouchmove",
+		"touchend #screens_view":"ontouchend"
 	},
 	
 	initialize: function() {
@@ -391,7 +391,7 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	ontouchstart: function(e){	
-		
+		console.log('start');
 		/*
 		var target = e.originalEvent.target ? e.originalEvent.target : e.target;
 		$(target).closest('li').append('<div id="item_highlight"></div>');

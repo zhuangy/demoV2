@@ -12,7 +12,7 @@ var FrontScreenView = Backbone.View.extend({
 		_.bindAll(this, 'render', 'slideshow', 'fbook_click');
 	},
 	
-	render:function(index, code){
+	render:function(index, code, pageNum){
 		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
 		$('#header_view').append(headerStr);
 		
@@ -35,7 +35,9 @@ var FrontScreenView = Backbone.View.extend({
 			
 			dust.render("frontScreen", data, function(err, out) {
 				if (!err){
-					$('#screens_view').append(out);
+					//$('#screens_view').append(out);
+					var div = document.getElementById('swipeview-'+pageNum);
+					div.innerHTML = out;
 					
 					var width = $('#menu_screen').width();
 					var height = $('#menu_screen').height();
@@ -94,7 +96,7 @@ var FrontScreenView = Backbone.View.extend({
 		//store event
 		ACTIONS.push({action: 'clickFacebook', time: new Date().getTime()});
 		
-		window.location.href = 'https://www.facebook.com/dialog/feed?app_id=150769608397642&link='+this.fbook_link+'&picture='+this.img_fbook+'&name='+this.fbook_name+'&caption=Brought%20to%20you%20by%20WebiTap&description=Using%20Dialogs%20to%20interact%20with%20users.&redirect_uri=http://www.webitap.com/mobile/?code='+this.code;
+		window.location.href = 'https://www.facebook.com/dialog/feed?app_id=150769608397642&link='+this.fbook_link+'&picture='+this.img_fbook+'&name='+this.fbook_name+'&caption=Brought%20to%20you%20by%20WebiTap&description=Using%20Dialogs%20to%20interact%20with%20users.&redirect_uri=http://www.webitap.com/m/?code='+this.code;
 		
 		
 	}

@@ -142,10 +142,10 @@ var ItemsView = Backbone.View.extend({
 				//VIDEO[that.model.get('index')] = new YT.Player('video'+that.model.get("index")); //for youtube vid
 				VIDEO[that.model.get('index')] = document.getElementById(that.model.get('token')+'Video'); // for html5 vid
 				// turn on iscroll for this screen
-				new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
+				//new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
 			}else{
 				// turn on iscroll for this screen
-				new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
+				//new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
 			}
 		});
 		
