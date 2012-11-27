@@ -88,11 +88,17 @@ var ItemsView = Backbone.View.extend({
 	},
 	
 	render : function() {
+		this.el = document.createElement('div');
+		this.el.className='items_list';
+
 		$(this.el).html(''); // clear element
-		// for each comment, create a view and prepend it to the list.
+		this.list = document.createElement('ul');
+		this.list.className='scrollableContent';
+
+		// for each item create a view and prepend it to the list.
 		this.collection.each(function(Item) {
 		  var itemView = new ItemView({ model : Item, collection:this.collection });
-		  $('#scroller'+Item.get('screen_token')+' .scrollableContent').append(itemView.render().el);
+		  $(this.list).append(itemView.render().el);
 		  // set stars rating
 		  var id = Item.get('token') ? Item.get('token') : Item.get('timestamp');
 		  setStarsRating('[data-token="'+id+'"] .star', Item.get('rating'));
@@ -100,8 +106,11 @@ var ItemsView = Backbone.View.extend({
 		//return this;
 		
 		// append spacer after last item
-		$('#scroller'+this.model.get('token')+' .scrollableContent').append('<div class="bottomListSpacer" style="height:'+size.height*0.1+'px;"></div>');
+		$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.1+'px;"></div>');
 		
+		// append list to items_list
+		$(this.el).append(this.list);
+
 		var that = this;
 		// add video if needed. Check if screen token is in screen_video list
 		
@@ -109,18 +118,13 @@ var ItemsView = Backbone.View.extend({
 		API.get('video?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
 			if(res){
 				//resize scrolling element
-				$('#'+that.model.get('token')+'iscroll').css({'height':(0.925*size.height-size.width*0.9/1.6*0.9)+'px'});
+				$(that.list).css({'height':(0.925*size.height-size.width*0.9/1.6*0.9)+'px'});
 				
 				//insert video
 				var vid_el = "<video class='video' id='"+that.model.get('token')+"Video' poster='"+res.poster+"' controls><source src='"+res.vid_mp4+"'><source src='"+res.vid_ogv+"' type='video/ogg'></video>";
 				//$('#scroller'+that.model.get('token')+' .scrollableContent').prepend(vid_el);
-				$('#'+that.model.get('token')).prepend(vid_el); //insert before scroller
+				$(that.el).prepend(vid_el); //insert before scroller
 
-				
-				//$('#scroller'+that.model.get('token')+' .scrollableContent').prepend('<div class="video"></div>');
-				//$('#scroller'+that.model.get('token')+' .video').html('<iframe height="100%"  width="100%" id="video'+that.model.get("index")+'" src="'+res.video_url+'" frameborder="0" allowfullscreen style="z-index:1;" ></iframe>');
-				//$('#scroller'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
-				//$('#scroller'+that.model.get('token')+' .video').css('width',size.width+'px');
 				//adjust video size
 				$('#'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
 				$('#'+that.model.get('token')+' .video').css('width',size.width+'px');
@@ -145,6 +149,7 @@ var ItemsView = Backbone.View.extend({
 			}
 		});
 		
+		return this.el;
 		
 	},
 });
@@ -191,8 +196,10 @@ var ItemView = Backbone.View.extend({
 	openOverlay: function(ev){
 		//ev.stopPropagation();
 		
-		var itemOverlay = new ItemDetailedView({model:this.model});
+		//var itemOverlay = new ItemDetailedView({model:this.model});
+		itemOverlay.model = this.model;
 		itemOverlay.render();
+		itemOverlay.delegateEvents();
 		
 		$('#item_highlight').remove();
 		

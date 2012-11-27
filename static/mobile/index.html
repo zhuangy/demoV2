@@ -49,8 +49,19 @@ li{
 	-webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
 }
+
+#screens_view{
+	position:absolute;
+	width:100%;
+	background-image: url("img/background_texture.jpg");
+	z-index:100;
+	display:block;
+}
+
 #menu_screen{
 	background-image: url("img/background_texture.jpg");
+	z-index:100;
+	display:block;
 }
 
 #menu_screen, #noNFC_screen{
@@ -64,11 +75,6 @@ li{
 
 #noNFC_screen{
 	z-index:200;
-}
-
-#menu_screen{
-	z-index:100;
-	display:block;
 }
 
 #wrongorientation{
@@ -114,6 +120,8 @@ li{
 <script src="../lib/iscroll.js"></script>
 <script type="text/javascript" src="http://www.youtube.com/player_api"></script>
 
+<script src="views/item_detailed_view.js"></script>
+
 <script src="../lib/api.js"></script>
 <script type="text/javascript" src="useragents.js"></script>
 <script src="initialize.js"></script>
@@ -141,9 +149,9 @@ li{
 
  // Add a script element as a child of the body
  function downloadJSAtOnload() {
-	 var s1 = document.createElement("script");
-	 s1.src = "views/item_detailed_view.js";
-	 document.body.appendChild(s1);
+	 //var s1 = document.createElement("script");
+	 //s1.src = "views/item_detailed_view.js";
+	 //document.body.appendChild(s1);
 
 	 var s2 = document.createElement("script");
 	 s2.src = "views/comments.js";
@@ -185,7 +193,7 @@ li{
         <div id="screens_view"></div>
     </div>
 	
-    <div id="overlay"></div>
+    <!--<div id="overlay"></div> -->
     <div id="enterCommentOverlay"></div>
 
 

@@ -35,7 +35,7 @@ var ScreenView = Backbone.View.extend({
 		_.bindAll(this, 'render');
 		
 	},
-	render: function(index){
+	render: function(index, pageNum){
 		this.model.set({index: index});
 		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
 		$('#header_view').append(headerStr);
@@ -44,24 +44,12 @@ var ScreenView = Backbone.View.extend({
 			$('#h'+this.model.get('token')).css('margin-left', size.width/4+'px');	
 		}
 		
-		$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div id="'+this.model.get('token')+'iscroll"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div></div>')
+		//$('#screens_view').append('<div class="col" id="'+this.model.get('token')+'" scrollable="true"><div id="'+this.model.get('token')+'iscroll" class="iscroll"><div class="scroller" id="scroller'+this.model.get('token')+'"><ul class="scrollableContent"></ul></div></div></div>')
 		
 		// some css
-		$('#'+this.model.get('token')).css({'left': (index)*size.width+'px',
-					  'width': size.width+'px',
-					  //'background-image': 'url("img/background_texture.jpg")',
-					  'color':'white',
-					  'height': 0.925*size.height+'px',
-					  'top': 0.075*size.height+'px',
-					  'padding-top': size.height*0.012+'px'});
+		//$('#'+this.model.get('token')).css({'left': (index)*size.width+'px',
+											//'top': 0.075*size.height+'px',});
 
-		$('#'+this.model.get('token')+'iscroll').css({'overflow':'hidden',
-													 'position':'relative',
-													 'z-index':'1',
-													 'height':'100%',
-													 'margin-top':'1%'
-													 });
-		
 		// render items into this.el!!!!
 		var itemsCollection = new Items([],{token: this.model.get('token')});
 		var itemsView = new ItemsView({collection: itemsCollection, model: this.model});
@@ -69,7 +57,11 @@ var ScreenView = Backbone.View.extend({
 		var that = this;
 		itemsCollection.fetch({
 		  success : function(items) {
-			itemsView.render();
+			var div = document.getElementById('swipeview-'+pageNum);
+			div.innerHTML = '';
+			div.appendChild(itemsView.render());
+			//el.appendChild(itemsView.render());
+			//return that.el;
 			//$('#scroller'+that.model.get('token')).html(itemsView.render().el); // inserts a <ul class='scrollableContent'>...list...</ul>
 		  },
 		  error: function() {
@@ -104,7 +96,9 @@ var ScreensView = Backbone.View.extend({
 		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen');
 		
 		//post event to database
-		saveEvent();
+		//saveEvent();
+		//GLOBAL.itemOVerlay = new ItemDetailedView();
+
 		
 		//this.ScreenCollection = new Screens();
 		this.screenView = new Object();
@@ -120,15 +114,26 @@ var ScreensView = Backbone.View.extend({
 		this.ended = 1;
 		
 		this.code = this.options.code;
-		
-		this.Screens = new Array();
-		this.ScreensContent = new Array();
+
+		this.Screens = [];
+		this.screenHTML = [];
+		this.currPage = 0;
+
+		this.masterPages = [];
+		for (i=0; i<3; i++) {
+			div = document.createElement('div');
+			div.id = 'swipeview-' + (i);
+			div.className='col';
+			div.style.left = i*100 + '%';
+
+			$(this.el).append(div);
+			this.masterPages.push(div);
+		}
 		
 		
 	},
 	
 	render : function() {
-		//$('#menu_screen').append('<div id="header"><div id="header_view"><div class="h" id="h_front"><img class="valigner" />WELCOME</div></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div id="header"><div id="header_view"></div></div><div id="headerBlur"></div>');
 		$('#menu_screen').append('<div data-role="footer" id="footer" class="alpha60"><img id="backButton" src="img/webitap/backButton.png"/><div id="homeButton"></div></div>');
 		
@@ -155,24 +160,26 @@ var ScreensView = Backbone.View.extend({
 		this.numSlides = this.collection.length;
 		
 		// some css
-		$(this.el).css('width', this.numSlides*size.width+'px');
+		//$(this.el).css('width', this.numSlides*size.width+'px');
+		//$(this.el).css('width', size.width+'px');
 		$('#header_view').css('width', this.numSlides*size.width+'px');
 		$('.h').css('width', (size.width/2)+'px');
 		$('#h_front').css('margin-left', size.width/4+'px');
 		
+
 		// RENDER INITIAL SCREENS
 		for (i=0; i<Math.min(3,this.collection.models.length); i++){
 			if(this.collection.models[i].get('type')=='menu_list'){
 				//var screenView = new ScreenView({model:this.collection.models[i]});
 				//screenView.render(i);
 				this.Screens[i] = new ScreenView({model:this.collection.models[i]});
-				this.Screens[i].render(i);
+				this.Screens[i].render(i, i);
 			}
 			else if (this.collection.models[i].get('type')=='splash'){
 				//var frontscreenView = new FrontScreenView({model:this.collection.models[i]});
 				//frontscreenView.render(i, this.code);
 				this.Screens[i] = new FrontScreenView({model:this.collection.models[i]});
-				this.Screens[i].render(i, this.code);
+				this.Screens[i].render(i, this.code, i);
 			}
 		}
 		
@@ -245,7 +252,7 @@ var ScreensView = Backbone.View.extend({
 		  $('#overlay-blur').css('display', 'none');
 		  $('#backButton').css('display', 'none');
 		  
-		   $("#insert .slideshow").css('display','block');
+		  $('#overlay').remove();
 		}	
 	},
 	
@@ -281,6 +288,59 @@ var ScreensView = Backbone.View.extend({
 			ACTIONS.push({action: 'slide', time: new Date().getTime()});
 		
 			this.index = index;
+			//set page
+			this.currPage = this.index%3; // page can be 0,1,2
+			
+			if(this.index>0 && this.index<this.numSlides-1){
+				if(this.currPage==0){
+					this.masterPages[1].style.left = (1+this.index)*100+'%';
+					this.masterPages[0].style.left = this.index*100+'%';
+					this.masterPages[2].style.left = (this.index-1)*100+'%';
+				}
+				else if(this.currPage==1){
+					this.masterPages[2].style.left = (1+this.index)*100+'%';
+					this.masterPages[1].style.left = this.index*100+'%';
+					this.masterPages[0].style.left = (this.index-1)*100+'%';
+				}
+				else if(this.currPage==2){
+					this.masterPages[0].style.left = (1+this.index)*100+'%';
+					this.masterPages[2].style.left = this.index*100+'%';
+					this.masterPages[1].style.left = (this.index-1)*100+'%';
+				}
+				var that = this;
+				if(direction<0 && this.index>1 && this.index<this.numSlides-1){
+					setTimeout(function(){
+						if(that.collection.models[index+1].get('type')=='menu_list'){
+							that.Screens[index+1] = new ScreenView({model:that.collection.models[index+1]});
+							that.Screens[index+1].render(index+1, (that.currPage+1)%3);
+							
+							that.length++;
+						}
+						else if (that.collection.models[index+1].get('type')=='splash'){
+							that.Screens[index+1] = new FrontScreenView({model:that.collection.models[index+1]});
+							that.Screens[index+1].render(index+1, this.code, (that.currPage+1)%3);
+							that.length++;
+						}
+					},301);
+				}
+				else if(direction>0 && this.index>0){
+					setTimeout(function(){
+						if(that.collection.models[index-1].get('type')=='menu_list'){
+							that.Screens[index-1].render(index-1, (that.index-1)%3);
+							
+							that.length++;
+						}
+						else if (that.collection.models[index-1].get('type')=='splash'){
+							that.Screens[index-1].render(index-1, this.code, (that.index-1)%3);
+							that.length++;
+						}
+					},301);
+				}
+			}
+
+
+			/*
+
 			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#screens_view').children('.col').length<this.index+3 ){
 				// LOAD NEW SCREENS ON THE RIGHT side
 				var that = this; 
@@ -303,6 +363,7 @@ var ScreensView = Backbone.View.extend({
 				},301);
 	
 			  }
+			  */
 			 // else if(){ // if scroll left - add new screens on the left side
 			 // }
 			// stop any playing videos

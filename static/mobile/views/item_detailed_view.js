@@ -1,18 +1,18 @@
 var ItemDetailedView = Backbone.View.extend({
-	el: '#overlay',
-	
+	//el: '#overlay',
+
 	events: {
-		"touchstart #comments_touch":"showComments",
-		"touchstart #description_touch":"showDescription",
-		"touchstart #addComment":"showCommentForm",
-		"touchstart #rating":"showCommentForm"
+		"click #comments_touch":"showComments",
+		"click #description_touch":"showDescription",
+		"click #addComment":"showCommentForm",
+		"click #rating":"showCommentForm"
 	},
 	
 	initialize: function(){
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'makeMeVisible', 'showComments', 'showCommentForm', 'showDescription', 'updateRating');
 		
-		this.model.bind('change', this.updateRating);
+		//this.model.bind('change', this.updateRating);
 		window.scroll(0,1);
 		
 		
@@ -22,6 +22,9 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
+		this.el = document.createElement('div');
+		this.el.id='overlay';
+
 		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
 		console.log(data);
 		var that = this;
@@ -29,6 +32,7 @@ var ItemDetailedView = Backbone.View.extend({
 		dust.render("itemDetailedView", data, function(err, out) {
 			if (!err){
 				$(that.el).html(out);
+				that.model.bind('change', that.updateRating);
 				that.updateRating();
 				that.makeMeVisible();
 				return this;
@@ -46,6 +50,8 @@ var ItemDetailedView = Backbone.View.extend({
 	},
 	
 	makeMeVisible: function(){
+		$('.ui-page').append(this.el);
+
 		if (user.iphone){
 			$('#overlay-blur').css('-webkit-transform', 'scale(0.5)');
 		}

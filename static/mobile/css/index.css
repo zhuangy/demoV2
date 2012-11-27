@@ -71,7 +71,20 @@ a:focus{
 	-o-backface-visibility: hidden;
 	backface-visibility: hidden;
 	
+	width:100%;
+	position:relative;
 	display:block;
+	color:white;
+	height: 92.5%;
+	padding-top: 1.2%;
+}
+
+.iscroll{
+	overflow:hidden;
+	position:relative;
+	z-index:1;
+	height:100%;
+	margin-top:1%;
 }
 
 /*HEADER*/

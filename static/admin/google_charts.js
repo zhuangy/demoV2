@@ -10,7 +10,7 @@ var num_android_tap = 0;
 		
 // DAY-BY-DAY BAR PLOT
 var total_daily = new Array();
-total_daily[0] = ['Date', 'Iota', 'Lucias'];
+total_daily[0] = ['Date', 'Iota', 'Lucias', 'Ami', 'SanSai'];
 var total_daily_xaxis = new Array();
 total_daily_xaxis[0] = 0;
 
@@ -88,7 +88,7 @@ $.ajax({
 					
 				}
 				
-				var admin = [-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299];
+				var admin = [-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417];
 				//133 mom; 134 dad; 0 masha local; 1 masha; 15 masha webitap;
 				// 144 Ryan; 146 TengFei; 12 Aram; 14 John; 141 John Ipad;
 				// 199 198 masha home;
@@ -123,6 +123,14 @@ $.ajax({
 					else if(id.indexOf('1112')!=-1 || id.indexOf('1234')!=-1){
 						//Lucias
 						col = 2;
+					}
+					else if(id.indexOf('1024')!=-1){
+						//Ami
+						col = 3;
+					}
+					else if(id.indexOf('1023')!=-1{
+						//SanSai
+						col = 4;
 					}
 					//UPDATE COUNT
 					total_daily[total_daily.length-1][col]++;

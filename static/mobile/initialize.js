@@ -63,6 +63,8 @@ if (user.mobile){
 	}
 }
 
+
+
 var tappedFacebook = false; //global variable - used to check if user tapped the facebook share link
 var VIDEO = []; //initialize global VIDEO variable - store video objects from each screen, if present
 var ACTIONS = []; // initialize global variable to record user Actions - to store user interactions with the app
@@ -70,6 +72,9 @@ var EVENT_TOKEN; //initialize event_token variable - event toke is stored in a c
 CONF={
 	'api-host' : 'http://api.webitap.com' // api address
 }
+//var GLOBAL = {};
+var itemOverlay = new ItemDetailedView();
+var ItemCollections = [];
 
 /*
 // Check if webitap_event cookie is stored
@@ -116,7 +121,7 @@ function store_actions(){
 }
 
 setInterval(function(){
-	store_actions();
+	//store_actions();
 },120000);
 
 var FACEBOOK_POST= getQueryVariable('post_id');
@@ -156,6 +161,7 @@ function checkOrientation() {
 
 
 $(document).ready(function (){
+
 	/*
 		Check orientation to make sure phone is in portrait mode
 	*/
