@@ -196,12 +196,13 @@ $(document).ready(function (){
 	/*
 		Check that screen is scrolled to y=1
 	*/
-	setInterval(function() {
+	/*setInterval(function() {
 		if (window.pageYOffset!=1){
 			window.scrollTo(0,1);
 		}
 	}, 1000);
-	
+	*/
+
 	/*
 		Define screen dimensions - take into account iphone footer bar
 	*/
@@ -211,6 +212,13 @@ $(document).ready(function (){
 	$('[data-role="page"]').css('width', size.width+'px');
 	$('[data-role="page"]').css('height', size.height+'px');
 	
+	//preload images
+	if (document.images) {
+		var img1 = new Image();
+
+		img1.src = "img/comments_tab.png";
+	}
+
 	/*
 		Load the app!
 	*/	

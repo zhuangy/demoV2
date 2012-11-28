@@ -111,7 +111,7 @@ $.ajax({
 				date = (parseFloat(date.getMonth())+1) + '/' + date.getDate()+'/'+date.getFullYear();
 					if(total_daily_xaxis[total_daily_xaxis.length-1] != date){
 						// new row
-						total_daily[total_daily.length] = [date, 0, 0];
+						total_daily[total_daily.length] = [date, 0, 0,0,0];
 						total_daily_xaxis[total_daily_xaxis.length] = date;
 					}
 					total_daily
@@ -120,7 +120,7 @@ $.ajax({
 						//IOTA
 						col = 1;
 					}
-					else if(id.indexOf('1112')!=-1 || id.indexOf('1234')!=-1){
+					else if(id.indexOf('1112')!=-1 || id.indexOf('1234')!=-1 || id.indexOf('TC2')!=-1){
 						//Lucias
 						col = 2;
 					}
@@ -128,7 +128,7 @@ $.ajax({
 						//Ami
 						col = 3;
 					}
-					else if(id.indexOf('1023')!=-1{
+					else if(id.indexOf('1023')!=-1 || id.indexOf('TC3')!=-1){
 						//SanSai
 						col = 4;
 					}

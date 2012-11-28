@@ -22,6 +22,8 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
+		window.scrollTo(0,1);
+
 		this.el = document.createElement('div');
 		this.el.id='overlay';
 
@@ -46,7 +48,8 @@ var ItemDetailedView = Backbone.View.extend({
 		When new comment is added - update item model and update rating on Overlay screen
 	*/
 	updateRating: function(){
-		setStarsRating('#overlay #rating img',this.model.get('rating')); //global function
+		setStarsRating($('.itemDetailstar', $(this.el)), this.model.get('rating')); //global function
+		//setStarsRating('#overlay #rating img',this.model.get('rating')); //global function
 	},
 	
 	makeMeVisible: function(){

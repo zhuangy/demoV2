@@ -72,13 +72,16 @@ a:focus{
 	backface-visibility: hidden;
 	
 	width:100%;
-	position:relative;
+	position:absolute;
 	display:block;
 	color:white;
 	height: 92.5%;
 	padding-top: 1.2%;
-}
 
+	overflow:hidden;
+	z-index:1;
+
+}
 .iscroll{
 	overflow:hidden;
 	position:relative;
@@ -101,8 +104,6 @@ a:focus{
 	color:#D5c59e;
 	
 	overflow:hidden;
-	
-	height: 11%;
 		
 	background-image:url(../img/webitap/Menu_bar.png);
 	background-size: 100% 100%;
@@ -117,6 +118,7 @@ a:focus{
 	padding: 0;
 	margin: 0;
 	height:70%;
+	width:100%;
 }
 
 #headerBlur{
@@ -137,6 +139,7 @@ a:focus{
 }
 
 .h{
+	position:absolute;
 	margin:0px;
 	padding:0px;
 	text-align:center;
@@ -503,12 +506,26 @@ img.shadow{
 	background-color: rgba(255,255,255,0.4);
 }
 
+.items_list{
+	position:relative;
+	width:100%;
+	height:100%;
+	z-index:1;
+	overflow:hidden;
+	-webkit-transform: translate3d(0px,0px,0px);
+	-webkit-transform-origin: 0px 0px;
+}
+
+.items_scroller{
+	-webkit-transform: translate3d(0px,0px,0px);
+	-webkit-transform-origin: 0px 0px;
+}
+
 /* OVERLAY */
 /* OVERLAY COMMENTS */
 
 #overlay .comment_row{
 	width:100%;
-	height:
 	padding: 0.2em 0em 0.2em 0em;
 	border-bottom: 1px solid rgba(150, 150, 150, 0.6);
 }
@@ -642,7 +659,7 @@ img.shadow{
 	font-size:0.65em;
 }
 
-#overlay .itemDetailstar{
+#rating .itemDetailstar{
 	width:1.3em;
 	float:left;
 	padding: 0.5em 0.1em 0.5em 0.1em;

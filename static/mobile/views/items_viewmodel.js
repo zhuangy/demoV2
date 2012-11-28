@@ -92,8 +92,14 @@ var ItemsView = Backbone.View.extend({
 		this.el.className='items_list';
 
 		$(this.el).html(''); // clear element
+
+		this.scroller = document.createElement('div');
+		this.scroller.className='items_scroller';
+
 		this.list = document.createElement('ul');
 		this.list.className='scrollableContent';
+
+		this.scroller.appendChild(this.list);
 
 		// for each item create a view and prepend it to the list.
 		this.collection.each(function(Item) {
@@ -106,10 +112,11 @@ var ItemsView = Backbone.View.extend({
 		//return this;
 		
 		// append spacer after last item
-		$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.1+'px;"></div>');
+		if(user.iphone){$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.17+'px;"></div>');}
+		else{$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.07+'px;"></div>');}
 		
 		// append list to items_list
-		$(this.el).append(this.list);
+		$(this.el).append(this.scroller);
 
 		var that = this;
 		// add video if needed. Check if screen token is in screen_video list
@@ -118,20 +125,27 @@ var ItemsView = Backbone.View.extend({
 		API.get('video?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
 			if(res){
 				//resize scrolling element
-				$(that.list).css({'height':(0.925*size.height-size.width*0.9/1.6*0.9)+'px'});
+				$(that.el).css({'height':(0.925*size.height-size.width*0.9/1.6*0.9)+'px'});
 				
 				//insert video
-				var vid_el = "<video class='video' id='"+that.model.get('token')+"Video' poster='"+res.poster+"' controls><source src='"+res.vid_mp4+"'><source src='"+res.vid_ogv+"' type='video/ogg'></video>";
-				//$('#scroller'+that.model.get('token')+' .scrollableContent').prepend(vid_el);
-				$(that.el).prepend(vid_el); //insert before scroller
+				var vid = document.createElement('video');
+				var sc1 = document.createElement('source');
+				sc1.src = res.vid_mp4;
+				var sc2 = document.createElement('source');
+				sc2.src = res.vid_ogv;
+				sc2.type = "video/ogg";
 
-				//adjust video size
-				$('#'+that.model.get('token')+' .video').css('height',size.width*0.9/1.6*0.9+'px');
-				$('#'+that.model.get('token')+' .video').css('width',size.width+'px');
-				
+				vid.appendChild(sc1); vid.appendChild(sc2);
+				vid.style.cssText="height:"+size.width*0.9/1.6*0.9+"px; width:"+size.width+"px;";
+				vid.poster= res.poster;
+				vid.controls = true;
+				vid.className = 'video';
+				vid.id = that.model.get('token')+"Video";
+				$(that.el).parent().prepend(vid); //insert before scroller
+
 				//video start/stop controls
 				var video = document.getElementById(that.model.get('token')+'Video');
-				video.addEventListener('click',function(){
+				vid.addEventListener('click',function(){
 					if (video.paused) 
 					  video.play(); 
 					else 
@@ -143,9 +157,11 @@ var ItemsView = Backbone.View.extend({
 				VIDEO[that.model.get('index')] = document.getElementById(that.model.get('token')+'Video'); // for html5 vid
 				// turn on iscroll for this screen
 				//new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
+				//return that.el;
 			}else{
 				// turn on iscroll for this screen
 				//new iScroll(that.model.get('token')+'iscroll', {vScrollbar:false});
+				//return that.el;
 			}
 		});
 		
@@ -184,26 +200,28 @@ var ItemView = Backbone.View.extend({
 			}
 		});
 		
-		//this.updateRating();
+		this.updateRating();
 		return this;
 	},
 	
 	updateRating: function(){
-		console.log('model changed, updating ItemView')
-		setStarsRating('[data-token="'+this.model.get('token')+'"] .star',this.model.get('rating')); //global function
+		//console.log('model changed, updating ItemView')
+		setStarsRating($('.star', $(this.el)), this.model.get('rating')); //global function
+		//setStarsRating('[data-token="'+this.model.get('token')+'"] .star',this.model.get('rating')); //global function
 	},
 	
 	openOverlay: function(ev){
 		//ev.stopPropagation();
-		
-		//var itemOverlay = new ItemDetailedView({model:this.model});
-		itemOverlay.model = this.model;
-		itemOverlay.render();
-		itemOverlay.delegateEvents();
-		
-		$('#item_highlight').remove();
-		
-		//store itemView action
-		ACTIONS.push({action: 'itemView', time: new Date().getTime(), name:this.model.get('name')});
+		if($('#overlay').length<1){ // if overlay is already open - return
+			//var itemOverlay = new ItemDetailedView({model:this.model});
+			itemOverlay.model = this.model;
+			itemOverlay.render();
+			itemOverlay.delegateEvents();
+			
+			$('#item_highlight').remove();
+			
+			//store itemView action
+			ACTIONS.push({action: 'itemView', time: new Date().getTime(), name:this.model.get('name')});
+		}
 	},
 });

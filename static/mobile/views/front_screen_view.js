@@ -13,13 +13,17 @@ var FrontScreenView = Backbone.View.extend({
 	},
 	
 	render:function(index, code, pageNum){
-		var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
-		$('#header_view').append(headerStr);
+		//var headerStr = '<div class="h" id ="h'+this.model.get('token')+'" style="width:'+size.width/2+'px"><img class="valigner" />'+this.model.get('name')+'</div>';
+		//$('#header_view').append(headerStr);
 		
-		if(index==0){
-			$('#h'+this.model.get('token')).css('margin-left', size.width/4+'px');	
-		}
+		//if(index==0){
+		//	$('#h'+this.model.get('token')).css('margin-left', size.width/4+'px');	
+		//}
 		
+		//var h = document.getElementById('headerswipe-'+pageNum);
+		//h.innerHTML = '<img class="valigner" />'+this.model.get('name');
+
+
 		var that = this;
 		// get screen data from redis
 		API.get('splash?screen_token='+this.model.get('token'), true, function(err){console.log(err);}, function(res){
@@ -44,10 +48,8 @@ var FrontScreenView = Backbone.View.extend({
 					
 					$('.col_front').css({'left': (index)*size.width+'px',
 								  'width': width+'px',
-								  'height': height+'px',
 								  'background-color': 'black',
-								  'height': 0.925*height+'px',
-								  'top': 0.075*height+'px'});
+								  'height': 0.925*height+'px'});
 					
 					if(FACEBOOK_POST){
 						$('#facebookOverlay').css('background-image', 'url(img/iota/facebook_confirmation.png)');
