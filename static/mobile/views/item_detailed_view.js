@@ -22,7 +22,7 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
-		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
+		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath').replace('.jpg','_thumbnail.jpg'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
 		console.log(data);
 		var that = this;
 		// render item and append to screen
@@ -31,6 +31,7 @@ var ItemDetailedView = Backbone.View.extend({
 				$(that.el).html(out);
 				that.updateRating();
 				that.makeMeVisible();
+				$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'));
 				return this;
 			} else{
 				return console.log(err);
