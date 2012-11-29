@@ -543,7 +543,7 @@ var ScreensView = Backbone.View.extend({
 		
 		  // prevent native scrolling 
 		  e.preventDefault();
-		  console.log(this.index);
+		  //console.log(this.index);
 		  // increase resistance if first or last slide
 		  this.deltaX = 
 			this.deltaX / 

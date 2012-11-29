@@ -28,7 +28,7 @@ var ItemDetailedView = Backbone.View.extend({
 		this.el.id='overlay';
 
 		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath').replace('.jpg','_thumbnail.jpg'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
-		console.log(data);
+		//console.log(data);
 		var that = this;
 		// render item and append to screen
 		dust.render("itemDetailedView", data, function(err, out) {
@@ -37,7 +37,7 @@ var ItemDetailedView = Backbone.View.extend({
 				that.model.bind('change', that.updateRating);
 				that.updateRating();
 				that.makeMeVisible();
-				$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'));
+				setTimeout(function(){$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'));console.log('replaced');},300);
 				return this;
 			} else{
 				return console.log(err);
