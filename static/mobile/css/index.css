@@ -1,4 +1,3 @@
-
 .GothamBold{font-family:GothamBold;}
 
 .GothamLight{font-family: GothamLight;}
@@ -202,7 +201,7 @@ ul{
 }
 
 #facebookOverlay{
-	position:absolute;
+	position:relative;
 	width: 100%;
 	height:40%;
 	background-image:url(../img/iota/facebookOverlay.png);
@@ -210,10 +209,12 @@ ul{
 	background-repeat: no-repeat;
 	top:25%;	
 	/*left:-10%;*/
-	z-index:100;
+	z-index:500;
 	margin:0;
 	padding:0;
 	color:#FFFFFF;
+	display:block;
+	pointer-events: auto;
 }
 
 #fbookButton{
@@ -313,9 +314,12 @@ ul{
 .slideshow {
     height: 100%;
     width: 100%;
-    position: relative;
+    /*position: relative;*/
+    position: absolute;
+    top:0;
     overflow: hidden;
     margin: auto;
+    z-index:90;
 }
 .sLeft {
     height: 100%;
@@ -338,6 +342,7 @@ ul{
     bottom: 0px;
     left: -200px;
 	opacity:0;
+	z-index:90;
 	
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
