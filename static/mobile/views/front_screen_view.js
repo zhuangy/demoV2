@@ -32,6 +32,7 @@ var FrontScreenView = Backbone.View.extend({
 			
 			
 			//preload large images
+			
 			for(i=1;i<7;i++){
 				var img = new Image();
 				img.src = res['img'+i];
@@ -39,7 +40,7 @@ var FrontScreenView = Backbone.View.extend({
 			
 
 			 //data={token: that.model.get('token'), 'img1': res['img1'], 'img2': res['img2'], 'img3': res['img3'], 'img4': res['img4'], 'img5': res['img5'], 'img6': res['img6'], 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
-			//data={token: that.model.get('token'), 'img1': res['img1'], 'img2': res['img1'], 'img3': res['img1'], 'img4': res['img1'], 'img5': res['img1'], 'img6': res['img1'], 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
+			//data={token: that.model.get('token'), 'img1': res['img1'].replace('.jpg','_thumbnail.jpg'), 'img2': res['img2'].replace('.jpg','_thumbnail.jpg'), 'img3': res['img3'].replace('.jpg','_thumbnail.jpg'), 'img4': res['img4'].replace('.jpg','_thumbnail.jpg'), 'img5': res['img5'].replace('.jpg','_thumbnail.jpg'), 'img6': res['img6'].replace('.jpg','_thumbnail.jpg'), 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
 			data={token: that.model.get('token'), 'img1': 'img/backButton.png', 'img2': 'img/backButton.png', 'img3': 'img/backButton.png', 'img4': 'img/backButton.png', 'img5': 'img/backButton.png', 'img6': 'img/backButton.png', 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
 			
 			that.fbook_name = res['fbook_name'];
@@ -58,6 +59,7 @@ var FrontScreenView = Backbone.View.extend({
 					div.appendChild(that.el);
 
 					
+					
 					$('.col_front .slideshow img')[0].src = res['img1'];
 					$('.col_front .slideshow img')[3].src = res['img4'];
 					setTimeout(function(){
@@ -69,7 +71,6 @@ var FrontScreenView = Backbone.View.extend({
 						$('.col_front .slideshow img')[5].src = res['img6'];
 					},2000)
 
-					
 					
 					//$('.col_front').css({'left': (index)*size.width+'px'});
 								  //'width': width+'px',
