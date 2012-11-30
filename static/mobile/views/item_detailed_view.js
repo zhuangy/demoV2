@@ -37,7 +37,15 @@ var ItemDetailedView = Backbone.View.extend({
 				that.model.bind('change', that.updateRating);
 				that.updateRating();
 				that.makeMeVisible();
-				setTimeout(function(){$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'));console.log('replaced');},300);
+				
+				
+				img = document.createElement('img')
+				img.src=data.imgPath.replace('_thumbnail.jpg','.jpg');
+				$(img).load(function(){
+					$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'))
+					delete img;
+				});
+				
 				return this;
 			} else{
 				return console.log(err);
