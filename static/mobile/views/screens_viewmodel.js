@@ -217,22 +217,26 @@ var ScreensView = Backbone.View.extend({
 			$('#header_view').append(h);
 		}
 
-		console.log('rendered menu_view');
 		
-		
-		if($('#loading_screen')){
+		if(tap){
 			setTimeout(function(){
 				$('#loading_screen').remove();
-			}, 1500);
-		}
-		// animate transition out
-		setTimeout(function(){
-			$('#noNFCscreen_top').addClass('validated_slideUp');
-			$('#noNFCscreen_bottom').addClass('validated_slideDown');
-			setTimeout(function(){
 				$('#noNFC_screen').remove();
-			},800);
-		},800);
+				window.scrollTo(0,1);
+			}, 1500);
+		} else if(login){ // animate transition out
+			setTimeout(function(){
+				//document.getElementById('#noNFCscreen_top').className='validated_slideUp';
+				//document.getElementById('#noNFCscreen_bottom').className='validated_slideDown';
+				$('#noNFCscreen_top').addClass('validated_slideUp');
+				$('#noNFCscreen_bottom').addClass('validated_slideDown');
+				setTimeout(function(){
+					//el = document.getElementById('#noNFC_screen');
+					//el.parentNode.removeChild(el);
+					$('#noNFC_screen').remove();
+				},800);
+			},900);
+		}
 	},
 	
 	tap_home: function(){
@@ -342,10 +346,12 @@ var ScreensView = Backbone.View.extend({
 
 			//initialize iscroll
 			setTimeout(function(){
-				if(that.masterPages[that.currPage].children.length==2){
-					that.verticalScroll = new iScroll(that.masterPages[that.currPage].children[1], {vScrollbar:false});
-				}else if(that.masterPages[that.currPage].children.length==1){
-					that.verticalScroll = new iScroll(that.masterPages[that.currPage].children[0], {vScrollbar:false});
+				if(index>=0){
+					if(that.masterPages[that.currPage].children.length==2){
+						that.verticalScroll = new iScroll(that.masterPages[that.currPage].children[1], {vScrollbar:false});
+					}else if(that.masterPages[that.currPage].children.length==1){
+						that.verticalScroll = new iScroll(that.masterPages[that.currPage].children[0], {vScrollbar:false});
+					}
 				}
 				
 			},100)
@@ -408,35 +414,6 @@ var ScreensView = Backbone.View.extend({
 			
 			},310);
 			
-
-
-			/*
-
-			  if(direction<0 && $('#screens_view').children('.col').length<this.numSlides && $('#screens_view').children('.col').length<this.index+3 ){
-				// LOAD NEW SCREENS ON THE RIGHT side
-				var that = this; 
-				setTimeout(function(){
-					if(that.collection.models[index+2].get('type')=='menu_list'){
-						//var screenView = new ScreenView({model:that.collection.models[index+2]});
-						//screenView.render(index+2);
-						this.Screens[index+2] = new ScreenView({model:that.collection.models[index+2]});
-						this.Screens[index+2].render(index+2);
-						
-						that.length++;
-					}
-					else if (that.collection.models[index+2].get('type')=='splash'){
-						//var frontscreenView = new FrontScreenView({model:that.collection.models[index+2]});
-						//frontscreenView.render(index+2);
-						this.Screens[index+2] = new FrontScreenView({model:that.collection.models[index+2]});
-						this.Screens[index+2].render(index+2);
-						that.length++;
-					}
-				},301);
-	
-			  }
-			  */
-			 // else if(){ // if scroll left - add new screens on the left side
-			 // }
 			// stop any playing videos
 			setTimeout(function(){
 				for(i=0; i<VIDEO.length;i++){
@@ -446,22 +423,12 @@ var ScreensView = Backbone.View.extend({
 					}
 				}
 			},300);
-			
-			// unload/hide screens that are not in field of view
-			/*
-			for(s in this.Screens){
-				if(Math.abs(s-this.index)>1){
-					$('#'+this.Screens[s].model.get('token')).css('display', 'none');
-				} else{
-					$('#'+this.Screens[s].model.get('token')).css('display', 'block');
-				}
-			}
-			*/
 		}
 		
 	},
 	
 	ontouchstart: function(e){
+		window.scrollTo(0,1);
 		/*
 		var target = e.originalEvent.target ? e.originalEvent.target : e.target;
 		$(target).closest('li').append('<div id="item_highlight"></div>');

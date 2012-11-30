@@ -73,8 +73,6 @@ var AddCommentForm = Backbone.View.extend({
 	},
 	
 	addComment: function(e){
-		console.log('adding');
-		
 		e.preventDefault();
 		var name = this.trim($('#rating_title_text').val());
 		var text = this.trim($('#rating_field_text').val());
@@ -96,7 +94,7 @@ var AddCommentForm = Backbone.View.extend({
 		
 		console.log(this.rating);
 		if(!incomplete && !this.adding){
-			this.adding = 1;
+			this.adding = 1; //set this.adding to prevent adding multiple times
 			var that = this;
 			// new commment model with user inputs
 			var comment = new Comment({'item_token': this.token, 'name': name, 'rating': this.rating, 'comment_text':text})
@@ -131,8 +129,7 @@ var AddCommentForm = Backbone.View.extend({
 		s = s.replace(/\n /,"\n"); 
 		return s;
 	},
-	unrender: function() 
-	{
+	unrender: function() {
 		$(this.el).css('display','none');
 		$(this.el).css('opacity', '0');
 		if(user.iphone) {

@@ -75,6 +75,8 @@ CONF={
 //var GLOBAL = {};
 var itemOverlay = new ItemDetailedView();
 var ItemCollections = [];
+var tap=false;
+var login=false;
 
 /*
 // Check if webitap_event cookie is stored
@@ -215,8 +217,10 @@ $(document).ready(function (){
 	//preload images
 	if (document.images) {
 		var img1 = new Image();
-
 		img1.src = "img/comments_tab.png";
+
+		var img2 = new Image();
+		img2.src = "img/webitap/plus.png";
 	}
 
 	/*
@@ -224,12 +228,14 @@ $(document).ready(function (){
 	*/	
 	var code = getQueryVariable('code');
 	if (code) {
+		tap = true;
 		// TAP - load the app :)
 		var loadingView = new LoadingView({});
 		$('[data-role="page"]').append(loadingView.render().el);
 		loadingView.loadMenu();
 	} else if (!code) {
 		// didnt' tap - LOAD noNFC SCREEN
+		login = true;
 		var nonfcView = new noNFCView();
 		nonfcView.render();
 		nonfcView.slide(1,0);

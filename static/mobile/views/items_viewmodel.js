@@ -112,7 +112,7 @@ var ItemsView = Backbone.View.extend({
 		//return this;
 		
 		// append spacer after last item
-		if(user.iphone){$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.17+'px;"></div>');}
+		if(user.iphone){$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.09+'px;"></div>');}
 		else{$(this.list).append('<div class="bottomListSpacer" style="height:'+size.height*0.07+'px;"></div>');}
 		
 		// append list to items_list
