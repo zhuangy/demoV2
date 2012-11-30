@@ -28,15 +28,6 @@ html, body{
 	-webkit-text-size-adjust:none !important; 
 }
 
-.col{
-	position:absolute;
-	top:0;
-	height:100%;
-	-webkit-backface-visibility:hidden;
-	overflow:hidden;
-	z-index:1;
-}
-
 li{
 	-webkit-backface-visibility:hidden;
 }
@@ -49,8 +40,20 @@ li{
 	-webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
 }
+
+#screens_view{
+	position:absolute;
+	width:100%;
+	background-image: url("img/background_texture.jpg");
+	z-index:100;
+	display:block;
+	top:7.5%;
+}
+
 #menu_screen{
 	background-image: url("img/background_texture.jpg");
+	z-index:100;
+	display:block;
 }
 
 #menu_screen, #noNFC_screen{
@@ -64,11 +67,6 @@ li{
 
 #noNFC_screen{
 	z-index:200;
-}
-
-#menu_screen{
-	z-index:100;
-	display:block;
 }
 
 #wrongorientation{
@@ -114,6 +112,8 @@ li{
 <script src="../lib/iscroll.js"></script>
 <script type="text/javascript" src="http://www.youtube.com/player_api"></script>
 
+<script src="views/item_detailed_view.js"></script>
+
 <script src="../lib/api.js"></script>
 <script type="text/javascript" src="useragents.js"></script>
 <script src="initialize.js"></script>
@@ -138,38 +138,32 @@ li{
 <script src="views/add_comment_view.js"></script>-->
 
 <script type="text/javascript">
+	 // Add a script element as a child of the body
+	 function downloadJSAtOnload() {
+		 //var s1 = document.createElement("script");
+		 //s1.src = "views/item_detailed_view.js";
+		 //document.body.appendChild(s1);
 
- // Add a script element as a child of the body
- function downloadJSAtOnload() {
-	 var s1 = document.createElement("script");
-	 s1.src = "views/item_detailed_view.js";
-	 document.body.appendChild(s1);
+		 var s2 = document.createElement("script");
+		 s2.src = "views/comments.js";
+		 document.body.appendChild(s2);
 
-	 var s2 = document.createElement("script");
-	 s2.src = "views/comments.js";
-	 document.body.appendChild(s2);
+		 var s3 = document.createElement("script");
+		 s3.src = "views/add_comment_view.js";
+		 document.body.appendChild(s3);
 
-	 var s3 = document.createElement("script");
-	 s3.src = "views/add_comment_view.js";
-	 document.body.appendChild(s3);
+		 var s4 = document.createElement("script");
+		 s4.src = "views/items_viewmodel.js";
+		 document.body.appendChild(s4);
 
-	 var s4 = document.createElement("script");
-	 s4.src = "views/items_viewmodel.js";
-	 document.body.appendChild(s4);
+	 }
 
- }
-
- // Check for browser support of event handling capability
- if (window.addEventListener)
- window.addEventListener("load", downloadJSAtOnload, false);
- else if (window.attachEvent)
- window.attachEvent("onload", downloadJSAtOnload);
- else window.onload = downloadJSAtOnload;
-
-</script>
-
-<script>
-
+	 // Check for browser support of event handling capability
+	 if (window.addEventListener)
+	 window.addEventListener("load", downloadJSAtOnload, false);
+	 else if (window.attachEvent)
+	 window.attachEvent("onload", downloadJSAtOnload);
+	 else window.onload = downloadJSAtOnload;
 </script>
 
 </head>
@@ -185,7 +179,7 @@ li{
         <div id="screens_view"></div>
     </div>
 	
-    <div id="overlay"></div>
+    <!--<div id="overlay"></div> -->
     <div id="enterCommentOverlay"></div>
 
 

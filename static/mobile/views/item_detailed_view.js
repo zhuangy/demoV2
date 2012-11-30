@@ -1,6 +1,6 @@
 var ItemDetailedView = Backbone.View.extend({
-	el: '#overlay',
-	
+	//el: '#overlay',
+
 	events: {
 		"touchstart #comments_touch":"showComments",
 		"touchstart #description_touch":"showDescription",
@@ -12,7 +12,7 @@ var ItemDetailedView = Backbone.View.extend({
 		// every function that uses 'this' as the current object should be in here
 		_.bindAll(this, 'render', 'makeMeVisible', 'showComments', 'showCommentForm', 'showDescription', 'updateRating');
 		
-		this.model.bind('change', this.updateRating);
+		//this.model.bind('change', this.updateRating);
 		window.scroll(0,1);
 		
 		
@@ -22,16 +22,30 @@ var ItemDetailedView = Backbone.View.extend({
 		Render item overlay from dust template (dustTemplates/itemDetailedView.dust)
 	*/
 	render: function(){
+		window.scrollTo(0,1);
+
+		this.el = document.createElement('div');
+		this.el.id='overlay';
+
 		data = {'item_token':this.model.get('token'), 'name':this.model.get('name'), 'imgPath':this.model.get('imgPath').replace('.jpg','_thumbnail.jpg'), 'price':this.model.get('price'), 'description':this.model.get('description').replace(/\n\r?/g, '<br>')};
-		console.log(data);
+		//console.log(data);
+
 		var that = this;
 		// render item and append to screen
 		dust.render("itemDetailedView", data, function(err, out) {
 			if (!err){
 				$(that.el).html(out);
+				that.model.bind('change', that.updateRating);
 				that.updateRating();
 				that.makeMeVisible();
-				$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'));
+				
+				img = document.createElement('img')
+				img.src=data.imgPath.replace('_thumbnail.jpg','.jpg');
+				$(img).load(function(){
+					$("#overlay #image").attr('src', data.imgPath.replace('_thumbnail.jpg','.jpg'))
+					delete img;
+				});
+
 				return this;
 			} else{
 				return console.log(err);
@@ -43,10 +57,13 @@ var ItemDetailedView = Backbone.View.extend({
 		When new comment is added - update item model and update rating on Overlay screen
 	*/
 	updateRating: function(){
-		setStarsRating('#overlay #rating img',this.model.get('rating')); //global function
+		setStarsRating($('.itemDetailstar', $(this.el)), this.model.get('rating')); //global function
+		//setStarsRating('#overlay #rating img',this.model.get('rating')); //global function
 	},
 	
 	makeMeVisible: function(){
+		$('.ui-page').append(this.el);
+
 		if (user.iphone){
 			$('#overlay-blur').css('-webkit-transform', 'scale(0.5)');
 		}

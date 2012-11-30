@@ -7,7 +7,7 @@ var app = express();
 
 app.configure(function() {
         app.use(gzippo.staticGzip(__dirname + '/static'));
-        //app.use(gzippo.compress());
+        app.use(gzippo.compress());
         app.use(express.methodOverride());
         app.use(express.bodyParser());
         app.use(app.router);

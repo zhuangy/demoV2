@@ -1,19 +1,11 @@
+.GothamBold{font-family:GothamBold;}
 
-.GothamBold{
-	font-family:GothamBold;
-}
+.GothamLight{font-family: GothamLight;}
 
-.GothamLight{
-	font-family: GothamLight;
-}
-
-a:focus{
-	outline:none;
-}
+a:focus{outline:none;}
 
 /*LOADING SCREEN*/
-#loading_screen
-{  
+#loading_screen{  
   position: absolute;
   left: 0px;
   top: 0px;
@@ -71,11 +63,29 @@ a:focus{
 	-o-backface-visibility: hidden;
 	backface-visibility: hidden;
 	
+	width:100%;
+	position:absolute;
 	display:block;
+	color:white;
+	height: 92.5%;
+	padding-top: 1.2%;
+
+	overflow:hidden;
+	z-index:1;
+
 }
 
+.iscroll{
+	overflow:hidden;
+	position:relative;
+	z-index:1;
+	height:100%;
+	margin-top:1%;
+}
+
+
 /*HEADER*/
-#header {
+#header{
 	position: absolute; 
 	height:11%;
 	width:100%;
@@ -88,8 +98,6 @@ a:focus{
 	color:#D5c59e;
 	
 	overflow:hidden;
-	
-	height: 11%;
 		
 	background-image:url(../img/webitap/Menu_bar.png);
 	background-size: 100% 100%;
@@ -104,6 +112,9 @@ a:focus{
 	padding: 0;
 	margin: 0;
 	height:70%;
+	width:100%;
+	position:relative;
+	left:-50%;
 }
 
 #headerBlur{
@@ -124,6 +135,7 @@ a:focus{
 }
 
 .h{
+	position:absolute;
 	margin:0px;
 	padding:0px;
 	text-align:center;
@@ -139,10 +151,6 @@ a:focus{
 	width:0px;
 	vertical-align: middle;
 	visibility:hidden;
-}
-
-#h_front{
-	margin-left:25%;
 }
 
 /*SCROLLABLE*/
@@ -193,7 +201,7 @@ ul{
 }
 
 #facebookOverlay{
-	position:absolute;
+	position:relative;
 	width: 100%;
 	height:40%;
 	background-image:url(../img/iota/facebookOverlay.png);
@@ -201,10 +209,12 @@ ul{
 	background-repeat: no-repeat;
 	top:25%;	
 	/*left:-10%;*/
-	z-index:100;
+	z-index:500;
 	margin:0;
 	padding:0;
 	color:#FFFFFF;
+	display:block;
+	pointer-events: auto;
 }
 
 #fbookButton{
@@ -229,6 +239,15 @@ ul{
 	margin:0;
 	padding:0;
 	float:left;
+}
+
+.col_front{
+	height:100%;
+	width:100%;
+	position:absolute;
+	display:block;
+	color:white;padding-top:1.2%;
+	z-index:1;
 }
 
 .col_front #welcome-content{
@@ -295,9 +314,12 @@ ul{
 .slideshow {
     height: 100%;
     width: 100%;
-    position: relative;
+    /*position: relative;*/
+    position: absolute;
+    top:0;
     overflow: hidden;
     margin: auto;
+    z-index:90;
 }
 .sLeft {
     height: 100%;
@@ -320,6 +342,7 @@ ul{
     bottom: 0px;
     left: -200px;
 	opacity:0;
+	z-index:90;
 	
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
@@ -490,12 +513,26 @@ img.shadow{
 	background-color: rgba(255,255,255,0.4);
 }
 
+.items_list{
+	position:relative;
+	width:100%;
+	height:100%;
+	z-index:1;
+	overflow:hidden;
+	-webkit-transform: translate3d(0px,0px,0px);
+	-webkit-transform-origin: 0px 0px;
+}
+
+.items_scroller{
+	-webkit-transform: translate3d(0px,0px,0px);
+	-webkit-transform-origin: 0px 0px;
+}
+
 /* OVERLAY */
 /* OVERLAY COMMENTS */
 
 #overlay .comment_row{
 	width:100%;
-	height:
 	padding: 0.2em 0em 0.2em 0em;
 	border-bottom: 1px solid rgba(150, 150, 150, 0.6);
 }
@@ -629,7 +666,7 @@ img.shadow{
 	font-size:0.65em;
 }
 
-#overlay .itemDetailstar{
+#rating .itemDetailstar{
 	width:1.3em;
 	float:left;
 	padding: 0.5em 0.1em 0.5em 0.1em;

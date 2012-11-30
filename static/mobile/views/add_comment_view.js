@@ -21,6 +21,7 @@ var AddCommentForm = Backbone.View.extend({
 		this.nameDefault = "Type your name here";
 		this.commentDefault = "Touch to begin typing...";
 		this.rating = 0;
+		this.adding = 0;
 	},
 	render: function(){
 		var that = this;
@@ -92,7 +93,8 @@ var AddCommentForm = Backbone.View.extend({
 		}
 		
 		console.log(this.rating);
-		if(!incomplete){
+		if(!incomplete && !this.adding){
+			this.adding = 1; //set this.adding to prevent adding multiple times
 			var that = this;
 			// new commment model with user inputs
 			var comment = new Comment({'item_token': this.token, 'name': name, 'rating': this.rating, 'comment_text':text})
@@ -116,6 +118,8 @@ var AddCommentForm = Backbone.View.extend({
 				
 				that.unrender();
 			});
+		}else{
+			this.adding = 0;
 		}
 		
 	},
@@ -125,14 +129,14 @@ var AddCommentForm = Backbone.View.extend({
 		s = s.replace(/\n /,"\n"); 
 		return s;
 	},
-	unrender: function() 
-	{
+	unrender: function() {
 		$(this.el).css('display','none');
 		$(this.el).css('opacity', '0');
 		if(user.iphone) {
 			$(this.el).css('-webkit-transform', 'scale(.5)');
 		  }
 		$(this.el).html('');
+		this.adding = 0;
 	},
 	
 	typeNameEvent: function(){

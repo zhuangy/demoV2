@@ -167,8 +167,8 @@ var m = Math,
 		that.scroller.style[transformOrigin] = '0 0';
 		if (that.options.useTransition) that.scroller.style[transitionTimingFunction] = 'cubic-bezier(0.33,0.66,0.66,1)';
 		
-		if (that.options.useTransform) that.scroller.style[transform] = 'translate(' + that.x + 'px,' + that.y + 'px)' + translateZ;
-		else that.scroller.style.cssText += ';position:absolute;top:' + that.y + 'px;left:' + that.x + 'px';
+		//if (that.options.useTransform) {that.scroller.style[transform] = 'translate(' + that.x + 'px,' + that.y + 'px)' + translateZ; console.log(that.x+' '+that.y);}
+		//else that.scroller.style.cssText += ';position:absolute;top:' + that.y + 'px;left:' + that.x + 'px';
 
 		if (that.options.useTransition) that.options.fixedScrollbar = true;
 

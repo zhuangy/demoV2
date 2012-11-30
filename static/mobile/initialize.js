@@ -63,6 +63,8 @@ if (user.mobile){
 	}
 }
 
+
+
 var tappedFacebook = false; //global variable - used to check if user tapped the facebook share link
 var VIDEO = []; //initialize global VIDEO variable - store video objects from each screen, if present
 var ACTIONS = []; // initialize global variable to record user Actions - to store user interactions with the app
@@ -70,6 +72,11 @@ var EVENT_TOKEN; //initialize event_token variable - event toke is stored in a c
 CONF={
 	'api-host' : 'http://api.webitap.com' // api address
 }
+//var GLOBAL = {};
+var itemOverlay = new ItemDetailedView();
+var ItemCollections = [];
+var tap=false;
+var login=false;
 
 /*
 // Check if webitap_event cookie is stored
@@ -94,11 +101,10 @@ if (ev_token!=null && ev_token!=""){
 	})
 }
 */
-
 //store actions function - called periodically while user interacts with the app
 var num_actions = ACTIONS.length;
 function store_actions(){
-	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	/*var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
 	if(ACTIONS.length>num_actions){
 		num_actions = ACTIONS.length;
 		$.ajax({
@@ -111,12 +117,13 @@ function store_actions(){
 			success: function(res){console.log('updated');},
 			error: function(err){console.log(JSON.stringify(err));}
 		});
-	}
+	}*/
 	
 }
 
+
 setInterval(function(){
-	store_actions();
+	//store_actions();
 },120000);
 
 var FACEBOOK_POST= getQueryVariable('post_id');
@@ -156,6 +163,7 @@ function checkOrientation() {
 
 
 $(document).ready(function (){
+
 	/*
 		Check orientation to make sure phone is in portrait mode
 	*/
@@ -190,12 +198,13 @@ $(document).ready(function (){
 	/*
 		Check that screen is scrolled to y=1
 	*/
-	setInterval(function() {
+	/*setInterval(function() {
 		if (window.pageYOffset!=1){
 			window.scrollTo(0,1);
 		}
 	}, 1000);
-	
+	*/
+
 	/*
 		Define screen dimensions - take into account iphone footer bar
 	*/
@@ -205,17 +214,28 @@ $(document).ready(function (){
 	$('[data-role="page"]').css('width', size.width+'px');
 	$('[data-role="page"]').css('height', size.height+'px');
 	
+	//preload images
+	if (document.images) {
+		var img1 = new Image();
+		img1.src = "img/comments_tab.png";
+
+		var img2 = new Image();
+		img2.src = "img/webitap/plus.png";
+	}
+
 	/*
 		Load the app!
 	*/	
 	var code = getQueryVariable('code');
 	if (code) {
+		tap = true;
 		// TAP - load the app :)
 		var loadingView = new LoadingView({});
 		$('[data-role="page"]').append(loadingView.render().el);
 		loadingView.loadMenu();
 	} else if (!code) {
 		// didnt' tap - LOAD noNFC SCREEN
+		login = true;
 		var nonfcView = new noNFCView();
 		nonfcView.render();
 		nonfcView.slide(1,0);
