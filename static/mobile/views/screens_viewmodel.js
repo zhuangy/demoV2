@@ -83,12 +83,12 @@ var ScreenView = Backbone.View.extend({
 var ScreensView = Backbone.View.extend({
 	el: '#screens_view',
 	events: {
-		"mousedown":"ontouchstart",
-		"mousemove":"ontouchmove",
-		"mouseup":"ontouchend",
-		"touchstart #menu_screen":"ontouchstart",
-		"touchmove #menu_screen":"ontouchmove",
-		"touchend #menu_screen":"ontouchend"
+		//"mousedown":"ontouchstart",
+		//"mousemove":"ontouchmove",
+		//"mouseup":"ontouchend",
+		//"touchstart #menu_screen":"ontouchstart",
+		//"touchmove #menu_screen":"ontouchmove",
+		//"touchend #menu_screen":"ontouchend"
 	},
 	
 	initialize: function() {
@@ -428,6 +428,7 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	ontouchstart: function(e){
+		//console.log(e.target.id);
 		window.scrollTo(0,1);
 		/*
 		var target = e.originalEvent.target ? e.originalEvent.target : e.target;
@@ -439,6 +440,7 @@ var ScreensView = Backbone.View.extend({
 		*/
 		
 		this.start = {
+		  
 		  // get touch coordinates for delta calculations in onTouchMove
 		  pageX: e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
 		  pageY: e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
@@ -484,7 +486,7 @@ var ScreensView = Backbone.View.extend({
 		$(this.el).css({'webkitTransitionDuration':'0ms'});
 		$('#header_view').css({'webkitTransitionDuration':'0ms'});
 		this.ended = 0;
-		
+
 		e.stopPropagation();
 	},
 	

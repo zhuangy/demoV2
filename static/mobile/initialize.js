@@ -101,11 +101,10 @@ if (ev_token!=null && ev_token!=""){
 	})
 }
 */
-
 //store actions function - called periodically while user interacts with the app
 var num_actions = ACTIONS.length;
 function store_actions(){
-	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	/*var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
 	if(ACTIONS.length>num_actions){
 		num_actions = ACTIONS.length;
 		$.ajax({
@@ -118,9 +117,10 @@ function store_actions(){
 			success: function(res){console.log('updated');},
 			error: function(err){console.log(JSON.stringify(err));}
 		});
-	}
+	}*/
 	
 }
+
 
 setInterval(function(){
 	//store_actions();
