@@ -83,7 +83,7 @@ var FrontScreenView = Backbone.View.extend({
 					else{
 						$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
 						$('#fbookButton').css('left', ($('#facebookOverlay').height()*1.7)+'px');
-						$("#swipeview--1").click(that.fbook_click);
+						setTimeout(function(){$("#swipeview--1").click(that.fbook_click);},3000);
 						//$("#facebookOverlay").click(that.fbook_click);
 					}
 
@@ -118,7 +118,7 @@ var FrontScreenView = Backbone.View.extend({
 	fbook_click: function(e){
 		x_pos = 100*e.pageX/size.width;
 		y_pos = 100*e.pageY/size.height;
-		if(62.5<=y_pos && y_pos<=82.5 && 0<=x_pos && x_pos<=80){
+		if(62.5<=y_pos && y_pos<=82.5 && 0<=x_pos && x_pos<=80 && !($('#navigationOverlay').css('display')=='block')){
 			e.stopPropagation();
 			tappedFacebook = true;
 			

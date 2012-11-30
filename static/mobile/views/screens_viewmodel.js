@@ -172,9 +172,9 @@ var ScreensView = Backbone.View.extend({
 			$('#navigationOverlay').remove();
 			// slide after 3 seconds
 			setTimeout(function(){
-				if(that.index==-1){
-					that.slide(0,500,-1);
-				}
+				//if(that.index==-1){
+				//	that.slide(0,500,-1);
+				//}
 			},3000);
 		});
 		// header - swipe on tap
