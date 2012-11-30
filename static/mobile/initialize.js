@@ -78,7 +78,7 @@ var ItemCollections = [];
 var tap=false;
 var login=false;
 
-/*
+
 // Check if webitap_event cookie is stored
 var ev_token=getCookie("webitap_event");
 if (ev_token!=null && ev_token!=""){
@@ -100,11 +100,11 @@ if (ev_token!=null && ev_token!=""){
 		error:function(err){console.log(JSON.stringify(err));} 
 	})
 }
-*/
+
 //store actions function - called periodically while user interacts with the app
 var num_actions = ACTIONS.length;
 function store_actions(){
-	/*var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
+	var data = {event_token: EVENT_TOKEN, actions: ACTIONS};
 	if(ACTIONS.length>num_actions){
 		num_actions = ACTIONS.length;
 		$.ajax({
@@ -117,13 +117,13 @@ function store_actions(){
 			success: function(res){console.log('updated');},
 			error: function(err){console.log(JSON.stringify(err));}
 		});
-	}*/
+	}
 	
 }
 
 
 setInterval(function(){
-	//store_actions();
+	store_actions();
 },120000);
 
 var FACEBOOK_POST= getQueryVariable('post_id');

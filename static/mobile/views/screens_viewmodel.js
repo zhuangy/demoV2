@@ -96,7 +96,7 @@ var ScreensView = Backbone.View.extend({
 		_.bindAll(this, 'render', 'slide', 'ontouchstart', 'ontouchmove', 'ontouchend', 'tap_home', 'tap_header', 'loadNextScreen');
 		
 		//post event to database
-		//saveEvent();
+		saveEvent();
 		//GLOBAL.itemOVerlay = new ItemDetailedView();
 
 		
