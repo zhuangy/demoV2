@@ -121,6 +121,7 @@ var FrontScreenView = Backbone.View.extend({
 		if(62.5<=y_pos && y_pos<=82.5 && 0<=x_pos && x_pos<=80 && !($('#navigationOverlay').css('display')=='block')){
 			e.stopPropagation();
 			tappedFacebook = true;
+			setTimeout(function(){tappedFacebook=false;},2000);
 			
 			//store event
 			ACTIONS.push({action: 'clickFacebook', time: new Date().getTime()});
