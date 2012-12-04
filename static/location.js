@@ -18,32 +18,38 @@ $(document).ready(function(e) {
 		//console.log(info.length);
 			for(i=0; i<res.length; i++){
 				
+			
+
 				  // DO SOMETHING WITH THE ORG INFO HERE!!		  
 				  //console.log("lalal");
 				//var info=res[i];  
 				var info=JSON.parse(res[i]);
 				//console.log("info:"+info.name);
 				//console.log("hah")
-				data={
-				  name:info.name,
-				  code0:info.code%10,
-				  code1:parseInt(info.code/10)%10,
-				  code2:parseInt(info.code/100)%10,
-				  code3:parseInt(info.code/1000)%10,
-				  address1:info.address1,
-				  address2:info.address2,
-				  logo:info.logo,
-				  token:info.token
-					  
+				if(info.name!="Flaherty's Seafood Dinner"){
+
+					data={
+					  name:info.name,
+					  code0:info.code%10,
+					  code1:parseInt(info.code/10)%10,
+					  code2:parseInt(info.code/100)%10,
+					  code3:parseInt(info.code/1000)%10,
+					  address1:info.address1,
+					  address2:info.address2,
+					  logo:info.logo,
+					  token:info.token
+						  
+					}
+					dust.render("about", data, function(err, out) {
+						if (!err){
+							$('#map_left_container').append(out);
+							return this;
+						} else{
+							return console.log(err);
+						}
+
+					});
 				}
-				  dust.render("about", data, function(err, out) {
-				  	if (!err){
-				  		$('#map_left_container').append(out);
-				  		return this;
-				  	} else{
-				  		return console.log(err);
-				  	}
-				  });
 				  
 			  
 			}

@@ -35,6 +35,13 @@ function sortByKey(array, key) {
     });
 }
 
+function sortUsers(array) {
+    return array.sort(function(a, b) {
+		var x = new Date(a); var y = new Date(b);
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
 
 var users;
 $.ajax({
@@ -52,11 +59,13 @@ $.ajax({
 	headers:{'Authorization':'Basic ZGFuaGFrOndlYmkyMDEyIQ=='}, 
 	success:function(res){
 		res = sortByKey(res, 'datestamp');
+		users.sort(function(a,b){return parseFloat(a)-parseFloat(b)});
 		
 		var str = '';
 		count = 0;
 		
 		for (i in res){
+		//for (i=0; i<700; i++){
 			var date = res[i].datestamp;
 			//if(parseFloat(date.substr(3,2))>28){
 				var ev = res[i];
@@ -67,10 +76,14 @@ $.ajax({
 				var date = new Date([ev.datestamp + ' UTC']);
 				date = (parseFloat(date.getMonth())+1) + '/' + date.getDate()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
 				
-				if(ev.tag_id){var id = ev.tag_id;}
-				else if(ev.code){var id = ev.code;}
+				//if(ev.tag_id){var id = String(ev.tag_id);}
+				//else if(ev.code){var id = String(ev.code);}
+				if(ev.tag_id){var id = (ev.tag_id);}
+				else if(ev.code){var id = (ev.code);}
 				
-				if(ev.cookie_id){var user = users.indexOf(String(ev.cookie_id));}
+				if(ev.cookie_id){
+					var user = users.indexOf(String(ev.cookie_id));
+				}
 				
 				if(ev.actions&& ev.actions.length>0){
 					var act = ev.actions;
@@ -88,18 +101,24 @@ $.ajax({
 					
 				}
 				
-				var admin = [-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
-
+				var admin = [5,19,202,201,205,9,162,364,414,265,467,491,298,6,160,166,220,413,-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
+				//var admin = [-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
 				//133 mom; 134 dad; 0 masha local; 1 masha; 15 masha webitap;
 				// 144 Ryan; 146 TengFei; 12 Aram; 14 John; 141 John Ipad;
 				// 199 198 masha home;
 				
+				//for (var i=0; i<admin.length; i++){
+				//	admin[i]+=3;
+				//}
+
 				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users					
 					count = count+1;
 					str = '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+id+'</td><td>'+ev.user_agent+'</td><td>'+date+'</td><td>'+user+'</td><td>'+time+'</td></tr>';
 					$('#events').append(str);
 					
-					
+					if(admin.indexOf(parseFloat(user))==4){
+						console.log('3');
+					}
 					
 				//Pie chart total_pie
 				if(ev.user_agent.toLowerCase().indexOf('iphone')!=-1 && ev.type=='login'){num_iphone_login++;}
@@ -117,24 +136,29 @@ $.ajax({
 					}
 					total_daily
 					var col;
-					if(id.indexOf('1111')!=-1 || id.indexOf('TC1')!=-1){
-						//IOTA
-						col = 1;
+					try{
+						if(id.indexOf('1111')!=-1 || id.indexOf('TC1')!=-1){
+							//IOTA
+							col = 1;
+						}
+						else if(id.indexOf('1112')!=-1 || id.indexOf('1234')!=-1 || id.indexOf('TC2')!=-1){
+							//Lucias
+							col = 2;
+						}
+						else if(id.indexOf('1024')!=-1){
+							//Ami
+							col = 3;
+						}
+						else if(id.indexOf('1023')!=-1 || id.indexOf('TC3')!=-1){
+							//SanSai
+							col = 4;
+						}
+						//UPDATE COUNT
+						total_daily[total_daily.length-1][col]++;
 					}
-					else if(id.indexOf('1112')!=-1 || id.indexOf('1234')!=-1 || id.indexOf('TC2')!=-1){
-						//Lucias
-						col = 2;
+					catch(err){
+						console.log(err);
 					}
-					else if(id.indexOf('1024')!=-1){
-						//Ami
-						col = 3;
-					}
-					else if(id.indexOf('1023')!=-1 || id.indexOf('TC3')!=-1){
-						//SanSai
-						col = 4;
-					}
-					//UPDATE COUNT
-					total_daily[total_daily.length-1][col]++;
 				 
 				 
 				 // INDIVIDUAL ACTIONS PLOT
