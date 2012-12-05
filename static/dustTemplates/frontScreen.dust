@@ -12,7 +12,15 @@
         </div>
         <div class="welcome-img">
             <div id="facebookOverlay">
-                <div id="fbookButton"><img id='facebook' src="img/iota/facebookBttn.png" width='100%'/></div>
+                <div class="fbook_text">
+                    <span class="fbook_1">FREE {fbook_item} </span>
+                    <span class="fbook_2">WHEN YOU SHARE A </span>
+                    <span class="fbook_3">STORY AOBUT US ON </span>
+                    <span class="fbook_4">FACEBOOK</span>
+                </div>
+                <div id="fbookButton">
+                    <img id="facebook" src="img/iota/facebookBttn.png" width='100%'/>
+                </div>
             </div>
             <div class = "slideshow">
                 <img class = "sRight" id = "slideR0" src = "{img4}"/>

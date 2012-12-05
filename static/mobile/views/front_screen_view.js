@@ -40,7 +40,7 @@ var FrontScreenView = Backbone.View.extend({
 
 			 //data={token: that.model.get('token'), 'img1': res['img1'], 'img2': res['img2'], 'img3': res['img3'], 'img4': res['img4'], 'img5': res['img5'], 'img6': res['img6'], 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
 			//data={token: that.model.get('token'), 'img1': res['img1'].replace('.jpg','_thumbnail.jpg'), 'img2': res['img2'].replace('.jpg','_thumbnail.jpg'), 'img3': res['img3'].replace('.jpg','_thumbnail.jpg'), 'img4': res['img4'].replace('.jpg','_thumbnail.jpg'), 'img5': res['img5'].replace('.jpg','_thumbnail.jpg'), 'img6': res['img6'].replace('.jpg','_thumbnail.jpg'), 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
-			data={token: that.model.get('token'), 'img1': 'img/backButton.png', 'img2': 'img/backButton.png', 'img3': 'img/backButton.png', 'img4': 'img/backButton.png', 'img5': 'img/backButton.png', 'img6': 'img/backButton.png', 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN};
+			data={token: that.model.get('token'), 'img1': 'img/backButton.png', 'img2': 'img/backButton.png', 'img3': 'img/backButton.png', 'img4': 'img/backButton.png', 'img5': 'img/backButton.png', 'img6': 'img/backButton.png', 'img_logo':res['img_logo'], 'img_fbook':res['img_fbook'], 'fbook_name':res['fbook_name'], 'fbook_link':res['fbook_link'], 'code':code, 'event_token':EVENT_TOKEN, 'fbook_item':res['fbook_item']};
 			
 			that.fbook_name = res['fbook_name'];
 			that.fbook_link = res['fbook_link'];
@@ -81,8 +81,21 @@ var FrontScreenView = Backbone.View.extend({
 						$('#fbookButton').html('');
 					}
 					else{
-						$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
-						$('#fbookButton').css('left', ($('#facebookOverlay').height()*1.7)+'px');
+						//$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
+						//$('#fbookButton').css('left', ($('#facebookOverlay').height()*1.7)+'px');
+						if(!user.iphone){
+							//$('#facebookOverlay').css('height', '45%');
+							$('.fbook_text').css('padding-top', '6%');
+							$('#fbookButton').css('width', '13%');
+						}
+						var h = $('#facebookOverlay').height();
+						var n = res['fbook_item'].length-5;
+						var diff = n>0 ? n*2 : 0;
+						$('.fbook_1').css('font-size', h*(23-diff)/100+'px');
+						$('.fbook_2').css('font-size', (h*0.13)+'px');
+						$('.fbook_3').css('font-size', (h*0.13)+'px');
+						if(user.iphone){$('.fbook_4').css('font-size', (h*0.28)+'px');}
+						else{$('.fbook_4').css('font-size', (h*0.25)+'px');}
 						setTimeout(function(){$("#swipeview--1").click(that.fbook_click);},3000);
 						//$("#facebookOverlay").click(that.fbook_click);
 					}
@@ -126,7 +139,7 @@ var FrontScreenView = Backbone.View.extend({
 			//store event
 			ACTIONS.push({action: 'clickFacebook', time: new Date().getTime()});
 			
-			window.location.href = 'https://www.facebook.com/dialog/feed?app_id=150769608397642&link='+this.fbook_link+'&picture='+this.img_fbook+'&name='+this.fbook_name+'&caption=Brought%20to%20you%20by%20WebiTap&description=Using%20Dialogs%20to%20interact%20with%20users.&redirect_uri=http://www.webitap.com/m/?code='+this.code;
+			window.location.href = 'https://www.facebook.com/dialog/feed?app_id=150769608397642&link='+this.fbook_link+'&picture='+this.img_fbook+'&name='+this.fbook_name+'&caption=Brought%20to%20you%20by%20WebiTap&description=Using%20Dialogs%20to%20interact%20with%20users.&redirect_uri=http://www.webitap.com/mobile/?code='+this.code;
 		}
 		
 	}
