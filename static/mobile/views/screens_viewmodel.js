@@ -171,11 +171,11 @@ var ScreensView = Backbone.View.extend({
 		$('#navigationOverlay').bind('touchstart', function(ev){
 			$('#navigationOverlay').remove();
 			// slide after 3 seconds
-			setTimeout(function(){
-				if(that.index==-1){
-					that.slide(0,500,-1);
-				}
-			},3000);
+			//setTimeout(function(){
+			//	if(that.index==-1){
+			//		that.slide(0,500,-1);
+			//	}
+			//},3000);
 		});
 		// header - swipe on tap
 		$('#headerBlur').click(this.tap_header);
