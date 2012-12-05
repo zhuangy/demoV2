@@ -78,7 +78,7 @@ var FrontScreenView = Backbone.View.extend({
 						$('#facebookOverlay').css({'background-image': 'url(img/iota/facebook_confirmation.png)',
 													'width':'100%',
 													'background-size': '100% auto'});
-						$('#fbookButton').html('');
+						$('#fbookOverlay').html('');
 					}
 					else{
 						//$('#fbookButton').css('width', ($('#facebookOverlay').height()*0.4)+'px');
