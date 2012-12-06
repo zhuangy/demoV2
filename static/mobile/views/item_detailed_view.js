@@ -39,10 +39,6 @@ var ItemDetailedView = Backbone.View.extend({
 				that.updateRating();
 				that.makeMeVisible();
 				
-				setTimeout(function(){
-					new iScroll('item-content', {vScrollbar:false});
-				},10)
-				
 				img = document.createElement('img')
 				img.src=data.imgPath.replace('_thumbnail.jpg','.jpg');
 				$(img).load(function(){
@@ -80,9 +76,9 @@ var ItemDetailedView = Backbone.View.extend({
 		var h = $('#overlay').height() - $('#overlay #title').height() - $('#overlay #image').height() - $('#overlay #rating').height() - $('#overlay #comment_topBar').height()*0.9;
 		$('#item-content').css('height', h+'px');
 		
-		// setTimeout(function(){
-		// 	new iScroll('item-content', {vScrollbar:false});
-		// },10)
+		setTimeout(function(){
+			new iScroll('item-content', {vScrollbar:false});
+		},100)
 			
 		/*fadein*/	
 		setTimeout( function(){
