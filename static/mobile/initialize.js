@@ -71,6 +71,7 @@ var ACTIONS = []; // initialize global variable to record user Actions - to stor
 var EVENT_TOKEN; //initialize event_token variable - event toke is stored in a cookie when the user first loads the app
 CONF={
 	'api-host' : 'http://api.webitap.com' // api address
+	//'api-host' : 'http://192.168.1.101:8080' // api address
 }
 //var GLOBAL = {};
 var itemOverlay = new ItemDetailedView();
@@ -174,7 +175,7 @@ $(document).ready(function (){
 	*/
 	window.onresize = function(e) { //your code  
     	e.preventDefault();
-		window.scrollTo(0,1);
+		//window.scrollTo(0,1);
 		checkOrientation();
 	}
 	

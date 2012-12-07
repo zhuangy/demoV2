@@ -85,40 +85,40 @@ $.ajax({
 					var user = users.indexOf(String(ev.cookie_id));
 				}
 				
-				if(ev.actions&& ev.actions.length>0){
-					var act = ev.actions;
-					var l = ev.actions.length;
-					time = (act[l-1].time - act[0].time)/1000;
-					if (time<60){
-						time = Math.ceil(time)+' seconds';
-					}
-					else if(time>=60){
-						time = (time/60)+' minutes';
-					}
-					console.log(user);
-					console.log(time);
-					console.log(JSON.stringify(ev));
-					
-				}
+
 				
-				var admin = [5,19,202,201,205,9,162,364,414,265,467,491,298,6,160,166,220,413,-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
+				var admin = [5,19,202,201,205,9,162,364,414,265,467,491,492,617,298,6,160,166,220,413,568,569,572,477,145,-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
 				//var admin = [-1,0,1,2,8,11,12,14,15,41,114,130,133,134,144,146,147,150,152,149,155,158,159,147,157,148,153,198,199,202,215,224, 251, 252, 248, 250, 249, 247,236,143, 257, 303, 304, 305, 301, 294, 307, 308, 302, 306, 300, 296, 299, 363, 417, 447, 424, 131, 262, 475, 476];
 				//133 mom; 134 dad; 0 masha local; 1 masha; 15 masha webitap;
 				// 144 Ryan; 146 TengFei; 12 Aram; 14 John; 141 John Ipad;
 				// 199 198 masha home;
-				
+				//var admin=[];
 				//for (var i=0; i<admin.length; i++){
 				//	admin[i]+=3;
 				//}
 
 				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users					
+					if(ev.actions&& ev.actions.length>0){
+						var act = ev.actions;
+						var l = ev.actions.length;
+						time = (act[l-1].time - act[0].time)/1000;
+						if (time<60){
+							time = Math.ceil(time)+' seconds';
+						}
+						else if(time>=60){
+							time = (time/60)+' minutes';
+						}
+						console.log(user);
+						console.log(time);
+						console.log(JSON.stringify(ev));
+						
+					}
+
 					count = count+1;
 					str = '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+id+'</td><td>'+ev.user_agent+'</td><td>'+date+'</td><td>'+user+'</td><td>'+time+'</td></tr>';
 					$('#events').append(str);
 					
-					if(admin.indexOf(parseFloat(user))==4){
-						console.log('3');
-					}
+				
 					
 				//Pie chart total_pie
 				if(ev.user_agent.toLowerCase().indexOf('iphone')!=-1 && ev.type=='login'){num_iphone_login++;}

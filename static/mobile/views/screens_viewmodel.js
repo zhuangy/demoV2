@@ -48,7 +48,6 @@ var ScreenView = Backbone.View.extend({
 		
 		// some css
 		//$('#'+this.model.get('token')).css({'left': (index)*size.width+'px',
-											//'top': 0.075*size.height+'px',});
 
 		// render items into this.el!!!!
 		var itemsCollection = new Items([],{token: this.model.get('token')});
@@ -205,8 +204,8 @@ var ScreensView = Backbone.View.extend({
 				this.Screens[i].render(i, this.code, i-1);
 			}
 			else if(this.collection.models[i].get('type')=='ad'){ // advertisement page
-				this.Screens[i] = new AdScreenView({model:this.collection.models[i]});
-				this.Screens[i].render(i, this.code, i-1);
+				this.Screens[i] = new AdView({model:this.collection.models[i]});
+				this.Screens[i].render(i, i-1);
 			}
 		}
 		
@@ -376,6 +375,10 @@ var ScreensView = Backbone.View.extend({
 								that.Screens[index+2] = new FrontScreenView({model:that.collection.models[index+2]});
 								that.Screens[index+2].render(index+1, that.code, (that.currPage+1)%3);
 								that.length++;
+							}
+							else if(this.collection.models[index+1].get('type')=='ad'){ // advertisement page
+								this.Screens[index+2] = new AdView({model:this.collection.models[index+2]});
+								this.Screens[index+2].render(index+1, (that.currPage+1)%3);
 							}
 					}
 					else if(direction>0 && that.index>0){
