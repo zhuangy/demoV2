@@ -361,7 +361,7 @@ var ScreensView = Backbone.View.extend({
 
 			// swipe 3panel view and load new content if needed
 			setTimeout(function(){
-				if(that.index>0 && that.index<that.numSlides-1){
+				if(that.index>0 && that.index<that.numSlides-2){
 
 					if(direction<0 && that.index>0 && that.index<that.numSlides-2){
 
