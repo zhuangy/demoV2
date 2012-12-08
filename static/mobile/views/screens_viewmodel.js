@@ -363,22 +363,22 @@ var ScreensView = Backbone.View.extend({
 			setTimeout(function(){
 				if(that.index>0 && that.index<that.numSlides-1){
 
-					if(direction<0 && that.index>0 && that.index<that.numSlides-1){
+					if(direction<0 && that.index>0 && that.index<that.numSlides-2){
 
-							if(that.collection.models[index+1].get('type')=='menu_list'){
+							if(that.collection.models[index+2].get('type')=='menu_list'){
 								that.Screens[index+2] = new ScreenView({model:that.collection.models[index+2]});
 								that.Screens[index+2].render(index+1, (that.currPage+1)%3);
 								
 								that.length++;
 							}
-							else if (that.collection.models[index+1].get('type')=='splash'){
+							else if (that.collection.models[index+2].get('type')=='splash'){
 								that.Screens[index+2] = new FrontScreenView({model:that.collection.models[index+2]});
 								that.Screens[index+2].render(index+1, that.code, (that.currPage+1)%3);
 								that.length++;
 							}
-							else if(this.collection.models[index+1].get('type')=='ad'){ // advertisement page
-								this.Screens[index+2] = new AdView({model:this.collection.models[index+2]});
-								this.Screens[index+2].render(index+1, (that.currPage+1)%3);
+							else if (that.collection.models[index+2].get('type')=='ad'){ // advertisement page
+								that.Screens[index+2] = new AdView({model:that.collection.models[index+2]});
+								that.Screens[index+2].render(index+1, (that.currPage+1)%3);
 							}
 					}
 					else if(direction>0 && that.index>0){
