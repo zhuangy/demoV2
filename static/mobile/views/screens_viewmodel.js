@@ -310,7 +310,7 @@ var ScreensView = Backbone.View.extend({
 	},
 	
 	tap_header: function(ev){
-		if (ev.pageX>size.width*3/4 && this.index<this.numSlides-1){
+		if (ev.pageX>size.width*3/4 && this.index<this.numSlides-2){
 			this.slide(this.index+1, 300, -1);
 		}
 		else if (ev.pageX<size.width*1/4 && this.index>=0){
