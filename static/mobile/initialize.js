@@ -80,6 +80,7 @@ var tap=false;
 var login=false;
 
 
+/*
 // Check if webitap_event cookie is stored
 var ev_token=getCookie("webitap_event");
 if (ev_token!=null && ev_token!=""){
@@ -101,6 +102,7 @@ if (ev_token!=null && ev_token!=""){
 		error:function(err){console.log(JSON.stringify(err));} 
 	})
 }
+*/
 
 //store actions function - called periodically while user interacts with the app
 var num_actions = ACTIONS.length;
