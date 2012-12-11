@@ -97,6 +97,8 @@ $.ajax({
 				//	admin[i]+=3;
 				//}
 
+				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users					
+					
 					if(ev.actions&& ev.actions.length>0){
 						var act = ev.actions;
 						var l = ev.actions.length;
@@ -113,12 +115,10 @@ $.ajax({
 						
 					}
 
-				if(user && admin.indexOf(parseFloat(user))==-1){ // if this is not one of admin users					
-					
-
 					count = count+1;
 					str = '<tr><td>'+count+'</td><td>'+ev.type+'</td><td>'+id+'</td><td>'+ev.user_agent+'</td><td>'+date+'</td><td>'+user+'</td><td>'+time+'</td></tr>';
 					$('#events').append(str);
+
 					
 				
 					
@@ -204,7 +204,7 @@ $.ajax({
 	    new google.visualization.ColumnChart(document.getElementById('total_daily_bar')).
 		  draw(total_daily_data,
 			   {title:"WebiTap Activity",
-				width:1000, height:400,
+				width:1500, height:400,
 				hAxis: {title: "Date"}}
 		  );
 
