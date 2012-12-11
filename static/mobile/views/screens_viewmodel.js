@@ -97,7 +97,6 @@ var ScreensView = Backbone.View.extend({
 		//post event to database
 		saveEvent();
 		//GLOBAL.itemOVerlay = new ItemDetailedView();
-
 		
 		//this.ScreenCollection = new Screens();
 		this.screenView = new Object();
@@ -179,7 +178,25 @@ var ScreensView = Backbone.View.extend({
 		// header - swipe on tap
 		$('#headerBlur').click(this.tap_header);
 		
-		this.numSlides = this.collection.length;
+		// Only show screens for this time of day
+		console.log(this.collection);
+
+		tNow = new Date().getHours();
+		this.collectionTemp = new Array();
+		for(i=0; i<this.collection.models.length; i++){
+			if(this.collection.models[i].get('time')){
+				t = this.collection.models[i].get('time').split('-');
+				if( tNow>=parseFloat(t[0]) && tNow<parseFloat(t[1]) ){
+					this.collectionTemp.push(this.collection.models[i]);
+				}
+
+			} else{
+				this.collectionTemp.push(this.collection.models[i]);
+			}
+		}
+
+		this.collection.models = this.collectionTemp;
+		this.numSlides = this.collection.models.length;
 		
 		// some css
 		//$(this.el).css('width', this.numSlides*size.width+'px');
