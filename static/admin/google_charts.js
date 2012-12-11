@@ -147,7 +147,7 @@ $.ajax({
 							//Lucias
 							col = 2;
 						}
-						else if(id.indexOf('1024')!=-1){
+						else if(id.indexOf('1024')!=-1 || id.indexOf('TC4')!=-1){
 							//Ami
 							col = 3;
 						}
